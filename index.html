@@ -3,765 +3,1037 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>私域客服周报看板 · 2026.05.02–05.22</title>
+<title>私域客服团队周报看板 · 2026年5月</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #F4F2ED;
-    --surface: #FFFFFF;
-    --surface2: #F0EDE6;
-    --border: #E2DDD4;
-    --text-primary: #1A1916;
-    --text-secondary: #6B6860;
-    --text-muted: #A09D97;
-    --accent: #1A3A2A;
-    --accent2: #2D6A4F;
-    --accent-light: #E8F2EC;
-    --gold: #C9A84C;
-    --gold-light: #FBF5E6;
-    --danger: #8B2A2A;
-    --danger-light: #F5EAEA;
-    --blue: #1E3F6B;
-    --blue-mid: #3A6EA8;
-    --blue-light: #E8EFF7;
-    --teal: #1D7A6A;
-    --coral: #B5441E;
-    --mono: 'DM Mono', monospace;
-    --sans: 'Noto Sans SC', sans-serif;
-    --radius: 8px;
-    --radius-lg: 14px;
-    --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.04);
+    --bg: #f5f4f0;
+    --surface: #ffffff;
+    --surface2: #f0ede8;
+    --border: rgba(0,0,0,0.08);
+    --border-med: rgba(0,0,0,0.14);
+    --text: #1a1917;
+    --text-muted: #6b6963;
+    --text-hint: #9b9790;
+    --blue: #185FA5;
+    --blue-light: #E6F1FB;
+    --blue-mid: #378ADD;
+    --green: #0F6E56;
+    --green-light: #E1F5EE;
+    --green-mid: #1D9E75;
+    --amber: #854F0B;
+    --amber-light: #FAEEDA;
+    --amber-mid: #BA7517;
+    --coral: #993C1D;
+    --coral-light: #FAECE7;
+    --coral-mid: #D85A30;
+    --pink-mid: #D4537E;
+    --purple-mid: #7F77DD;
+    --gray-mid: #888780;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --shadow: 0 1px 4px rgba(0,0,0,0.06), 0 0 0 0.5px rgba(0,0,0,0.06);
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   body {
-    font-family: var(--sans);
+    font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
     background: var(--bg);
-    color: var(--text-primary);
+    color: var(--text);
     font-size: 14px;
-    line-height: 1.6;
+    line-height: 1.5;
     min-height: 100vh;
   }
 
   /* ── Layout ── */
-  .page { max-width: 1080px; margin: 0 auto; padding: 40px 28px 80px; }
+  .app { display: flex; flex-direction: column; min-height: 100vh; }
+  .main { flex: 1; min-width: 0; }
 
-  /* ── Header ── */
-  .header {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: end;
-    gap: 20px;
-    margin-bottom: 40px;
-    padding-bottom: 24px;
-    border-bottom: 1.5px solid var(--text-primary);
+  /* ── Top header bar ── */
+  .topbar {
+    background: var(--surface);
+    border-bottom: 0.5px solid var(--border-med);
+    padding: 16px 32px 0;
+    position: sticky; top: 0; z-index: 20;
   }
-  .header-eyebrow {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 8px;
-    font-family: var(--mono);
+  .topbar-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 14px;
   }
-  .header-title {
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: -.02em;
-    line-height: 1.2;
-    color: var(--text-primary);
+  .topbar-title { font-size: 18px; font-weight: 700; color: var(--text); letter-spacing: -.01em; }
+  .topbar-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+  .topbar-badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .badge {
+    font-size: 11px; font-weight: 500; padding: 3px 10px;
+    border-radius: 20px; white-space: nowrap;
   }
-  .header-title span { color: var(--accent2); }
-  .header-meta {
-    text-align: right;
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-muted);
-    line-height: 1.8;
+  .badge-blue { background: var(--blue-light); color: var(--blue); }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-amber { background: var(--amber-light); color: var(--amber); }
+  .badge-coral { background: var(--coral-light); color: var(--coral); }
+
+  /* ── Tab nav ── */
+  .tab-nav {
+    display: flex; align-items: flex-end; gap: 0;
+    overflow-x: auto; scrollbar-width: none;
   }
-  .header-meta strong { color: var(--text-secondary); font-weight: 500; }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-group-label {
+    font-size: 10px; font-weight: 600; color: var(--text-hint);
+    letter-spacing: .06em; text-transform: uppercase;
+    padding: 0 14px 10px 0; white-space: nowrap;
+    align-self: flex-end;
+    border-bottom: 2px solid transparent;
+  }
+  .tab-divider {
+    width: 0.5px; background: var(--border-med);
+    height: 18px; margin: 0 6px 10px; align-self: flex-end;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 6px;
+    padding: 10px 16px; cursor: pointer;
+    font-size: 13px; font-weight: 500; color: var(--text-muted);
+    white-space: nowrap; border-bottom: 2px solid transparent;
+    transition: color .15s, border-color .15s;
+    user-select: none;
+  }
+  .nav-item:hover { color: var(--text); border-bottom-color: var(--border-med); }
+  .nav-item.active { color: var(--blue); border-bottom-color: var(--blue-mid); }
+  .nav-item svg { width: 15px; height: 15px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  .content { padding: 24px 32px; max-width: 1280px; }
+
+  /* ── Pages ── */
+  .page { display: none; }
+  .page.active { display: block; }
 
   /* ── Section ── */
-  .section { margin-bottom: 36px; }
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 16px;
-  }
-  .section-num {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 500;
-    background: var(--text-primary);
-    color: var(--bg);
-    padding: 2px 8px;
-    border-radius: 3px;
-    letter-spacing: .06em;
-  }
-  .section-title {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    letter-spacing: .06em;
-    text-transform: uppercase;
-  }
+  .sec { margin-bottom: 28px; }
+  .sec-header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+  .sec-title { font-size: 15px; font-weight: 600; color: var(--text); }
+  .sec-sub { font-size: 12px; color: var(--text-muted); margin-left: auto; }
 
-  /* ── KPI Cards ── */
-  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 10px; }
-  .kpi-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  /* ── KPI cards ── */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
   .kpi {
-    background: var(--surface);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px 16px 14px;
-    box-shadow: var(--shadow);
+    background: var(--surface); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 16px 18px;
   }
-  .kpi.accent { background: var(--accent); border-color: var(--accent); }
-  .kpi.gold { background: var(--gold-light); border-color: #E8D8A0; }
-  .kpi.danger { background: var(--danger-light); border-color: #DDB0B0; }
-  .kpi-label {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-bottom: 6px;
-    font-weight: 400;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .kpi.accent .kpi-label { color: rgba(255,255,255,.55); }
-  .kpi-value {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--text-primary);
-    font-family: var(--mono);
-    letter-spacing: -.02em;
-    line-height: 1;
-  }
-  .kpi.accent .kpi-value { color: #fff; }
-  .kpi.gold .kpi-value { color: #7A5B10; }
-  .kpi.danger .kpi-value { color: var(--danger); }
-  .kpi-delta {
-    font-size: 11px;
-    margin-top: 5px;
-    font-family: var(--mono);
-    font-weight: 500;
-  }
-  .up { color: var(--teal); }
-  .dn { color: var(--danger); }
-  .kpi-sub { font-size: 10px; color: var(--text-muted); margin-top:4px; }
+  .kpi-icon { width: 30px; height: 30px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+  .kpi-icon svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .kpi-label { font-size: 11px; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
+  .kpi-val { font-size: 24px; font-weight: 600; line-height: 1.1; color: var(--text); }
+  .kpi-delta { font-size: 12px; margin-top: 5px; display: flex; align-items: center; gap: 4px; }
+  .up { color: var(--green); }
+  .dn { color: var(--coral); }
+  .neu { color: var(--text-muted); }
 
   /* ── Chart cards ── */
   .chart-card {
-    background: var(--surface);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 22px 22px 18px;
-    box-shadow: var(--shadow);
+    background: var(--surface); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 18px 20px; margin-bottom: 14px;
   }
-  .chart-title {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    margin-bottom: 14px;
-    text-transform: uppercase;
-    letter-spacing: .06em;
-  }
-  .chart-wrap { position: relative; width: 100%; }
-
-  /* ── Tabs ── */
-  .tabs { display: flex; gap: 4px; margin-bottom: 14px; }
-  .tab {
-    font-size: 11px;
-    padding: 4px 12px;
-    border: 0.5px solid var(--border);
-    border-radius: 4px;
-    background: transparent;
-    color: var(--text-muted);
-    cursor: pointer;
-    font-family: var(--sans);
-    transition: all .15s;
-  }
-  .tab:hover { background: var(--surface2); color: var(--text-secondary); }
-  .tab.active {
-    background: var(--text-primary);
-    color: #fff;
-    border-color: var(--text-primary);
-    font-weight: 500;
-  }
-
-  /* ── Legend ── */
-  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; }
-  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-muted); }
-  .legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
-
-  /* ── Two col ── */
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .chart-label { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .chart-hint { font-size: 11px; color: var(--text-muted); margin-bottom: 12px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 12px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+  .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 800px) { .chart-row { grid-template-columns: 1fr; } }
 
   /* ── Table ── */
   .tbl-card {
-    background: var(--surface);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow);
+    background: var(--surface); border-radius: var(--radius);
+    box-shadow: var(--shadow); overflow: hidden; margin-bottom: 14px;
   }
-  .tbl-head {
-    padding: 12px 16px 10px;
-    border-bottom: 0.5px solid var(--border);
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: .06em;
-    background: var(--surface2);
-  }
-  table { width: 100%; border-collapse: collapse; }
-  th {
-    text-align: left;
-    padding: 8px 14px;
-    font-size: 10px;
-    font-weight: 500;
-    color: var(--text-muted);
-    border-bottom: 0.5px solid var(--border);
-    text-transform: uppercase;
-    letter-spacing: .06em;
-    white-space: nowrap;
-  }
-  td {
-    padding: 8px 14px;
-    font-size: 12px;
-    color: var(--text-primary);
-    border-bottom: 0.5px solid var(--border);
-    vertical-align: middle;
-  }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead tr { background: var(--surface2); }
+  th { padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 600; color: var(--text-muted); letter-spacing: .02em; text-transform: uppercase; white-space: nowrap; border-bottom: 0.5px solid var(--border-med); }
+  td { padding: 10px 14px; border-bottom: 0.5px solid var(--border); color: var(--text); white-space: nowrap; }
   tr:last-child td { border-bottom: none; }
-  tr:hover td { background: var(--surface2); }
+  tbody tr:hover td { background: var(--surface2); }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
 
-  .rank-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    font-size: 10px;
-    font-weight: 700;
-    font-family: var(--mono);
-  }
-  .r1 { background: #F4C842; color: #3D2800; }
-  .r2 { background: #C8C8C8; color: #2A2A2A; }
-  .r3 { background: #D4A07A; color: #3A1A00; }
-  .rn { background: var(--surface2); color: var(--text-muted); }
+  /* ── Rank badges ── */
+  .rk { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; font-size: 11px; font-weight: 700; }
+  .rk-1 { background: #FAC775; color: #412402; }
+  .rk-2 { background: #B4B2A9; color: #2C2C2A; }
+  .rk-3 { background: #F0997B; color: #4A1B0C; }
+  .rk-n { background: var(--surface2); color: var(--text-muted); }
 
-  .badge-leader {
-    font-size: 9px;
-    padding: 1px 5px;
-    border-radius: 3px;
-    background: var(--blue-light);
-    color: var(--blue);
-    margin-left: 4px;
-    font-weight: 500;
-    white-space: nowrap;
-  }
-  .mono { font-family: var(--mono); }
-  .na { color: var(--text-muted); }
-  .val-good { color: var(--teal); font-weight: 500; }
-  .val-warn { color: #9A5A00; font-weight: 500; }
-  .val-bad { color: var(--danger); font-weight: 500; }
+  /* ── Role tags ── */
+  .tag { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 10px; }
+  .tag-ft { background: var(--blue-light); color: var(--blue); }
+  .tag-pt { background: var(--amber-light); color: var(--amber); }
+  .tag-new { background: var(--green-light); color: var(--green); }
+  .tag-lead { background: #EEEDFE; color: #3C3489; }
 
-  /* ── Info box ── */
-  .info-box {
-    border-left: 3px solid var(--blue-mid);
-    background: var(--blue-light);
-    padding: 10px 14px;
-    border-radius: 0 var(--radius) var(--radius) 0;
-    font-size: 12px;
-    color: var(--blue);
-    line-height: 1.65;
-    margin-top: 12px;
+  /* ── Insight cards ── */
+  .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  @media (max-width: 800px) { .insight-grid { grid-template-columns: 1fr; } }
+  .insight {
+    background: var(--surface); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 14px 16px;
+    border-left: 3px solid var(--border-med);
   }
+  .insight-blue { border-left-color: var(--blue-mid); }
+  .insight-green { border-left-color: var(--green-mid); }
+  .insight-amber { border-left-color: var(--amber-mid); }
+  .insight-coral { border-left-color: var(--coral-mid); }
+  .insight-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .insight-body { font-size: 12px; color: var(--text-muted); line-height: 1.65; }
 
-  /* ── Conclusion list ── */
-  .conclusion-list { list-style: none; }
-  .conclusion-list li {
-    display: grid;
-    grid-template-columns: 28px 1fr;
-    gap: 12px;
-    padding: 14px 0;
-    border-bottom: 0.5px solid var(--border);
-    font-size: 13px;
-    line-height: 1.7;
-    align-items: start;
+  /* ── Period selector ── */
+  .period-bar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .period-btn {
+    padding: 6px 16px; border-radius: 20px; border: 0.5px solid var(--border-med);
+    background: transparent; font-size: 12px; font-weight: 500; color: var(--text-muted);
+    cursor: pointer; transition: all .15s;
   }
-  .conclusion-list li:last-child { border-bottom: none; }
-  .c-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-  .c-icon.red { background: var(--danger-light); color: var(--danger); }
-  .c-icon.gold { background: var(--gold-light); color: #7A5B10; }
-  .c-icon.green { background: var(--accent-light); color: var(--accent2); }
-  .c-icon.orange { background: #FDF0E0; color: #8A4A00; }
-  .c-icon.gray { background: var(--surface2); color: var(--text-secondary); }
-  .c-text b { color: var(--text-primary); }
-  .c-text { color: var(--text-secondary); }
+  .period-btn:hover { border-color: var(--blue-mid); color: var(--blue); }
+  .period-btn.active { background: var(--blue-mid); color: #fff; border-color: var(--blue-mid); }
 
-  /* ── Suggest cards ── */
-  .suggest-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
-  .suggest-card {
-    background: var(--surface);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 18px 18px 16px;
-    box-shadow: var(--shadow);
-    border-top: 3px solid var(--accent);
-  }
-  .suggest-num {
-    font-family: var(--mono);
-    font-size: 28px;
-    font-weight: 400;
-    color: var(--border);
-    line-height: 1;
-    margin-bottom: 10px;
-  }
-  .suggest-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); }
-  .suggest-body { font-size: 12px; color: var(--text-secondary); line-height: 1.7; }
+  /* ── Progress bars ── */
+  .prog-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .prog-name { width: 64px; font-size: 12px; color: var(--text); text-align: right; flex-shrink: 0; }
+  .prog-bar-wrap { flex: 1; background: var(--surface2); border-radius: 4px; height: 8px; overflow: hidden; }
+  .prog-bar { height: 100%; border-radius: 4px; transition: width .5s ease; }
+  .prog-val { width: 80px; font-size: 12px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
 
-  /* ── Trend indicator ── */
-  .trend-up::before { content: '↑ '; color: var(--teal); }
-  .trend-dn::before { content: '↓ '; color: var(--danger); }
+  /* ── Divider ── */
+  .divider { height: 0.5px; background: var(--border); margin: 20px 0; }
 
-  /* ── Footer ── */
-  .footer {
-    margin-top: 48px;
-    padding-top: 20px;
-    border-top: 0.5px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    color: var(--text-muted);
-    font-family: var(--mono);
+  /* ── Summary strip ── */
+  .summary-strip {
+    display: flex; gap: 0; margin-bottom: 20px;
+    background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden;
   }
+  .strip-item { flex: 1; padding: 14px 16px; border-right: 0.5px solid var(--border); }
+  .strip-item:last-child { border-right: none; }
+  .strip-label { font-size: 11px; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
+  .strip-val { font-size: 18px; font-weight: 600; }
+  .strip-delta { font-size: 11px; margin-top: 2px; }
 
-  /* ── Print ── */
-  @media print {
-    body { background: #fff; }
-    .page { padding: 20px; }
+  /* Mobile */
+  @media (max-width: 680px) {
+    .content { padding: 16px; }
+    .topbar { padding: 14px 16px 0; }
+    .topbar-header { flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    .summary-strip { flex-direction: column; }
+    .strip-item { border-right: none; border-bottom: 0.5px solid var(--border); }
+    .nav-item { padding: 8px 12px; font-size: 12px; }
   }
-
-  /* ── Animations ── */
-  @keyframes fadeUp {
-    from { opacity:0; transform: translateY(12px); }
-    to   { opacity:1; transform: translateY(0); }
-  }
-  .section { animation: fadeUp .4s ease both; }
-  .section:nth-child(1) { animation-delay: .05s; }
-  .section:nth-child(2) { animation-delay: .10s; }
-  .section:nth-child(3) { animation-delay: .15s; }
-  .section:nth-child(4) { animation-delay: .20s; }
-  .section:nth-child(5) { animation-delay: .25s; }
-  .section:nth-child(6) { animation-delay: .30s; }
-  .section:nth-child(7) { animation-delay: .35s; }
-  .section:nth-child(8) { animation-delay: .40s; }
 </style>
 </head>
 <body>
-<div class="page">
+<div class="app">
 
-  <!-- Header -->
-  <div class="header">
+<!-- ── Top Navigation ── -->
+<div class="topbar">
+  <div class="topbar-header">
     <div>
-      <div class="header-eyebrow">Private Domain CS · Weekly Report</div>
-      <div class="header-title">私域客服<span>周报看板</span></div>
+      <div class="topbar-title">私域客服团队周报看板</div>
+      <div class="topbar-sub">2026.05.02 — 2026.05.29 &nbsp;·&nbsp; 四周数据 &nbsp;·&nbsp; 数据来源：个微 · 企微 · 有赞</div>
     </div>
-    <div class="header-meta">
-      <strong>数据周期</strong><br>
-      W1 &nbsp;2026.05.02 – 05.08<br>
-      W2 &nbsp;2026.05.09 – 05.15<br>
-      W3 &nbsp;2026.05.16 – 05.22<br>
-      <br>
-      <strong>生成日期</strong> &nbsp;2026.05.25
+    <div class="topbar-badges">
+      <span class="badge badge-green">活动期进行中</span>
+      <span class="badge badge-amber">5/8起有赞平台活动</span>
+      <span class="badge badge-blue">W4新品上架</span>
     </div>
   </div>
-
-  <!-- ① 总体概览 -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-num">01</span>
-      <span class="section-title">总体概览</span>
+  <div class="tab-nav">
+    <div class="tab-group-label">数据分析</div>
+    <div class="nav-item active" onclick="nav('overview',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      总体概览
     </div>
-    <div class="kpi-grid" style="margin-bottom:10px;">
-      <div class="kpi accent">
-        <div class="kpi-label">3周累计接待量</div>
-        <div class="kpi-value">11,309</div>
-        <div class="kpi-sub" style="color:rgba(255,255,255,.45);">3个系统合计</div>
-      </div>
-      <div class="kpi accent">
-        <div class="kpi-label">3周累计销售额</div>
-        <div class="kpi-value">¥629,234</div>
-        <div class="kpi-sub" style="color:rgba(255,255,255,.45);">有赞分销系统</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">W1 销售额</div>
-        <div class="kpi-value">¥254,546</div>
-        <div class="kpi-delta" style="color:var(--text-muted);">05.02 – 05.08</div>
-      </div>
-      <div class="kpi gold">
-        <div class="kpi-label">W2 销售额</div>
-        <div class="kpi-value">¥288,928</div>
-        <div class="kpi-delta up">↑ +13.5% vs W1</div>
-      </div>
-      <div class="kpi danger">
-        <div class="kpi-label">W3 销售额</div>
-        <div class="kpi-value">¥85,760</div>
-        <div class="kpi-delta dn">↓ −70.3% vs W2</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">3周平均人效</div>
-        <div class="kpi-value">¥55.6</div>
-        <div class="kpi-sub">元 / 次接待</div>
-      </div>
+    <div class="nav-item" onclick="nav('trend',this)">
+      <svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+      周期环比分析
     </div>
-    <div class="kpi-grid-3">
-      <div class="kpi">
-        <div class="kpi-label">W1 总接待量</div>
-        <div class="kpi-value">2,208</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">W2 总接待量</div>
-        <div class="kpi-value">3,657</div>
-        <div class="kpi-delta up">↑ +65.6% vs W1</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">W3 总接待量</div>
-        <div class="kpi-value">5,444</div>
-        <div class="kpi-delta up">↑ +48.8% vs W2</div>
-      </div>
+    <div class="nav-item" onclick="nav('workload',this)">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      工作量分析
+    </div>
+    <div class="nav-item" onclick="nav('sales',this)">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      销售贡献分析
+    </div>
+    <div class="nav-item" onclick="nav('perf',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+      个人表现与排名
+    </div>
+    <div class="tab-divider"></div>
+    <div class="tab-group-label">洞察</div>
+    <div class="nav-item" onclick="nav('insights',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      结论与建议
     </div>
   </div>
+</div>
 
-  <!-- ② 周期环比趋势 -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-num">02</span>
-      <span class="section-title">周期环比趋势</span>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">接待量 vs 销售额走势（销售额÷100缩放对齐显示）</div>
-      <div class="chart-wrap" style="height:200px;">
-        <canvas id="trendC" role="img" aria-label="三周接待量与销售额趋势折线图"></canvas>
-      </div>
-      <div class="legend">
-        <div class="legend-item"><span class="legend-dot" style="background:#3A6EA8"></span>总接待量（次）</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#2D6A4F;border:1px dashed #2D6A4F;background:transparent;width:16px;height:2px;border-radius:0;"></span>销售额÷100</div>
-      </div>
-      <div class="info-box">接待量三周持续攀升，但 W3 销售额从 ¥288,928 骤降至 ¥85,760（−70.3%），接待量与销售额出现明显背离，W3 转化率问题值得重点排查。</div>
-    </div>
-  </div>
+<!-- ── Main Content ── -->
+<div class="main">
+  <div class="content">
 
-  <!-- ③ 客服工作量 -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-num">03</span>
-      <span class="section-title">客服工作量分析（接待量）</span>
-    </div>
-    <div class="chart-card">
-      <div class="tabs">
-        <button class="tab active" onclick="swVol('w1',this)">W1（05.02-08）</button>
-        <button class="tab" onclick="swVol('w2',this)">W2（05.09-15）</button>
-        <button class="tab" onclick="swVol('w3',this)">W3（05.16-22）</button>
-      </div>
-      <div class="chart-wrap" style="height:260px;">
-        <canvas id="volC" role="img" aria-label="各客服接待量堆叠柱状图"></canvas>
-      </div>
-      <div class="legend">
-        <div class="legend-item"><span class="legend-dot" style="background:#3A6EA8"></span>个微</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#2D6A4F"></span>企微</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#B5441E"></span>有赞</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ④ 销售贡献 -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-num">04</span>
-      <span class="section-title">客服销售贡献分析</span>
-    </div>
-    <div class="chart-card">
-      <div class="tabs">
-        <button class="tab active" onclick="swSales('w1',this)">W1（05.02-08）</button>
-        <button class="tab" onclick="swSales('w2',this)">W2（05.09-15）</button>
-        <button class="tab" onclick="swSales('w3',this)">W3（05.16-22）</button>
-      </div>
-      <div class="chart-wrap" style="height:240px;">
-        <canvas id="salesC" role="img" aria-label="各客服销售额柱状图"></canvas>
-      </div>
-    </div>
-  </div>
-
-  <!-- ⑤ 人效对比 -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-num">05</span>
-      <span class="section-title">人效对比（元 / 次接待）</span>
-    </div>
-    <div class="chart-card">
-      <div class="chart-wrap" style="height:220px;">
-        <canvas id="effC" role="img" aria-label="客服人效三周对比柱状图"></canvas>
-      </div>
-      <div class="legend">
-        <div class="legend-item"><span class="legend-dot" style="background:#B5D4F4"></span>W1</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#3A6EA8"></span>W2</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#1E3F6B"></span>W3</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ⑥ 排名总表 -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-num">06</span>
-      <span class="section-title">客服个人排名总表</span>
-    </div>
-
-    <div class="two-col" style="margin-bottom:14px;">
-      <div class="tbl-card">
-        <div class="tbl-head">接待量排名（W2）</div>
-        <table>
-          <tr><th>名次</th><th>客服</th><th>个微</th><th>企微</th><th>有赞</th><th>合计</th></tr>
-          <tr><td><span class="rank-badge r1">1</span></td><td>张胜男</td><td class="mono">328</td><td class="mono">493</td><td class="mono">162</td><td class="mono" style="font-weight:600">983</td></tr>
-          <tr><td><span class="rank-badge r2">2</span></td><td>吕晨</td><td class="mono">282</td><td class="mono">375</td><td class="mono">127</td><td class="mono" style="font-weight:600">784</td></tr>
-          <tr><td><span class="rank-badge r3">3</span></td><td>Vicky</td><td class="mono">373</td><td class="mono">269</td><td class="mono">98</td><td class="mono" style="font-weight:600">740</td></tr>
-          <tr><td><span class="rank-badge rn">4</span></td><td>肖佳怡</td><td class="mono">215</td><td class="mono">354</td><td class="mono">70</td><td class="mono">639</td></tr>
-          <tr><td><span class="rank-badge rn">5</span></td><td>刘悦</td><td class="mono">123</td><td class="mono">222</td><td class="mono">61</td><td class="mono">406</td></tr>
-          <tr><td><span class="rank-badge rn">6</span></td><td>朱梦娣</td><td class="mono">19</td><td class="mono">41</td><td class="mono">6</td><td class="mono">66</td></tr>
-          <tr><td><span class="rank-badge rn">7</span></td><td>李亚飞 <span class="badge-leader">组长</span></td><td class="mono na">—</td><td class="mono">39</td><td class="mono na">—</td><td class="mono">39</td></tr>
-          <tr><td><span class="rank-badge rn">—</span></td><td>黄桥</td><td colspan="4" class="na" style="font-size:11px;">W2 缺席</td></tr>
-        </table>
+    <!-- ══════════════════════════ PAGE: 总体概览 ══════════════════════════ -->
+    <div class="page active" id="page-overview">
+      <div class="sec">
+        <div class="sec-header"><div class="sec-title">四周关键指标汇总</div></div>
+        <div class="kpi-grid">
+          <div class="kpi">
+            <div class="kpi-icon" style="background:var(--blue-light)">
+              <svg viewBox="0 0 24 24" style="stroke:var(--blue-mid)"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="kpi-label">峰值接待量（W3）</div>
+            <div class="kpi-val">5,444</div>
+            <div class="kpi-delta up">↑ 42% vs W2</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-icon" style="background:var(--green-light)">
+              <svg viewBox="0 0 24 24" style="stroke:var(--green-mid)"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="kpi-label">W4 最新销售额</div>
+            <div class="kpi-val">¥15.9万</div>
+            <div class="kpi-delta up">↑ 85% vs W3</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-icon" style="background:var(--amber-light)">
+              <svg viewBox="0 0 24 24" style="stroke:var(--amber-mid)"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+            </div>
+            <div class="kpi-label">四周累计销售额</div>
+            <div class="kpi-val">¥78.8万</div>
+            <div class="kpi-delta neu">W1-W4合计</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-icon" style="background:#EEEDFE">
+              <svg viewBox="0 0 24 24" style="stroke:#7F77DD"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+            </div>
+            <div class="kpi-label">W4 团队人效</div>
+            <div class="kpi-val">¥38.1</div>
+            <div class="kpi-delta up">↑ 141% vs W3</div>
+          </div>
+        </div>
       </div>
 
-      <div class="tbl-card">
-        <div class="tbl-head">销售额排名（W2）</div>
-        <table>
-          <tr><th>名次</th><th>客服</th><th>W1 销售额</th><th>W2 销售额</th><th>W3 销售额</th></tr>
-          <tr><td><span class="rank-badge r1">1</span></td><td>吕晨</td><td class="mono">¥157,538</td><td class="mono val-good">¥145,888</td><td class="mono">¥30,580</td></tr>
-          <tr><td><span class="rank-badge r2">2</span></td><td>张胜男</td><td class="mono">¥79,092</td><td class="mono val-good">¥102,049</td><td class="mono">¥26,438</td></tr>
-          <tr><td><span class="rank-badge r3">3</span></td><td>刘悦</td><td class="mono">¥7,541</td><td class="mono">¥22,368</td><td class="mono">¥8,515</td></tr>
-          <tr><td><span class="rank-badge rn">4</span></td><td>肖佳怡</td><td class="mono">¥824</td><td class="mono">¥9,936</td><td class="mono">¥5,264</td></tr>
-          <tr><td><span class="rank-badge rn">5</span></td><td>Vicky</td><td class="mono">¥8,662</td><td class="mono">¥8,349</td><td class="mono">¥12,168</td></tr>
-          <tr><td><span class="rank-badge rn">6</span></td><td>黄桥</td><td class="mono">¥619</td><td class="mono">¥337</td><td class="mono">¥2,795</td></tr>
-          <tr><td><span class="rank-badge rn">7</span></td><td>李亚飞 <span class="badge-leader">组长</span></td><td class="mono">¥270</td><td class="mono na">—</td><td class="mono na">—</td></tr>
-          <tr><td><span class="rank-badge rn">8</span></td><td>朱梦娣</td><td class="mono na">—</td><td class="mono na">—</td><td class="mono na">—</td></tr>
-        </table>
+      <div class="sec">
+        <div class="sec-header"><div class="sec-title">四周趋势总览</div></div>
+        <div class="summary-strip">
+          <div class="strip-item">
+            <div class="strip-label">W1 (5/2-5/8)</div>
+            <div class="strip-val" style="color:var(--blue-mid)">2,251</div>
+            <div class="strip-delta neu">接待量基准</div>
+          </div>
+          <div class="strip-item">
+            <div class="strip-label">W2 (5/9-5/15)</div>
+            <div class="strip-val" style="color:var(--green-mid)">3,834</div>
+            <div class="strip-delta up">↑ 70.3%</div>
+          </div>
+          <div class="strip-item">
+            <div class="strip-label">W3 (5/16-5/22)</div>
+            <div class="strip-val" style="color:var(--amber-mid)">5,444</div>
+            <div class="strip-delta up">↑ 42.0%</div>
+          </div>
+          <div class="strip-item">
+            <div class="strip-label">W4 (5/23-5/29)</div>
+            <div class="strip-val" style="color:var(--coral-mid)">4,169</div>
+            <div class="strip-delta dn">↓ 23.4%</div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-label">接待量与销售额四周趋势</div>
+          <div class="chart-hint">左轴：接待人次 · 右轴：销售额（万元）</div>
+          <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#378ADD"></div>总接待量</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div>客服销售额</div>
+          </div>
+          <div style="position:relative;height:240px">
+            <canvas id="c-overview-trend" role="img" aria-label="四周接待量与销售额趋势图">W1:2251次/¥25.5万;W2:3834次/¥28.9万;W3:5444次/¥8.6万;W4:4169次/¥15.9万</canvas>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="two-col" style="margin-bottom:14px;">
-      <div class="tbl-card">
-        <div class="tbl-head">人效排名（元/次，W2）</div>
-        <table>
-          <tr><th>名次</th><th>客服</th><th>W1</th><th>W2</th><th>W3</th></tr>
-          <tr><td><span class="rank-badge r1">1</span></td><td>吕晨</td><td class="mono">¥326.8</td><td class="mono val-good">¥186.1</td><td class="mono">¥18.9</td></tr>
-          <tr><td><span class="rank-badge r2">2</span></td><td>张胜男</td><td class="mono">¥158.8</td><td class="mono val-good">¥103.8</td><td class="mono">¥45.4</td></tr>
-          <tr><td><span class="rank-badge r3">3</span></td><td>刘悦</td><td class="mono">¥25.0</td><td class="mono">¥55.1</td><td class="mono">¥17.2</td></tr>
-          <tr><td><span class="rank-badge rn">4</span></td><td>肖佳怡</td><td class="mono">¥4.6</td><td class="mono">¥15.6</td><td class="mono">¥4.3</td></tr>
-          <tr><td><span class="rank-badge rn">5</span></td><td>Vicky</td><td class="mono">¥19.4</td><td class="mono">¥11.3</td><td class="mono">¥10.3</td></tr>
-          <tr><td><span class="rank-badge rn">6</span></td><td>黄桥</td><td class="mono">¥3.8</td><td class="mono na">—</td><td class="mono">¥17.8</td></tr>
-          <tr><td><span class="rank-badge rn">7</span></td><td>朱梦娣</td><td class="mono na">—</td><td class="mono na">—</td><td class="mono na">—</td></tr>
-          <tr><td><span class="rank-badge rn">8</span></td><td>李亚飞 <span class="badge-leader">组长</span></td><td class="mono">¥3.9</td><td class="mono na">—</td><td class="mono na">—</td></tr>
-        </table>
+      <div class="sec">
+        <div class="sec-header"><div class="sec-title">团队成员概况</div></div>
+        <div class="tbl-card">
+          <table>
+            <thead><tr>
+              <th>姓名</th><th>类型</th><th>W1接待</th><th>W2接待</th><th>W3接待</th><th>W4接待</th><th>四周合计</th><th>四周销售额</th>
+            </tr></thead>
+            <tbody id="team-table"></tbody>
+          </table>
+        </div>
       </div>
 
-      <div class="tbl-card">
-        <div class="tbl-head">响应效率（有赞平均响应时长，越低越好）</div>
-        <table>
-          <tr><th>名次</th><th>客服</th><th>W1</th><th>W2</th><th>W3</th></tr>
-          <tr><td><span class="rank-badge r1">1</span></td><td>刘悦</td><td class="mono val-good">14s</td><td class="mono val-good">15s</td><td class="mono val-good">24s</td></tr>
-          <tr><td><span class="rank-badge r2">2</span></td><td>Vicky</td><td class="mono val-good">30s</td><td class="mono val-good">39s</td><td class="mono val-good">32s</td></tr>
-          <tr><td><span class="rank-badge r3">3</span></td><td>肖佳怡</td><td class="mono">56s</td><td class="mono val-good">34s</td><td class="mono val-good">31s</td></tr>
-          <tr><td><span class="rank-badge rn">4</span></td><td>黄桥</td><td class="mono">37s</td><td class="mono na">—</td><td class="mono">44s</td></tr>
-          <tr><td><span class="rank-badge rn">5</span></td><td>吕晨</td><td class="mono">60s</td><td class="mono">48s</td><td class="mono val-good">28s</td></tr>
-          <tr><td><span class="rank-badge rn">6</span></td><td>朱梦娣</td><td class="mono">45s</td><td class="mono val-good">33s</td><td class="mono val-bad">101s</td></tr>
-          <tr><td><span class="rank-badge rn">7</span></td><td>张胜男</td><td class="mono">54s</td><td class="mono">65s</td><td class="mono">40s</td></tr>
-          <tr><td><span class="rank-badge rn">8</span></td><td>李亚飞 <span class="badge-leader">组长</span></td><td class="mono">23s</td><td class="mono na">—</td><td class="mono na">—</td></tr>
-        </table>
+      <div class="sec">
+        <div class="sec-header"><div class="sec-title">活动背景时间轴</div></div>
+        <div class="insight-grid">
+          <div class="insight insight-blue">
+            <div class="insight-title">📅 W1（5/2-5/8）活动前基准期</div>
+            <div class="insight-body">接待量与销售额处于正常水位。4/22上新21日套餐，部分咨询延续至本周。全职客服（吕晨、张胜男）承担主要接待与销售。</div>
+          </div>
+          <div class="insight insight-green">
+            <div class="insight-title">🚀 W2（5/9-5/15）活动开启，咨询与销售双升</div>
+            <div class="insight-body">5/8活动正式启动，私域咨询量与客服销售额同步上涨。接待量环比激增70%，销售额增长13.5%，活动开门红效果良好，客户在私域渠道购买意愿明显提升。</div>
+          </div>
+          <div class="insight insight-amber">
+            <div class="insight-title">🔍 W3（5/16-5/22）活动持续，咨询高但下单少</div>
+            <div class="insight-body">接待量创四周峰值5,444次，但客服销售额降至8.6万。本周期进入<strong>电商平台比价阶段</strong>：大量用户通过私域咨询产品信息后，转至电商平台比价或下单，私域渠道成交转化率下降。同时个微咨询量出现下降，且前期个微数据存在异常情况，需结合实际接待情况综合判断。</div>
+          </div>
+          <div class="insight insight-coral">
+            <div class="insight-title">🆕 W4（5/23-5/29）新品上架期</div>
+            <div class="insight-body">5/26 IDN VC胶囊香港仓现货上架，5/27甘氨酸镁预售开启，带动销售额大幅反弹85%至15.9万。接待量回落至正常水位，质量显著提升。</div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="tbl-card">
-      <div class="tbl-head">有赞综合满意度</div>
-      <table>
-        <tr><th>客服</th><th>W1</th><th>W2</th><th>W3</th></tr>
-        <tr><td>吕晨</td><td class="mono val-warn">80.0%</td><td class="mono val-good">92.3%</td><td class="mono val-good">100%</td></tr>
-        <tr><td>张胜男</td><td class="mono val-good">100%</td><td class="mono na">—</td><td class="mono na">—</td></tr>
-        <tr><td>Vicky</td><td class="mono val-good">100%</td><td class="mono val-good">100%</td><td class="mono na">—</td></tr>
-        <tr><td>肖佳怡</td><td class="mono val-good">100%</td><td class="mono val-good">100%</td><td class="mono na">—</td></tr>
-        <tr><td>刘悦</td><td class="mono val-good">100%</td><td class="mono val-good">100%</td><td class="mono na">—</td></tr>
-        <tr><td>黄桥</td><td class="mono val-good">100%</td><td class="mono val-good">100%</td><td class="mono na">—</td></tr>
-        <tr><td>朱梦娣</td><td class="mono val-good">100%</td><td class="mono val-good">100%</td><td class="mono na">—</td></tr>
-        <tr><td>李亚飞 <span class="badge-leader">组长</span></td><td class="mono na">—</td><td class="mono val-good">100%</td><td class="mono na">—</td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- ⑦ 主要结论 -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-num">07</span>
-      <span class="section-title">主要结论</span>
-    </div>
-    <div class="chart-card">
-      <ul class="conclusion-list">
-        <li>
-          <div class="c-icon red">⚠</div>
-          <div class="c-text"><b>W3 销售骤降是最大预警信号</b><br>接待量连续创新高（W3 达 5,444 次），但销售额仅 ¥85,760，较 W2 的 ¥288,928 下滑 70.3%。销量与接待量严重背离，推测原因包括：大促活动结束导致高意向客户减少、分销链接推送频次下降、或新增接待以售后咨询为主，建议核查 W3 有赞链接发送记录与成交明细。</div>
-        </li>
-        <li>
-          <div class="c-icon gold">★</div>
-          <div class="c-text"><b>吕晨与张胜男是全队销售双核</b><br>张胜男 W2 接待量 983 次，人效 ¥103.8/次，仅次于吕晨（¥186.1/次）。两人 W2 合计贡献 ¥247,937，占全队 W2 总销售 85.8%。两人有赞接待量大（各 127、162 次）且转化率高，是有赞分销链接使用最积极的客服。</div>
-        </li>
-        <li>
-          <div class="c-icon green">✓</div>
-          <div class="c-text"><b>刘悦是兼职客服中的标杆</b><br>三周有赞平响始终最低（14s→15s→24s），W1、W2 满意度 100%，W2 销售额 ¥22,368 排名第三，人效 ¥55.1/次 跻身全队第三。作为兼职新客服，综合表现突出，具备培养为核心兼职的潜力。</div>
-        </li>
-        <li>
-          <div class="c-icon orange">!</div>
-          <div class="c-text"><b>肖佳怡企微响应时长需关注</b><br>W2 企微平响 245 秒（约 4 分钟），W3 仍达 192 秒，全队最高。W3 个微接待量同时激增至 943 次，多系统高并发下响应明显降速。W3 销售额 ¥5,264 较 W2 的 ¥9,936 下滑 47%，响应慢可能影响成交效率。</div>
-        </li>
-        <li>
-          <div class="c-icon gray">○</div>
-          <div class="c-text"><b>朱梦娣三周销售持续为零，须专项介入</b><br>接待量逐周增长（67→66→189 次），有赞销售额始终为 ¥0，且 W3 有赞平响从 33s 骤升至 101s。建议检查其有赞分销账号权限是否正常开通，并安排一对一辅导分销链接发送流程。</div>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- ⑧ 管理优化建议 -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-num">08</span>
-      <span class="section-title">管理优化建议</span>
-    </div>
-    <div class="suggest-grid">
-      <div class="suggest-card">
-        <div class="suggest-num">01</div>
-        <div class="suggest-title">建立话术共享库，以吕晨、张胜男为标杆提炼成交话术</div>
-        <div class="suggest-body">两人人效遥遥领先，核心差距在于有赞分销链接的主动推送时机与话术。建议由李亚飞组长收集两人真实成交对话（脱敏处理），整理为 5–10 条标准话术模板，在组内周会推广，重点帮助 Vicky、肖佳怡、朱梦娣提升人效。</div>
+    <!-- ══════════════════════════ PAGE: 周期环比 ══════════════════════════ -->
+    <div class="page" id="page-trend">
+      <div class="sec">
+        <div class="sec-header"><div class="sec-title">周期环比核心指标</div></div>
+        <div class="tbl-card">
+          <table>
+            <thead><tr>
+              <th>指标</th>
+              <th class="num">W1</th><th class="num">W2</th><th class="num">W2环比</th>
+              <th class="num">W3</th><th class="num">W3环比</th>
+              <th class="num">W4</th><th class="num">W4环比</th>
+            </tr></thead>
+            <tbody>
+              <tr>
+                <td>总接待量（次）</td>
+                <td class="num">2,251</td><td class="num">3,834</td><td class="num up">↑ 70.3%</td>
+                <td class="num">5,444</td><td class="num up">↑ 42.0%</td>
+                <td class="num">4,169</td><td class="num dn">↓ 23.4%</td>
+              </tr>
+              <tr>
+                <td>客服销售额</td>
+                <td class="num">¥254,545</td><td class="num">¥288,928</td><td class="num up">↑ 13.5%</td>
+                <td class="num">¥85,759</td><td class="num dn">↓ 70.3%</td>
+                <td class="num">¥158,673</td><td class="num up">↑ 85.0%</td>
+              </tr>
+              <tr>
+                <td>团队人效（¥/次）</td>
+                <td class="num">113.1</td><td class="num">75.4</td><td class="num dn">↓ 33.3%</td>
+                <td class="num">15.8</td><td class="num dn">↓ 79.1%</td>
+                <td class="num">38.1</td><td class="num up">↑ 141%</td>
+              </tr>
+              <tr>
+                <td>在线客服人数</td>
+                <td class="num">8</td><td class="num">8</td><td class="num neu">—</td>
+                <td class="num">7*</td><td class="num neu">—</td>
+                <td class="num">9</td><td class="num neu">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="font-size:11px;color:var(--text-hint);margin-top:-8px;margin-bottom:16px">* 兼职客服（黄桥、朱梦娣、王洁茹等）按实际排班出勤，未排班周期接待量为0属正常，不计入异常统计</div>
       </div>
-      <div class="suggest-card">
-        <div class="suggest-num">02</div>
-        <div class="suggest-title">优化多系统排班，缓解兼职高峰并发压力</div>
-        <div class="suggest-body">肖佳怡、朱梦娣在高接待量时段出现明显响应劣化。建议在高峰时段（如晚间 18–22 点）优先保障个微 + 有赞两个系统响应，企微设为次优先，避免 4 系统同时超负荷。全职客服吕晨、张胜男可承担更多企微保底接待。</div>
+
+      <div class="chart-row">
+        <div class="chart-card">
+          <div class="chart-label">接待量环比变化</div>
+          <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#378ADD"></div>W1</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div>W2</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#BA7517"></div>W3</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#D4537E"></div>W4</div>
+          </div>
+          <div style="position:relative;height:220px">
+            <canvas id="c-trend-reception" role="img" aria-label="四周接待量对比">W1:2251,W2:3834,W3:5444,W4:4169</canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-label">销售额环比变化</div>
+          <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#1D9E75;border-radius:50%"></div>销售额趋势</div>
+          </div>
+          <div style="position:relative;height:220px">
+            <canvas id="c-trend-sales" role="img" aria-label="四周销售额对比">W1:25.5万,W2:28.9万,W3:8.6万,W4:15.9万</canvas>
+          </div>
+        </div>
       </div>
-      <div class="suggest-card">
-        <div class="suggest-num">03</div>
-        <div class="suggest-title">建立有赞分销漏斗追踪，排查 W3 转化率骤降根因</div>
-        <div class="suggest-body">W3 接待量创新高而销售额仅 ¥85,760，说明链接推送或成交环节存在断层。建议要求每位客服每日记录分销链接发送次数，由李亚飞组长汇总"发送数→点击数→成交数"漏斗，同时核查朱梦娣账号分销权限是否正常开通。</div>
+
+      <div class="sec">
+        <div class="sec-header"><div class="sec-title">关键变化点分析</div></div>
+        <div class="insight-grid">
+          <div class="insight insight-green">
+            <div class="insight-title">✅ W1→W2：活动开启，咨询与销售同步爆发</div>
+            <div class="insight-body">接待量+70.3%是四周最大增幅，5/8活动启动效果立竿见影。销售额同步增长13.5%，私域渠道在活动首周即实现咨询与成交的双向提升，客服主动引导转化效果良好。</div>
+          </div>
+          <div class="insight insight-amber">
+            <div class="insight-title">🔍 W2→W3：比价阶段来临，高咨询低下单</div>
+            <div class="insight-body">接待量再增42%达峰值，但客服销售额下降70%。原因明确：W3进入<strong>电商平台比价阶段</strong>，大量用户通过私域客服了解产品详情、活动规则后，选择前往电商平台比价或下单，私域渠道的成交转化率随之下降。同时个微咨询量在W3出现下降，且个微前期数据存在异常，导致整体接待与销售的结构性分离。</div>
+          </div>
+          <div class="insight insight-blue">
+            <div class="insight-title">🚀 W3→W4：新品驱动，销售质量跃升</div>
+            <div class="insight-body">接待量回落23%至正常水位，销售额却反弹85%，团队人效从15.8飙升至38.1，说明W4新品上架精准触达高意向用户，产品力驱动转化效果显著。</div>
+          </div>
+          <div class="insight insight-coral">
+            <div class="insight-title">📊 服务指标：整体改善，局部需关注</div>
+            <div class="insight-body">吕晨平响W1→W4从54.9s降至36.6s（改善33%），张胜男从51.5s→41.4s稳定。肖佳怡W2平响128.7s（W3: 107s）明显偏高，活动期接待压力过大是主因，建议调整排班。</div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="footer">
-    <span>私域客服团队 · 内部周报</span>
-    <span>数据来源：个微 / 企微 / 有赞店铺 / 有赞分销 &nbsp;｜&nbsp; 生成于 2026.05.25</span>
-  </div>
+    <!-- ══════════════════════════ PAGE: 工作量 ══════════════════════════ -->
+    <div class="page" id="page-workload">
+      <div class="sec">
+        <div class="sec-header">
+          <div class="sec-title">各客服接待量分布</div>
+          <div class="sec-sub">数据来源：个微 + 企微 + 有赞会话合计</div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-label">各客服四周接待量对比</div>
+          <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#378ADD"></div>W1(5/2-8)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div>W2(5/9-15)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#BA7517"></div>W3(5/16-22)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#D4537E"></div>W4(5/23-29)</div>
+          </div>
+          <div style="position:relative;height:300px">
+            <canvas id="c-workload-bar" role="img" aria-label="各客服四周接待量柱状图">吕晨最高，张胜男次之</canvas>
+          </div>
+        </div>
+      </div>
 
-</div><!-- /page -->
+      <div class="sec">
+        <div class="sec-header"><div class="sec-title">W4 接待量占比</div></div>
+        <div class="chart-card">
+          <div class="chart-label">W4 各客服接待量占比</div>
+          <div style="position:relative;height:240px">
+            <canvas id="c-workload-pie" role="img" aria-label="W4各客服接待量占比饼图">吕晨940,张胜男801,Vicky711...</canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-header"><div class="sec-title">工作量详细数据</div></div>
+        <div class="tbl-card">
+          <table>
+            <thead><tr><th>客服</th><th>类型</th><th class="num">W1</th><th class="num">W2</th><th class="num">W3</th><th class="num">W4</th><th class="num">四周合计</th><th class="num">趋势</th></tr></thead>
+            <tbody id="workload-table"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-header"><div class="sec-title">工作量分析洞察</div></div>
+        <div class="insight-grid">
+          <div class="insight insight-green">
+            <div class="insight-title">🏆 接待量最高：吕晨（全职）</div>
+            <div class="insight-body">四周合计3,824次，W3单周1,618次为全团队历史最高。作为全职客服，承接了活动期最大量的流量压力，在高接待量下仍保持合理响应速度，综合表现突出。</div>
+          </div>
+          <div class="insight insight-blue">
+            <div class="insight-title">📈 成长最快：朱梦娣（兼职新）</div>
+            <div class="insight-body">W1仅67次→W4增至261次，四周增幅289%，是所有客服中增长率最高的。工时逐步增加，接待能力快速提升，建议进一步跟进培训和销售引导。</div>
+          </div>
+          <div class="insight insight-amber">
+            <div class="insight-title">📋 黄桥：按排班出勤，接待稳定</div>
+            <div class="insight-body">黄桥为兼职老客服，W2未排班故接待量为0，属正常安排。排班周期（W1/W3/W4）接待量稳定在157-168次，响应时间维持在63-87s范围，表现稳定可预期。</div>
+          </div>
+          <div class="insight insight-coral">
+            <div class="insight-title">💡 肖佳怡 W3 承压明显</div>
+            <div class="insight-body">W3接待量从639跃升至1,216次（+90%），同期平响从34s延长至107s。接待量与响应质量形成明显的负相关，建议活动期为其配备排班协助，避免服务质量下滑。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════ PAGE: 销售贡献 ══════════════════════════ -->
+    <div class="page" id="page-sales">
+      <div class="sec">
+        <div class="sec-header"><div class="sec-title">各客服销售额对比</div></div>
+        <div class="chart-card">
+          <div class="chart-label">各客服四周销售额（元）</div>
+          <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#378ADD"></div>W1</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div>W2</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#BA7517"></div>W3</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#D4537E"></div>W4</div>
+          </div>
+          <div style="position:relative;height:300px">
+            <canvas id="c-sales-bar" role="img" aria-label="各客服四周销售额柱状图">吕晨最高，张胜男次之</canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-card">
+          <div class="chart-label">W4 销售额贡献占比</div>
+          <div style="position:relative;height:260px">
+            <canvas id="c-sales-pie" role="img" aria-label="W4销售额占比">吕晨41%,张胜男45%,Vicky6%...</canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-label">四周累计销售额贡献</div>
+          <div style="position:relative;height:260px">
+            <canvas id="c-sales-total-pie" role="img" aria-label="四周累计销售额占比">吕晨最高</canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-header"><div class="sec-title">销售额详细数据</div></div>
+        <div class="tbl-card">
+          <table>
+            <thead><tr><th>客服</th><th class="num">W1</th><th class="num">W2</th><th class="num">W3</th><th class="num">W4</th><th class="num">四周合计</th><th class="num">W4占比</th><th class="num">W4排名</th></tr></thead>
+            <tbody id="sales-table"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-header"><div class="sec-title">销售贡献分析洞察</div></div>
+        <div class="insight-grid">
+          <div class="insight insight-green">
+            <div class="insight-title">🥇 销售双核：吕晨 + 张胜男</div>
+            <div class="insight-body">两位全职客服四周合计销售约66.5万，占全团队累计销售额的84.3%。吕晨在W1-W2销售领先，张胜男W4反超吕晨（7.17万 vs 6.58万），成为W4销售第一。</div>
+          </div>
+          <div class="insight insight-blue">
+            <div class="insight-title">💡 刘悦销售潜力突出</div>
+            <div class="insight-body">W2销售22,368元位列第三，四周合计41,327元。作为兼职新客服，销售表现已超越多数兼职老客服。W4下滑至2,903元，建议关注其W4工时排班是否减少。</div>
+          </div>
+          <div class="insight insight-amber">
+            <div class="insight-title">⚠️ W3销售数据异常，强烈建议核查</div>
+            <div class="insight-body">吕晨W3销售仅3万（vs W2的14.6万），张胜男W3仅2.6万（vs W2的10.2万），整体W3客服销售额降至8.6万。符合W3比价阶段的业务规律：用户通过私域咨询后流向电商平台成交，私域直接销售转化率下降属正常现象，非客服表现问题。</div>
+          </div>
+          <div class="insight insight-coral">
+            <div class="insight-title">📋 兼职客服销售：排班有限，潜力可期</div>
+            <div class="insight-body">黄桥、朱梦娣、王洁茹销售额较低，主要原因是这几位按实际排班出勤，出勤周次和工时有限，销售机会相对少于全职。建议在有排班的周次内重点跟进：① 确认有赞分销账号已开通激活；② 提供产品推荐话术参考；③ 根据实际出勤工时设置阶段性小目标，逐步建立转化习惯。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════ PAGE: 个人表现 ══════════════════════════ -->
+    <div class="page" id="page-perf">
+      <div class="period-bar">
+        <button class="period-btn active" onclick="setPeriod(3,this)">W4（最新）</button>
+        <button class="period-btn" onclick="setPeriod(2,this)">W3</button>
+        <button class="period-btn" onclick="setPeriod(1,this)">W2</button>
+        <button class="period-btn" onclick="setPeriod(0,this)">W1</button>
+      </div>
+
+      <div class="sec">
+        <div class="sec-header"><div class="sec-title" id="perf-period-title">W4 客服综合排名表</div></div>
+        <div class="tbl-card">
+          <table>
+            <thead><tr>
+              <th>客服</th><th class="num">接待量</th><th class="num">接待排名</th>
+              <th class="num">销售额</th><th class="num">销售排名</th>
+              <th class="num">人效(¥/次)</th><th class="num">人效排名</th>
+              <th class="num">满意度</th><th class="num">平响(s)</th><th class="num">响应排名</th>
+            </tr></thead>
+            <tbody id="perf-table"></tbody>
+          </table>
+        </div>
+        <div style="font-size:11px;color:var(--text-hint);margin-top:-8px">※ 李亚飞为客服组长，兼负管理职责，接待量较低属正常；响应时间最快，体现管理响应能力。</div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-card">
+          <div class="chart-label" id="rank-rec-title">W4 接待量排名</div>
+          <div style="position:relative;height:260px">
+            <canvas id="c-rank-rec" role="img" aria-label="接待量排名柱状图"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-label" id="rank-sales-title">W4 销售额排名</div>
+          <div style="position:relative;height:260px">
+            <canvas id="c-rank-sales" role="img" aria-label="销售额排名柱状图"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-header"><div class="sec-title">平均响应时间趋势（全周期）</div></div>
+        <div class="chart-card">
+          <div class="chart-label">各客服平响趋势（秒，越低越好）</div>
+          <div class="legend" id="resp-legend"></div>
+          <div style="position:relative;height:300px">
+            <canvas id="c-resp-trend" role="img" aria-label="各客服平响时间趋势图"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════ PAGE: 结论与建议 ══════════════════════════ -->
+    <div class="page" id="page-insights">
+      <div class="sec">
+        <div class="sec-header"><div class="sec-title">主要结论</div></div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="insight insight-green">
+            <div class="insight-title">📌 结论一：活动驱动效果显著，私域团队是流量承接的关键支柱</div>
+            <div class="insight-body">5/8活动开启后W2咨询量与销售额同步增长，W3进入比价阶段后接待量持续攀升但私域直接成交减少——私域客服在活动不同阶段承担不同角色：W2以"引导成交"为主，W3以"咨询答疑、辅助引流至电商"为主。W4新品上架后销售额大幅反弹至15.9万，验证了新品节点的高转化效率。四周累计销售额达78.8万，充分体现私域客服的综合价值。</div>
+          </div>
+          <div class="insight insight-blue">
+            <div class="insight-title">📌 结论二：全职客服是销售核心，团队贡献高度集中</div>
+            <div class="insight-body">吕晨（全职）+ 张胜男（全职）四周合计销售额占团队总额的84.3%，是无可替代的销售主力。吕晨以接待量领先，张胜男以转化效率领先（W4人效89.5元/次）。李亚飞作为组长，接待量较低属正常，其极低的响应时间（W4仅11.9s）体现了管理状态的高度在线。</div>
+          </div>
+          <div class="insight insight-amber">
+            <div class="insight-title">📌 结论三：W3为比价阶段，咨询高销售低属正常业务规律</div>
+            <div class="insight-body">W3接待量达峰值（5,444次）而客服销售额降至8.6万，是可解释的结构性现象：活动持续期间，用户进入电商平台比价阶段，大量用户借助私域客服了解产品详情、活动政策后，选择在电商渠道下单。私域客服在此阶段承担的是"咨询引流"而非"直接成交"的角色。此外，个微W3咨询量出现下降，且前期个微数据存在异常，也对接待量与销售额的比例关系产生了影响。</div>
+          </div>
+          <div class="insight insight-coral">
+            <div class="insight-title">📌 结论四：响应效率与满意度整体健康，活动期压力点需监控</div>
+            <div class="insight-body">W1-W2有赞满意度多数客服达到100%满分，反映日常服务质量良好。但肖佳怡在W2（128.7s）、W3（107s）平响明显拉长，刘悦在W4销售额下滑，这些均是值得关注的个体信号。朱梦娣排班工时在逐步增加，接待量稳步提升，后续可重点跟进销售转化引导。</div>
+          </div>
+          <div class="insight" style="border-left-color:var(--purple-mid)">
+            <div class="insight-title">📌 结论五：兼职新客服成长可期，长尾销售潜力有待释放</div>
+            <div class="insight-body">朱梦娣四周接待量增长289%，刘悦W2销售2.2万表现突出——兼职新客服整体成长轨迹积极。黄桥、朱梦娣、王洁茹销售额较低，主要受限于排班工时，出勤周次内接待机会有限。随着排班逐步完善、出勤频次提升，这部分长尾销售潜力值得期待，建议配合销售话术培训同步推进。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="sec">
+        <div class="sec-header"><div class="sec-title">3条管理优化建议</div></div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="chart-card" style="border-left:4px solid var(--green-mid)">
+            <div class="chart-label">💡 建议一：建立活动期弹性工时排班机制</div>
+            <div style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.7">
+              <strong>问题背景：</strong>W2活动开启期接待量激增70%，客服同步承压明显；W3进入比价阶段后接待量继续攀升至峰值，部分客服（如肖佳怡W3平响107s）响应时间拉长，影响咨询服务体验。在活动的不同阶段，客服承担的工作性质有所不同，需要有针对性的排班支撑。<br><br>
+              <strong>建议方案：</strong>依据活动节奏制定分阶段排班预案：① 活动开启期（如W2）重点保障转化效率，全职客服主导成交引导；② 比价高峰期（如W3）增加兼职客服在线覆盖，以"快速答疑"为核心目标，缩短响应等待；③ 新品上架节点提前增配排班，确保成交窗口不因咨询堆积而流失。
+            </div>
+          </div>
+          <div class="chart-card" style="border-left:4px solid var(--blue-mid)">
+            <div class="chart-label">💡 建议二：系统提升兼职客服有赞销售转化能力</div>
+            <div style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.7">
+              <strong>问题背景：</strong>黄桥、朱梦娣、王洁茹等兼职客服因排班工时有限，有赞销售额积累相对较少。在有排班的周次内，销售转化仍有提升空间，是可挖掘的增量来源。<br><br>
+              <strong>建议方案：</strong>① 核查所有兼职客服有赞分销账号是否已开通并激活；② 建立"销售话术卡片库"，含主动推荐场景、产品利益点、活动链接发送时机等，降低转化门槛；③ 结合实际排班工时设置阶梯式小目标（初期建议每出勤周100-300元），帮助兼职客服逐步建立销售意识与转化习惯。
+            </div>
+          </div>
+          <div class="chart-card" style="border-left:4px solid var(--amber-mid)">
+            <div class="chart-label">💡 建议三：强化数据标准化与异常预警机制</div>
+            <div style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.7">
+              <strong>问题背景：</strong>W3个微咨询量出现下降，且个微前期数据存在异常情况。在活动不同阶段（开启期/比价期/新品期）私域客服的角色与重心不同，若不区分阶段解读数据，容易产生误判。<br><br>
+              <strong>建议方案：</strong>① 跟进排查个微前期数据异常原因，明确是系统统计问题还是实际接待变化；② 建立分阶段数据解读框架——活动开启期重点看"销售转化率"，比价期重点看"咨询响应效率"，新品期重点看"人效"；③ 将本看板作为管理层常规工具，每周结合活动节点进行针对性复盘，避免孤立看单一指标。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+</div><!-- /app -->
 
 <script>
-const aShort = ['吕晨','张胜男','亚飞','黄桥','Vicky','佳怡','刘悦','梦娣'];
-const D = {
-  w1: { gw:[193,166,0,57,152,66,110,24], qw:[216,236,67,93,244,88,139,35], yz:[73,96,3,13,51,25,53,8], sales:[157538,79092,270,619,8662,824,7541,0] },
-  w2: { gw:[282,328,0,0,373,215,123,19], qw:[375,493,39,0,269,354,222,41], yz:[127,162,0,0,98,70,61,6], sales:[145888,102049,0,337,8349,9936,22368,0] },
-  w3: { gw:[1059,176,0,47,826,943,152,68], qw:[431,329,2,88,281,237,273,104], yz:[128,78,0,22,77,36,70,17], sales:[30580,26438,0,2795,12168,5264,8515,0] }
+const AGENTS = ['吕晨','张胜男','Vicky','肖佳怡','刘悦','黄桥','朱梦娣','王洁茹','李亚飞'];
+const AGENT_TYPES = {'吕晨':'full','张胜男':'full','Vicky':'part-old','肖佳怡':'part-old','刘悦':'part-new','黄桥':'part-old','朱梦娣':'part-new','王洁茹':'part-new','李亚飞':'lead'};
+const TYPE_LABELS = {'full':'全职','part-old':'兼职老','part-new':'兼职新','lead':'组长'};
+const TYPE_TAG = {'full':'tag-ft','part-old':'tag-pt','part-new':'tag-new','lead':'tag-lead'};
+const PERIODS = ['W1(5/2-8)','W2(5/9-15)','W3(5/16-22)','W4(5/23-29)'];
+const COLORS = ['#378ADD','#1D9E75','#BA7517','#D4537E'];
+const COLORS_A = ['rgba(55,138,221,0.82)','rgba(29,158,117,0.82)','rgba(186,117,23,0.82)','rgba(212,83,126,0.82)'];
+
+const RECEPTION = {
+  '吕晨':  [482,784,1618,940],
+  '张胜男':[498,983,583,801],
+  'Vicky': [447,740,1184,711],
+  '肖佳怡':[179,639,1216,518],
+  '刘悦':  [302,406,495,570],
+  '黄桥':  [163,0,157,168],
+  '朱梦娣':[67,66,189,261],
+  '王洁茹':[43,178,0,149],
+  '李亚飞':[70,39,2,51]
 };
-const EFF = {
-  w1: [326.84,158.82,3.86,3.79,19.38,4.60,24.97,0],
-  w2: [186.08,103.81,0,0,11.28,15.55,55.09,0],
-  w3: [18.90,45.35,0,17.80,10.28,4.33,17.20,0]
+const SALES = {
+  '吕晨':  [157538.32,145888.12,30579.65,65777.36],
+  '张胜男':[79092.28,102049.47,26438.02,71701.40],
+  'Vicky': [8662.10,8349.20,12168.03,9530.70],
+  '肖佳怡':[823.62,9936.10,5264.25,8585.81],
+  '刘悦':  [7541.33,22368.10,8514.63,2902.90],
+  '黄桥':  [618.50,337.10,2795.00,174.70],
+  '朱梦娣':[0,0,0,0],
+  '王洁茹':[0,0,0,0],
+  '李亚飞':[269.90,0,0,0]
+};
+const AVG_RESP = {
+  '吕晨':  [54.9,56.7,72.0,36.6],
+  '张胜男':[51.5,56.9,35.9,41.4],
+  'Vicky': [72.7,55.8,53.0,52.6],
+  '肖佳怡':[69.5,128.7,107.0,84.7],
+  '刘悦':  [38.5,40.1,42.8,41.6],
+  '黄桥':  [62.7,null,87.3,77.7],
+  '朱梦娣':[50.2,40.4,73.0,51.1],
+  '王洁茹':[78.0,72.0,null,86.0],
+  '李亚飞':[62.5,14.8,null,11.9]
+};
+const SATISFACTION = {
+  '吕晨':  [80.0,92.3,100.0,null],
+  '张胜男':[100.0,null,null,null],
+  'Vicky': [100.0,100.0,null,null],
+  '肖佳怡':[100.0,100.0,null,null],
+  '刘悦':  [100.0,100.0,null,null],
+  '黄桥':  [100.0,100.0,null,null],
+  '朱梦娣':[100.0,100.0,null,null],
+  '王洁茹':[100.0,100.0,null,null],
+  '李亚飞':[null,100.0,null,null]
 };
 
-const defOpts = { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ display:false } } };
+function fmtN(n){if(n==null||isNaN(n))return '-';return Math.round(n).toLocaleString('zh-CN');}
+function fmtY(n){if(n==null||isNaN(n)||n===0)return '-';return '¥'+n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+function fmtYK(n){if(!n)return '-';return '¥'+(n/10000).toFixed(1)+'万';}
+function rankBadge(r){if(!r)return '-';let c=r===1?'rk-1':r===2?'rk-2':r===3?'rk-3':'rk-n';return `<span class="rk ${c}">${r}</span>`;}
+function tagHTML(a){let t=AGENT_TYPES[a]||'part-new';return `<span class="tag ${TYPE_TAG[t]}">${TYPE_LABELS[t]}</span>`;}
+function rankArr(vals,asc){
+  let pairs=vals.map((v,i)=>({v,i})).filter(x=>x.v!=null&&x.v>0);
+  pairs.sort((a,b)=>asc?a.v-b.v:b.v-a.v);
+  let ranks=new Array(vals.length).fill(null);
+  pairs.forEach((x,ri)=>{ranks[x.i]=ri+1;});
+  return ranks;
+}
 
-// Trend chart
-new Chart(document.getElementById('trendC'), {
-  type: 'line',
-  data: {
-    labels: ['W1（05.02-08）','W2（05.09-15）','W3（05.16-22）'],
-    datasets: [
-      { label:'总接待量', data:[2208,3657,5444], borderColor:'#3A6EA8', backgroundColor:'rgba(58,110,168,0.07)', tension:0.38, fill:true, pointRadius:6, pointBackgroundColor:'#3A6EA8', pointBorderColor:'#fff', pointBorderWidth:2 },
-      { label:'销售额÷100', data:[2545,2889,858], borderColor:'#2D6A4F', backgroundColor:'rgba(45,106,79,0.05)', tension:0.38, fill:true, pointRadius:6, borderDash:[6,3], pointBackgroundColor:'#2D6A4F', pointBorderColor:'#fff', pointBorderWidth:2 }
-    ]
-  },
-  options: { ...defOpts, scales:{ x:{ ticks:{ font:{ size:11 } } }, y:{ beginAtZero:true, ticks:{ font:{ size:11 } } } } }
-});
+let currentPeriod = 3;
+let chartInstances = {};
 
-// Vol chart
-let volInst;
-function mkVol(wk) {
-  const ctx = document.getElementById('volC');
-  if (volInst) volInst.destroy();
-  volInst = new Chart(ctx, {
-    type: 'bar',
-    data: { labels: aShort, datasets: [
-      { label:'个微', data:D[wk].gw, backgroundColor:'#3A6EA8', borderRadius:3, borderSkipped:false },
-      { label:'企微', data:D[wk].qw, backgroundColor:'#2D6A4F', borderRadius:3, borderSkipped:false },
-      { label:'有赞', data:D[wk].yz, backgroundColor:'#B5441E', borderRadius:3, borderSkipped:false }
-    ]},
-    options: { ...defOpts, scales:{ x:{ stacked:true, ticks:{ font:{ size:11 } } }, y:{ stacked:true, beginAtZero:true, ticks:{ font:{ size:11 } } } } }
+function destroyChart(id){
+  if(chartInstances[id]){chartInstances[id].destroy();delete chartInstances[id];}
+}
+function mkChart(id,config){
+  destroyChart(id);
+  const ctx=document.getElementById(id);
+  if(!ctx)return;
+  chartInstances[id]=new Chart(ctx,config);
+}
+
+const gridColor='rgba(120,118,112,0.1)';
+const tickColor='#9b9790';
+const baseOpts={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{
+  x:{grid:{display:false},ticks:{color:tickColor,font:{size:11},autoSkip:false,maxRotation:0}},
+  y:{grid:{color:gridColor},ticks:{color:tickColor,font:{size:11}},border:{display:false}}
+}};
+
+function initOverview(){
+  mkChart('c-overview-trend',{
+    type:'bar',
+    data:{
+      labels:PERIODS,
+      datasets:[
+        {label:'总接待量',data:[2251,3834,5444,4169],backgroundColor:COLORS_A[0],yAxisID:'y',borderRadius:3},
+        {label:'销售额(万)',data:[25.45,28.89,8.58,15.87],backgroundColor:COLORS_A[1],yAxisID:'y1',borderRadius:3}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{
+      x:{grid:{display:false},ticks:{color:tickColor,font:{size:11}}},
+      y:{position:'left',grid:{color:gridColor},ticks:{color:tickColor,font:{size:11},callback:v=>v.toLocaleString()},border:{display:false}},
+      y1:{position:'right',grid:{display:false},ticks:{color:tickColor,font:{size:11},callback:v=>'¥'+v+'万'},border:{display:false}}
+    }}
+  });
+
+  // Team table
+  const tb=document.getElementById('team-table');
+  AGENTS.forEach(a=>{
+    const r=RECEPTION[a]||[0,0,0,0];
+    const s=SALES[a]||[0,0,0,0];
+    const tot=r.reduce((sum,v)=>sum+(v||0),0);
+    const stot=s.reduce((sum,v)=>sum+(v||0),0);
+    tb.innerHTML+=`<tr>
+      <td><strong>${a}</strong></td>
+      <td>${tagHTML(a)}</td>
+      <td class="num">${fmtN(r[0])}</td><td class="num">${fmtN(r[1])}</td>
+      <td class="num">${fmtN(r[2])}</td><td class="num">${fmtN(r[3])}</td>
+      <td class="num"><strong>${fmtN(tot)}</strong></td>
+      <td class="num">${stot>0?fmtYK(stot):'-'}</td>
+    </tr>`;
   });
 }
 
-// Sales chart
-let salesInst;
-function mkSales(wk) {
-  const ctx = document.getElementById('salesC');
-  if (salesInst) salesInst.destroy();
-  const colors = D[wk].sales.map(v => v > 100000 ? '#1E3F6B' : v > 20000 ? '#3A6EA8' : v > 5000 ? '#85B7EB' : '#D3D1C7');
-  salesInst = new Chart(ctx, {
-    type: 'bar',
-    data: { labels: aShort, datasets: [{ label:'销售额', data:D[wk].sales, backgroundColor:colors, borderRadius:4, borderSkipped:false }] },
-    options: { ...defOpts, scales:{ x:{ ticks:{ font:{ size:11 } } }, y:{ beginAtZero:true, ticks:{ font:{ size:11 }, callback: v => '¥' + v.toLocaleString() } } } }
+function initTrend(){
+  mkChart('c-trend-reception',{
+    type:'bar',
+    data:{labels:PERIODS,datasets:[{label:'接待量',data:[2251,3834,5444,4169],backgroundColor:COLORS_A,borderRadius:4}]},
+    options:{...baseOpts,scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toLocaleString()}}}}
+  });
+  mkChart('c-trend-sales',{
+    type:'line',
+    data:{labels:PERIODS,datasets:[{label:'销售额',data:[254545,288928,85759,158673],borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.08)',tension:0.4,fill:true,pointRadius:5,pointBackgroundColor:'#1D9E75',pointBorderColor:'#fff',pointBorderWidth:2}]},
+    options:{...baseOpts,scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>'¥'+Math.round(v/1000)+'k'}}}}
   });
 }
 
-// Efficiency chart
-new Chart(document.getElementById('effC'), {
-  type: 'bar',
-  data: { labels: aShort, datasets: [
-    { label:'W1', data:EFF.w1, backgroundColor:'#B5D4F4', borderRadius:3 },
-    { label:'W2', data:EFF.w2, backgroundColor:'#3A6EA8', borderRadius:3 },
-    { label:'W3', data:EFF.w3, backgroundColor:'#1E3F6B', borderRadius:3 }
-  ]},
-  options: { ...defOpts, scales:{ x:{ ticks:{ font:{ size:11 } } }, y:{ beginAtZero:true, ticks:{ font:{ size:11 }, callback: v => '¥' + v } } } }
-});
+function initWorkload(){
+  const ag=AGENTS.filter(a=>a!=='李亚飞');
+  mkChart('c-workload-bar',{
+    type:'bar',
+    data:{labels:ag,datasets:PERIODS.map((p,i)=>({label:p,data:ag.map(a=>(RECEPTION[a]||[0,0,0,0])[i]||0),backgroundColor:COLORS_A[i],borderRadius:3}))},
+    options:{...baseOpts,scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toLocaleString()}}}}
+  });
 
-function swVol(wk, btn) {
-  btn.closest('div').querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  mkVol(wk);
-}
-function swSales(wk, btn) {
-  btn.closest('div').querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  mkSales(wk);
+  const w4rec=AGENTS.filter(a=>a!=='李亚飞').map(a=>({name:a,v:(RECEPTION[a]||[0,0,0,0])[3]||0})).filter(d=>d.v>0);
+  mkChart('c-workload-pie',{
+    type:'doughnut',
+    data:{labels:w4rec.map(d=>d.name),datasets:[{data:w4rec.map(d=>d.v),backgroundColor:['#378ADD','#1D9E75','#D4537E','#BA7517','#7F77DD','#1D9E75','#888780'],borderWidth:2,borderColor:'#fff'}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:12},padding:10,color:tickColor}}}}
+  });
+
+  const tb=document.getElementById('workload-table');
+  AGENTS.forEach(a=>{
+    const r=RECEPTION[a]||[0,0,0,0];
+    const tot=r.reduce((s,v)=>s+(v||0),0);
+    const trend=r[3]>r[0]?`<span class="up">↑ ${Math.round((r[3]-r[0])/Math.max(r[0],1)*100)}%</span>`:r[3]<r[0]?`<span class="dn">↓ ${Math.round((r[0]-r[3])/Math.max(r[0],1)*100)}%</span>`:`<span class="neu">—</span>`;
+    tb.innerHTML+=`<tr>
+      <td><strong>${a}</strong></td><td>${tagHTML(a)}</td>
+      <td class="num">${r[0]||'-'}</td><td class="num">${r[1]||'-'}</td>
+      <td class="num">${r[2]||'-'}</td><td class="num">${r[3]||'-'}</td>
+      <td class="num"><strong>${fmtN(tot)}</strong></td>
+      <td class="num">${trend}</td>
+    </tr>`;
+  });
 }
 
-mkVol('w1');
-mkSales('w1');
+function initSales(){
+  const sAg=['吕晨','张胜男','Vicky','肖佳怡','刘悦','黄桥'];
+  mkChart('c-sales-bar',{
+    type:'bar',
+    data:{labels:sAg,datasets:PERIODS.map((p,i)=>({label:p,data:sAg.map(a=>(SALES[a]||[0,0,0,0])[i]||0),backgroundColor:COLORS_A[i],borderRadius:3}))},
+    options:{...baseOpts,scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v>=1000?'¥'+Math.round(v/1000)+'k':'¥'+v}}}}
+  });
+
+  const w4s=AGENTS.map(a=>({name:a,v:(SALES[a]||[0,0,0,0])[3]||0})).filter(d=>d.v>100);
+  mkChart('c-sales-pie',{
+    type:'doughnut',
+    data:{labels:w4s.map(d=>d.name),datasets:[{data:w4s.map(d=>d.v),backgroundColor:['#378ADD','#1D9E75','#D4537E','#BA7517','#7F77DD'],borderWidth:2,borderColor:'#fff'}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:12},padding:10,color:tickColor}}}}
+  });
+
+  const tots=AGENTS.map(a=>({name:a,v:(SALES[a]||[0,0,0,0]).reduce((s,v)=>s+(v||0),0)})).filter(d=>d.v>500);
+  mkChart('c-sales-total-pie',{
+    type:'doughnut',
+    data:{labels:tots.map(d=>d.name),datasets:[{data:tots.map(d=>d.v),backgroundColor:['#378ADD','#1D9E75','#D4537E','#BA7517','#7F77DD','#888780'],borderWidth:2,borderColor:'#fff'}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:12},padding:10,color:tickColor}}}}
+  });
+
+  const tb=document.getElementById('sales-table');
+  const w4total=AGENTS.reduce((s,a)=>s+((SALES[a]||[0,0,0,0])[3]||0),0);
+  const w4ranks=rankArr(AGENTS.map(a=>(SALES[a]||[0,0,0,0])[3]||0),false);
+  AGENTS.forEach((a,i)=>{
+    const s=(SALES[a]||[0,0,0,0]);
+    const tot=s.reduce((sum,v)=>sum+(v||0),0);
+    const w4v=s[3]||0;
+    const pct=w4total>0&&w4v>0?((w4v/w4total)*100).toFixed(1)+'%':'-';
+    tb.innerHTML+=`<tr>
+      <td><strong>${a}</strong></td>
+      <td class="num">${fmtY(s[0])}</td><td class="num">${fmtY(s[1])}</td>
+      <td class="num">${fmtY(s[2])}</td><td class="num">${fmtY(s[3])}</td>
+      <td class="num"><strong>${fmtY(tot)}</strong></td>
+      <td class="num">${pct}</td>
+      <td class="num">${w4ranks[i]?rankBadge(w4ranks[i]):'-'}</td>
+    </tr>`;
+  });
+}
+
+function renderPerfTable(pi){
+  const rec=AGENTS.map(a=>(RECEPTION[a]||[0,0,0,0])[pi]||0);
+  const sal=AGENTS.map(a=>(SALES[a]||[0,0,0,0])[pi]||0);
+  const eff=AGENTS.map((a,i)=>rec[i]>0?sal[i]/rec[i]:0);
+  const resp=AGENTS.map(a=>(AVG_RESP[a]||[null,null,null,null])[pi]);
+  const sat=AGENTS.map(a=>(SATISFACTION[a]||[null,null,null,null])[pi]);
+
+  const recRanks=rankArr(rec,false);
+  const salRanks=rankArr(sal,false);
+  const effRanks=rankArr(eff,false);
+  const respRanks=rankArr(resp.map(v=>v!=null?-v:null),false);
+
+  const tb=document.getElementById('perf-table');
+  tb.innerHTML='';
+  AGENTS.forEach((a,i)=>{
+    tb.innerHTML+=`<tr>
+      <td><strong>${a}</strong>${tagHTML(a)}</td>
+      <td class="num">${fmtN(rec[i])}</td>
+      <td class="num">${recRanks[i]?rankBadge(recRanks[i]):'-'}</td>
+      <td class="num">${sal[i]>0?fmtY(sal[i]):'-'}</td>
+      <td class="num">${salRanks[i]?rankBadge(salRanks[i]):'-'}</td>
+      <td class="num">${eff[i]>0?'¥'+eff[i].toFixed(1):'-'}</td>
+      <td class="num">${effRanks[i]?rankBadge(effRanks[i]):'-'}</td>
+      <td class="num">${sat[i]!=null?sat[i].toFixed(0)+'%':'-'}</td>
+      <td class="num">${resp[i]!=null?resp[i].toFixed(1)+'s':'-'}</td>
+      <td class="num">${respRanks[i]?rankBadge(respRanks[i]):'-'}</td>
+    </tr>`;
+  });
+
+  const pLabel = PERIODS[pi];
+  document.getElementById('perf-period-title').textContent = pLabel + ' 客服综合排名表';
+  document.getElementById('rank-rec-title').textContent = pLabel + ' 接待量排名';
+  document.getElementById('rank-sales-title').textContent = pLabel + ' 销售额排名';
+
+  // Rank charts
+  const recData=AGENTS.map((a,i)=>({name:a,v:rec[i]})).filter(d=>d.v>0).sort((a,b)=>b.v-a.v);
+  mkChart('c-rank-rec',{
+    type:'bar',
+    data:{labels:recData.map(d=>d.name),datasets:[{label:'接待量',data:recData.map(d=>d.v),backgroundColor:recData.map((_,i)=>i<3?COLORS_A[0]:'rgba(136,135,128,0.45)'),borderRadius:4}]},
+    options:{...baseOpts,scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toLocaleString()}}}}
+  });
+
+  const salData=AGENTS.map((a,i)=>({name:a,v:sal[i]})).filter(d=>d.v>0).sort((a,b)=>b.v-a.v);
+  mkChart('c-rank-sales',{
+    type:'bar',
+    data:{labels:salData.map(d=>d.name),datasets:[{label:'销售额',data:salData.map(d=>d.v),backgroundColor:salData.map((_,i)=>i<3?'rgba(29,158,117,0.82)':'rgba(136,135,128,0.45)'),borderRadius:4}]},
+    options:{...baseOpts,scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v>=1000?'¥'+Math.round(v/1000)+'k':'¥'+v}}}}
+  });
+}
+
+function initRespTrend(){
+  const respAgents=['吕晨','张胜男','Vicky','肖佳怡','刘悦','黄桥','朱梦娣'];
+  const rColors=['#378ADD','#1D9E75','#D4537E','#BA7517','#7F77DD','#888780','#1D9E75'];
+  const rDash=[[],[5,5],[],[3,3],[],[7,3],[]];
+
+  mkChart('c-resp-trend',{
+    type:'line',
+    data:{
+      labels:PERIODS,
+      datasets:respAgents.map((a,i)=>({
+        label:a,
+        data:(AVG_RESP[a]||[null,null,null,null]),
+        borderColor:rColors[i],
+        backgroundColor:'transparent',
+        borderDash:rDash[i],
+        tension:0.3,
+        pointRadius:4,
+        pointBackgroundColor:rColors[i],
+        pointBorderColor:'#fff',
+        pointBorderWidth:1.5,
+        spanGaps:true
+      }))
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{
+      x:{grid:{display:false},ticks:{color:tickColor,font:{size:11}}},
+      y:{grid:{color:gridColor},ticks:{color:tickColor,font:{size:11},callback:v=>v+'s'},border:{display:false}}
+    }}
+  });
+
+  const legend=document.getElementById('resp-legend');
+  legend.innerHTML=respAgents.map((a,i)=>`
+    <div class="legend-item">
+      <div class="legend-dot" style="background:${rColors[i]}"></div>${a}
+    </div>`).join('');
+}
+
+function setPeriod(pi,btn){
+  currentPeriod=pi;
+  document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPerfTable(pi);
+}
+
+function nav(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  el.classList.add('active');
+}
+
+// Init all
+initOverview();
+initTrend();
+initWorkload();
+initSales();
+renderPerfTable(3);
+initRespTrend();
 </script>
 </body>
 </html>
