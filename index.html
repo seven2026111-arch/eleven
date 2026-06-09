@@ -3,1037 +3,702 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>私域客服团队周报看板 · 2026年5月</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<title>私域客服团队月报 · 2026年4-5月</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root {
-    --bg: #f5f4f0;
-    --surface: #ffffff;
-    --surface2: #f0ede8;
-    --border: rgba(0,0,0,0.08);
-    --border-med: rgba(0,0,0,0.14);
-    --text: #1a1917;
-    --text-muted: #6b6963;
-    --text-hint: #9b9790;
-    --blue: #185FA5;
-    --blue-light: #E6F1FB;
-    --blue-mid: #378ADD;
-    --green: #0F6E56;
-    --green-light: #E1F5EE;
-    --green-mid: #1D9E75;
-    --amber: #854F0B;
-    --amber-light: #FAEEDA;
-    --amber-mid: #BA7517;
-    --coral: #993C1D;
-    --coral-light: #FAECE7;
-    --coral-mid: #D85A30;
-    --pink-mid: #D4537E;
-    --purple-mid: #7F77DD;
-    --gray-mid: #888780;
-    --radius: 10px;
-    --radius-sm: 6px;
-    --shadow: 0 1px 4px rgba(0,0,0,0.06), 0 0 0 0.5px rgba(0,0,0,0.06);
+    --ink: #1a1a2e;
+    --ink2: #2d2d4e;
+    --slate: #4a4a6a;
+    --muted: #8a8aaa;
+    --border: #e2e2f0;
+    --bg: #f7f7fc;
+    --card: #ffffff;
+    --apr: #7c6af7;
+    --may: #f7795a;
+    --may-light: #fff2ef;
+    --apr-light: #f3f1ff;
+    --green: #2ec4b6;
+    --yellow: #ffb547;
+    --red: #f05e5e;
+    --radius: 12px;
+    --shadow: 0 2px 16px rgba(30,20,80,0.07);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 14px;
-    line-height: 1.5;
-    min-height: 100vh;
-  }
+  body { font-family: 'PingFang SC','Microsoft YaHei',system-ui,sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
 
-  /* ── Layout ── */
-  .app { display: flex; flex-direction: column; min-height: 100vh; }
-  .main { flex: 1; min-width: 0; }
+  /* Header */
+  .header { background: linear-gradient(135deg, var(--ink) 0%, var(--ink2) 60%, #3d2d7a 100%); color: #fff; padding: 36px 40px 28px; position: relative; overflow: hidden; }
+  .header::after { content:''; position:absolute; right:-60px; top:-60px; width:280px; height:280px; border-radius:50%; background:rgba(124,106,247,0.15); }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .header h1 { font-size: 24px; font-weight: 700; letter-spacing: .5px; }
+  .header .sub { font-size: 13px; color: rgba(255,255,255,.6); margin-top: 4px; }
+  .badge { background: rgba(247,121,90,0.25); border: 1px solid rgba(247,121,90,0.5); color: #ffd4c9; font-size: 11px; padding: 3px 10px; border-radius: 20px; }
+  .header-meta { display:flex; gap:32px; margin-top: 24px; }
+  .meta-item label { font-size: 11px; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .8px; display:block; }
+  .meta-item span { font-size: 22px; font-weight: 700; color: #fff; }
+  .meta-item .delta { font-size: 12px; color: var(--may); background: rgba(247,121,90,.15); padding: 1px 7px; border-radius:10px; margin-left:6px; }
 
-  /* ── Top header bar ── */
-  .topbar {
-    background: var(--surface);
-    border-bottom: 0.5px solid var(--border-med);
-    padding: 16px 32px 0;
-    position: sticky; top: 0; z-index: 20;
-  }
-  .topbar-header {
-    display: flex; align-items: flex-start; justify-content: space-between;
-    margin-bottom: 14px;
-  }
-  .topbar-title { font-size: 18px; font-weight: 700; color: var(--text); letter-spacing: -.01em; }
-  .topbar-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
-  .topbar-badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-  .badge {
-    font-size: 11px; font-weight: 500; padding: 3px 10px;
-    border-radius: 20px; white-space: nowrap;
-  }
-  .badge-blue { background: var(--blue-light); color: var(--blue); }
-  .badge-green { background: var(--green-light); color: var(--green); }
-  .badge-amber { background: var(--amber-light); color: var(--amber); }
-  .badge-coral { background: var(--coral-light); color: var(--coral); }
+  /* Tabs */
+  .nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 0 40px; display: flex; gap: 0; }
+  .nav-tab { padding: 14px 22px; font-size: 13px; font-weight: 500; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all .2s; white-space: nowrap; }
+  .nav-tab:hover { color: var(--ink2); }
+  .nav-tab.active { color: var(--apr); border-bottom-color: var(--apr); font-weight: 600; }
 
-  /* ── Tab nav ── */
-  .tab-nav {
-    display: flex; align-items: flex-end; gap: 0;
-    overflow-x: auto; scrollbar-width: none;
-  }
-  .tab-nav::-webkit-scrollbar { display: none; }
-  .tab-group-label {
-    font-size: 10px; font-weight: 600; color: var(--text-hint);
-    letter-spacing: .06em; text-transform: uppercase;
-    padding: 0 14px 10px 0; white-space: nowrap;
-    align-self: flex-end;
-    border-bottom: 2px solid transparent;
-  }
-  .tab-divider {
-    width: 0.5px; background: var(--border-med);
-    height: 18px; margin: 0 6px 10px; align-self: flex-end;
-  }
-  .nav-item {
-    display: flex; align-items: center; gap: 6px;
-    padding: 10px 16px; cursor: pointer;
-    font-size: 13px; font-weight: 500; color: var(--text-muted);
-    white-space: nowrap; border-bottom: 2px solid transparent;
-    transition: color .15s, border-color .15s;
-    user-select: none;
-  }
-  .nav-item:hover { color: var(--text); border-bottom-color: var(--border-med); }
-  .nav-item.active { color: var(--blue); border-bottom-color: var(--blue-mid); }
-  .nav-item svg { width: 15px; height: 15px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-
-  .content { padding: 24px 32px; max-width: 1280px; }
-
-  /* ── Pages ── */
-  .page { display: none; }
+  /* Content */
+  .page { display: none; padding: 28px 40px 60px; max-width: 1200px; }
   .page.active { display: block; }
 
-  /* ── Section ── */
-  .sec { margin-bottom: 28px; }
-  .sec-header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
-  .sec-title { font-size: 15px; font-weight: 600; color: var(--text); }
-  .sec-sub { font-size: 12px; color: var(--text-muted); margin-left: auto; }
+  /* Section */
+  .section-title { font-size: 15px; font-weight: 700; color: var(--ink2); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .section-title::before { content:''; width:4px; height:18px; background: linear-gradient(var(--apr),var(--may)); border-radius:2px; display:inline-block; }
 
-  /* ── KPI cards ── */
-  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
-  .kpi {
-    background: var(--surface); border-radius: var(--radius);
-    box-shadow: var(--shadow); padding: 16px 18px;
-  }
-  .kpi-icon { width: 30px; height: 30px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
-  .kpi-icon svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .kpi-label { font-size: 11px; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
-  .kpi-val { font-size: 24px; font-weight: 600; line-height: 1.1; color: var(--text); }
-  .kpi-delta { font-size: 12px; margin-top: 5px; display: flex; align-items: center; gap: 4px; }
-  .up { color: var(--green); }
-  .dn { color: var(--coral); }
-  .neu { color: var(--text-muted); }
+  /* KPI cards */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+  .kpi { background: var(--card); border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  .kpi label { font-size: 11px; color: var(--muted); letter-spacing: .5px; display: block; margin-bottom: 8px; }
+  .kpi .val { font-size: 26px; font-weight: 700; color: var(--ink); }
+  .kpi .change { font-size: 12px; margin-top: 4px; }
+  .up { color: #2ec4b6; } .down { color: var(--red); }
 
-  /* ── Chart cards ── */
-  .chart-card {
-    background: var(--surface); border-radius: var(--radius);
-    box-shadow: var(--shadow); padding: 18px 20px; margin-bottom: 14px;
-  }
-  .chart-label { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
-  .chart-hint { font-size: 11px; color: var(--text-muted); margin-bottom: 12px; }
-  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 12px; }
-  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
-  .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
-  .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  @media (max-width: 800px) { .chart-row { grid-template-columns: 1fr; } }
+  /* Chart cards */
+  .chart-card { background: var(--card); border-radius: var(--radius); padding: 22px 24px; box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 20px; }
+  .chart-title { font-size: 13px; font-weight: 600; color: var(--ink2); margin-bottom: 16px; }
+  .chart-wrap { position: relative; }
 
-  /* ── Table ── */
-  .tbl-card {
-    background: var(--surface); border-radius: var(--radius);
-    box-shadow: var(--shadow); overflow: hidden; margin-bottom: 14px;
-  }
+  /* Compare grid */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+
+  /* Table */
+  .table-wrap { overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  thead tr { background: var(--surface2); }
-  th { padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 600; color: var(--text-muted); letter-spacing: .02em; text-transform: uppercase; white-space: nowrap; border-bottom: 0.5px solid var(--border-med); }
-  td { padding: 10px 14px; border-bottom: 0.5px solid var(--border); color: var(--text); white-space: nowrap; }
-  tr:last-child td { border-bottom: none; }
-  tbody tr:hover td { background: var(--surface2); }
-  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  th { background: var(--bg); color: var(--slate); font-weight: 600; font-size: 11px; text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); white-space: nowrap; }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  tr:hover td { background: #f9f9ff; }
+  .rank-badge { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; font-size: 11px; font-weight: 700; }
+  .rank-1 { background: #ffd700; color: #7a5a00; }
+  .rank-2 { background: #c0c0c0; color: #4a4a4a; }
+  .rank-3 { background: #cd7f32; color: #fff; }
+  .rank-n { background: var(--bg); color: var(--muted); }
+  .role-tag { font-size: 10px; background: var(--apr-light); color: var(--apr); border-radius: 4px; padding: 1px 6px; margin-left: 4px; }
+  .tag-lead { background: #fff5e6; color: #c07000; }
+  .tag-pt { background: #f0fff9; color: #007a5a; }
 
-  /* ── Rank badges ── */
-  .rk { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; font-size: 11px; font-weight: 700; }
-  .rk-1 { background: #FAC775; color: #412402; }
-  .rk-2 { background: #B4B2A9; color: #2C2C2A; }
-  .rk-3 { background: #F0997B; color: #4A1B0C; }
-  .rk-n { background: var(--surface2); color: var(--text-muted); }
+  /* Insight box */
+  .insight { background: linear-gradient(135deg, var(--apr-light), #fff); border: 1px solid rgba(124,106,247,.2); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 20px; }
+  .insight h4 { font-size: 13px; font-weight: 700; color: var(--apr); margin-bottom: 10px; }
+  .insight ul { padding-left: 16px; }
+  .insight li { font-size: 13px; color: var(--slate); margin-bottom: 6px; }
+  .insight-warn { background: linear-gradient(135deg, #fff8ef, #fff); border-color: rgba(247,181,71,.4); }
+  .insight-warn h4 { color: #c07000; }
+  .insight-ok { background: linear-gradient(135deg, #f0fff9, #fff); border-color: rgba(46,196,182,.3); }
+  .insight-ok h4 { color: #007a5a; }
 
-  /* ── Role tags ── */
-  .tag { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 10px; }
-  .tag-ft { background: var(--blue-light); color: var(--blue); }
-  .tag-pt { background: var(--amber-light); color: var(--amber); }
-  .tag-new { background: var(--green-light); color: var(--green); }
-  .tag-lead { background: #EEEDFE; color: #3C3489; }
+  /* Period toggle in charts */
+  .toggle-row { display: flex; gap: 8px; margin-bottom: 12px; }
+  .toggle-btn { padding: 5px 14px; border-radius: 20px; border: 1.5px solid var(--border); background: var(--card); font-size: 12px; cursor: pointer; transition: all .2s; }
+  .toggle-btn.active-apr { border-color: var(--apr); background: var(--apr); color: #fff; }
+  .toggle-btn.active-may { border-color: var(--may); background: var(--may); color: #fff; }
 
-  /* ── Insight cards ── */
-  .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-  @media (max-width: 800px) { .insight-grid { grid-template-columns: 1fr; } }
-  .insight {
-    background: var(--surface); border-radius: var(--radius);
-    box-shadow: var(--shadow); padding: 14px 16px;
-    border-left: 3px solid var(--border-med);
-  }
-  .insight-blue { border-left-color: var(--blue-mid); }
-  .insight-green { border-left-color: var(--green-mid); }
-  .insight-amber { border-left-color: var(--amber-mid); }
-  .insight-coral { border-left-color: var(--coral-mid); }
-  .insight-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
-  .insight-body { font-size: 12px; color: var(--text-muted); line-height: 1.65; }
+  /* Suggestion cards */
+  .suggest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .suggest-card { background: var(--card); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); border-top: 3px solid; }
+  .suggest-card:nth-child(1) { border-color: var(--apr); }
+  .suggest-card:nth-child(2) { border-color: var(--may); }
+  .suggest-card:nth-child(3) { border-color: var(--green); }
+  .suggest-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+  .suggest-card p { font-size: 12px; color: var(--slate); line-height: 1.7; }
 
-  /* ── Period selector ── */
-  .period-bar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-  .period-btn {
-    padding: 6px 16px; border-radius: 20px; border: 0.5px solid var(--border-med);
-    background: transparent; font-size: 12px; font-weight: 500; color: var(--text-muted);
-    cursor: pointer; transition: all .15s;
-  }
-  .period-btn:hover { border-color: var(--blue-mid); color: var(--blue); }
-  .period-btn.active { background: var(--blue-mid); color: #fff; border-color: var(--blue-mid); }
+  /* Progress bar */
+  .prog-bar { background: var(--bg); border-radius: 4px; height: 6px; overflow: hidden; margin-top: 4px; }
+  .prog-fill { height: 100%; border-radius: 4px; }
 
-  /* ── Progress bars ── */
-  .prog-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-  .prog-name { width: 64px; font-size: 12px; color: var(--text); text-align: right; flex-shrink: 0; }
-  .prog-bar-wrap { flex: 1; background: var(--surface2); border-radius: 4px; height: 8px; overflow: hidden; }
-  .prog-bar { height: 100%; border-radius: 4px; transition: width .5s ease; }
-  .prog-val { width: 80px; font-size: 12px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+  .empty-cell { color: var(--muted); font-size: 12px; }
 
-  /* ── Divider ── */
-  .divider { height: 0.5px; background: var(--border); margin: 20px 0; }
-
-  /* ── Summary strip ── */
-  .summary-strip {
-    display: flex; gap: 0; margin-bottom: 20px;
-    background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden;
-  }
-  .strip-item { flex: 1; padding: 14px 16px; border-right: 0.5px solid var(--border); }
-  .strip-item:last-child { border-right: none; }
-  .strip-label { font-size: 11px; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
-  .strip-val { font-size: 18px; font-weight: 600; }
-  .strip-delta { font-size: 11px; margin-top: 2px; }
-
-  /* Mobile */
-  @media (max-width: 680px) {
-    .content { padding: 16px; }
-    .topbar { padding: 14px 16px 0; }
-    .topbar-header { flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
-    .summary-strip { flex-direction: column; }
-    .strip-item { border-right: none; border-bottom: 0.5px solid var(--border); }
-    .nav-item { padding: 8px 12px; font-size: 12px; }
+  @media (max-width: 900px) {
+    .header { padding: 24px 20px 20px; }
+    .page { padding: 20px 16px 40px; }
+    .nav { padding: 0 16px; }
+    .kpi-grid { grid-template-columns: repeat(2,1fr); }
+    .compare-grid { grid-template-columns: 1fr; }
+    .suggest-grid { grid-template-columns: 1fr; }
+    .header-meta { flex-wrap: wrap; gap: 16px; }
   }
 </style>
 </head>
 <body>
-<div class="app">
 
-<!-- ── Top Navigation ── -->
-<div class="topbar">
-  <div class="topbar-header">
+<div class="header">
+  <div class="header-top">
     <div>
-      <div class="topbar-title">私域客服团队周报看板</div>
-      <div class="topbar-sub">2026.05.02 — 2026.05.29 &nbsp;·&nbsp; 四周数据 &nbsp;·&nbsp; 数据来源：个微 · 企微 · 有赞</div>
+      <h1>私域客服团队月报</h1>
+      <div class="sub">2026年4月 vs 2026年5月 · 数据截至 2026.05.31</div>
     </div>
-    <div class="topbar-badges">
-      <span class="badge badge-green">活动期进行中</span>
-      <span class="badge badge-amber">5/8起有赞平台活动</span>
-      <span class="badge badge-blue">W4新品上架</span>
+    <div class="badge">活动期分析版</div>
+  </div>
+  <div class="header-meta">
+    <div class="meta-item"><label>5月总接待量</label><span id="h-may-recv">—</span><span class="delta" id="h-recv-delta">—</span></div>
+    <div class="meta-item"><label>5月总销售额</label><span id="h-may-sales">—</span><span class="delta" id="h-sales-delta">—</span></div>
+    <div class="meta-item"><label>4月总接待量</label><span id="h-apr-recv">—</span></div>
+    <div class="meta-item"><label>4月总销售额</label><span id="h-apr-sales">—</span></div>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="nav-tab active" onclick="switchTab('overview')">总体概览</div>
+  <div class="nav-tab" onclick="switchTab('compare')">环比分析</div>
+  <div class="nav-tab" onclick="switchTab('workload')">工作量分析</div>
+  <div class="nav-tab" onclick="switchTab('sales')">销售贡献</div>
+  <div class="nav-tab" onclick="switchTab('perf')">个人表现</div>
+  <div class="nav-tab" onclick="switchTab('conclusion')">结论与建议</div>
+</nav>
+
+<!-- ==================== OVERVIEW ==================== -->
+<div class="page active" id="tab-overview">
+  <div class="kpi-grid" style="margin-top:4px">
+    <div class="kpi"><label>5月接待量</label><div class="val" id="ov-may-recv">—</div><div class="change up" id="ov-recv-chg">—</div></div>
+    <div class="kpi"><label>5月销售额</label><div class="val" id="ov-may-sales">—</div><div class="change up" id="ov-sales-chg">—</div></div>
+    <div class="kpi"><label>团队人均接待（5月）</label><div class="val" id="ov-avg-recv">—</div><div class="change" id="ov-avg-recv-chg" style="color:var(--muted)">—</div></div>
+    <div class="kpi"><label>团队人均销售（5月）</label><div class="val" id="ov-avg-sales">—</div><div class="change" id="ov-avg-sales-chg" style="color:var(--muted)">—</div></div>
+  </div>
+
+  <div class="insight">
+    <h4>📌 活动背景说明</h4>
+    <ul>
+      <li>4月22日起：有赞平台上新21日套餐，带动4月下旬咨询与销售提升</li>
+      <li>5月8日 00:00—5月31日：有赞平台理想燃料 & IDN品牌全面活动期，贯穿整个5月下旬</li>
+      <li>5月26日：IDN VC胶囊香港仓版现货上架；5月27日：IDN甘氨酸镁预售上线</li>
+      <li>以上活动节点叠加，是5月接待量与销售额大幅上涨的核心驱动因素</li>
+    </ul>
+  </div>
+
+  <div class="compare-grid">
+    <div class="chart-card">
+      <div class="chart-title">月度接待量对比（各平台）</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="chart-overview-recv"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">月度销售额对比（万元）</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="chart-overview-sales"></canvas></div>
     </div>
   </div>
-  <div class="tab-nav">
-    <div class="tab-group-label">数据分析</div>
-    <div class="nav-item active" onclick="nav('overview',this)">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      总体概览
+
+  <div class="chart-card">
+    <div class="chart-title">各客服5月接待量 vs 销售额</div>
+    <div class="chart-wrap" style="height:240px"><canvas id="chart-overview-person"></canvas></div>
+  </div>
+</div>
+
+<!-- ==================== COMPARE ==================== -->
+<div class="page" id="tab-compare">
+  <div class="kpi-grid" style="margin-top:4px">
+    <div class="kpi"><label>接待量环比增幅</label><div class="val up" id="cmp-recv-delta">—</div><div class="change" style="color:var(--muted)">17,299 vs 10,475</div></div>
+    <div class="kpi"><label>销售额环比增幅</label><div class="val up" id="cmp-sales-delta">—</div><div class="change" style="color:var(--muted)" id="cmp-sales-abs">—</div></div>
+    <div class="kpi"><label>人效变化</label><div class="val up" id="cmp-renxiao">—</div><div class="change" style="color:var(--muted)">元/次</div></div>
+    <div class="kpi"><label>平均响应时间</label><div class="val" id="cmp-resp">—</div><div class="change" style="color:var(--muted)" id="cmp-resp-chg">—</div></div>
+  </div>
+
+  <div class="compare-grid">
+    <div class="chart-card">
+      <div class="chart-title">各客服接待量环比变化</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="chart-cmp-recv"></canvas></div>
     </div>
-    <div class="nav-item" onclick="nav('trend',this)">
-      <svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-      周期环比分析
+    <div class="chart-card">
+      <div class="chart-title">各客服销售额环比变化（万元）</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="chart-cmp-sales"></canvas></div>
     </div>
-    <div class="nav-item" onclick="nav('workload',this)">
-      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      工作量分析
+  </div>
+
+  <div class="insight">
+    <h4>📊 关键变化分析</h4>
+    <ul>
+      <li><strong>接待量激增65.2%</strong>：从4月10,475次跃升至5月17,299次，主因是5月8日起全面活动期带来的持续高咨询流量</li>
+      <li><strong>销售额激增166%</strong>：从30.4万元跃升至80.9万元，活动期叠加多品牌促销，转化效率同步提升</li>
+      <li><strong>全职客服吕晨、张胜男</strong>承担了绝大部分销售增量，两人合计占5月销售额85.2%</li>
+      <li><strong>肖佳怡接待量增幅最大</strong>：从580次增至2,625次（+352%），反映出5月活动期其排班工时大幅增加</li>
+      <li><strong>Vicky接待量增幅显著</strong>：从2,042次增至3,250次（+59.2%），个微端咨询量贡献突出</li>
+      <li><strong>李亚飞接待量下降</strong>：从443次降至215次（-51.5%），个微端近乎为零，符合组长角色向管理侧转移的趋势</li>
+    </ul>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-title">服务指标对比（平均响应时间，秒）</div>
+    <div class="chart-wrap" style="height:240px"><canvas id="chart-cmp-resp"></canvas></div>
+  </div>
+</div>
+
+<!-- ==================== WORKLOAD ==================== -->
+<div class="page" id="tab-workload">
+  <div class="section-title">客服接待量分析</div>
+
+  <div class="toggle-row">
+    <button class="toggle-btn active-apr" onclick="setWorkloadPeriod('apr',this)">4月</button>
+    <button class="toggle-btn" onclick="setWorkloadPeriod('may',this)">5月</button>
+    <button class="toggle-btn" style="background:var(--bg)" onclick="setWorkloadPeriod('both',this)">对比</button>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-title" id="wl-chart-title">接待量分布（4月）</div>
+    <div class="chart-wrap" style="height:280px"><canvas id="chart-workload"></canvas></div>
+  </div>
+
+  <div class="compare-grid">
+    <div class="chart-card">
+      <div class="chart-title">平台接待量分布（4月）</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="chart-wl-platform-apr"></canvas></div>
     </div>
-    <div class="nav-item" onclick="nav('sales',this)">
-      <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-      销售贡献分析
+    <div class="chart-card">
+      <div class="chart-title">平台接待量分布（5月）</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="chart-wl-platform-may"></canvas></div>
     </div>
-    <div class="nav-item" onclick="nav('perf',this)">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
-      个人表现与排名
+  </div>
+
+  <div class="insight insight-warn">
+    <h4>⚠️ 工作量分布洞察</h4>
+    <ul>
+      <li><strong>接待量最高（5月）</strong>：吕晨（3,824次）、张胜男（3,790次），两位全职客服合计接待量占全团队41.6%</li>
+      <li><strong>增幅最大</strong>：肖佳怡（+352%）、朱梦娣（+477%），5月排班明显增加</li>
+      <li><strong>接待量下降</strong>：李亚飞（-51.5%）、黄桥（-19.3%），结合排班节奏属正常波动</li>
+      <li><strong>王洁茹、王璇</strong>为新增成员，5月接待量较低，处于正常上线磨合期</li>
+      <li><strong>有赞平台接待量5月大幅增长</strong>：从4月1,051次增至5月2,696次，活动期直接拉动有赞咨询量</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== SALES ==================== -->
+<div class="page" id="tab-sales">
+  <div class="section-title">客服销售贡献分析</div>
+
+  <div class="compare-grid">
+    <div class="chart-card">
+      <div class="chart-title">4月销售额贡献分布</div>
+      <div class="chart-wrap" style="height:240px"><canvas id="chart-sales-pie-apr"></canvas></div>
     </div>
-    <div class="tab-divider"></div>
-    <div class="tab-group-label">洞察</div>
-    <div class="nav-item" onclick="nav('insights',this)">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      结论与建议
+    <div class="chart-card">
+      <div class="chart-title">5月销售额贡献分布</div>
+      <div class="chart-wrap" style="height:240px"><canvas id="chart-sales-pie-may"></canvas></div>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-title">个人销售额对比（万元）</div>
+    <div class="chart-wrap" style="height:260px"><canvas id="chart-sales-bar"></canvas></div>
+  </div>
+
+  <div class="insight insight-ok">
+    <h4>💡 销售贡献洞察</h4>
+    <ul>
+      <li><strong>吕晨（5月40.7万）</strong>：销售贡献第一，月度贡献从15.4万增至40.7万（+166%），人效从61.4元/次提升至106.6元/次，活动期转化能力显著增强</li>
+      <li><strong>张胜男（5月29.1万）</strong>：销售贡献第二，人效从47.9元/次提升至76.7元/次，接待量大幅增加的同时保持高销售额</li>
+      <li><strong>刘悦（5月4.3万）</strong>：非全职中销售贡献最高，人效从7.1元/次提升至22.4元/次，表现突出</li>
+      <li><strong>Vicky（5月3.8万）</strong>：接待量增加明显，销售额同步增加（+209%），转化效率有所提升</li>
+      <li><strong>肖佳怡（5月2.5万）</strong>：接待量激增但销售额相对有限，人效9.4元/次，仍有提升空间</li>
+      <li><strong>朱梦娣、王洁茹</strong>销售额为零，以接待服务为主，符合新兼职定位</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== PERF ==================== -->
+<div class="page" id="tab-perf">
+  <div class="section-title">客服个人表现与排名</div>
+
+  <div class="toggle-row">
+    <button class="toggle-btn active-apr" onclick="setPerfPeriod('apr',this)">查看4月</button>
+    <button class="toggle-btn" onclick="setPerfPeriod('may',this)">查看5月</button>
+  </div>
+
+  <div class="table-wrap" style="margin-bottom:20px">
+    <table id="perf-table">
+      <thead>
+        <tr>
+          <th>客服</th>
+          <th>接待量</th>
+          <th>接待排名</th>
+          <th>销售额（元）</th>
+          <th>销售排名</th>
+          <th>人效（元/次）</th>
+          <th>人效排名</th>
+          <th>有赞满意度</th>
+          <th>满意度排名</th>
+          <th>平均响应（秒）</th>
+          <th>响应排名</th>
+        </tr>
+      </thead>
+      <tbody id="perf-tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-title" id="renxiao-title">人效排名（元/次）</div>
+    <div class="chart-wrap" style="height:240px"><canvas id="chart-renxiao"></canvas></div>
+  </div>
+
+  <div class="insight">
+    <h4>📈 响应效率 vs 满意度关系分析（5月）</h4>
+    <ul>
+      <li><strong>响应快且满意度高</strong>：刘悦（平响39.8秒，满意度100%）、吕晨（平响54.3秒，满意度100%）— 代表团队服务标杆</li>
+      <li><strong>响应较慢但满意度高</strong>：黄桥（平响74.3秒，满意度100%）、王洁茹（平响76.9秒，满意度100%）— 响应时间偏长但服务质量保障好</li>
+      <li><strong>响应慢且存在隐患</strong>：肖佳怡（平响106.3秒）、王璇（平响239.5秒）— 响应时间明显偏长，需重点关注</li>
+      <li><strong>结论</strong>：团队整体满意度维持高位，说明服务质量基础扎实，但部分兼职客服响应速度有待提升，可通过排班优化和话术工具辅助改善</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== CONCLUSION ==================== -->
+<div class="page" id="tab-conclusion">
+  <div class="section-title">主要结论</div>
+
+  <div class="insight insight-ok" style="margin-bottom:16px">
+    <h4>✅ 核心成果</h4>
+    <ul>
+      <li><strong>5月整体大幅增长</strong>：接待量+65.2%，销售额+166%，活动期带来的流量与转化均实现历史高位</li>
+      <li><strong>全职客服战斗力强</strong>：吕晨和张胜男5月合计销售额69.8万元，占团队总销售额85.2%，是私域销售核心引擎</li>
+      <li><strong>兼职团队整体规模化</strong>：肖佳怡、Vicky、刘悦5月接待量均超2,500次，兼职团队正成为高流量承接主力</li>
+      <li><strong>服务质量稳定</strong>：大多数客服满意度保持100%，团队整体服务品质有保障</li>
+    </ul>
+  </div>
+
+  <div class="insight insight-warn" style="margin-bottom:16px">
+    <h4>⚠️ 需关注问题</h4>
+    <ul>
+      <li><strong>响应时间分化加剧</strong>：肖佳怡（106秒）、王璇（239秒）平均响应时间显著偏高，活动期高流量下可能影响客户体验</li>
+      <li><strong>兼职客服人效偏低</strong>：肖佳怡（9.4元/次）接待量大幅增加但销售贡献相对有限，转化能力有提升空间</li>
+      <li><strong>李亚飞个微接待量骤降</strong>：5月仅13次（4月156次），需确认是组长职能转型的主动调整，还是需要关注的排班安排</li>
+      <li><strong>朱梦娣、王洁茹销售额为零</strong>：有赞分销链接使用率低，可加强产品推介技能培训</li>
+      <li><strong>王璇上线初期</strong>：有效回复率仅59%，响应时间极长，新人培训需尽快跟进</li>
+    </ul>
+  </div>
+
+  <div class="section-title" style="margin-top:8px">管理优化建议</div>
+  <div class="suggest-grid">
+    <div class="suggest-card">
+      <h4>🎯 建议一：建立分层销售辅助机制</h4>
+      <p>针对接待量高但转化率低的兼职客服（如肖佳怡），建立标准化有赞分销推荐话术库，并在客服工具中嵌入场景化产品推荐触发词，帮助提升兼职客服的销售转化率，减少对少数全职客服的销售依赖集中度。</p>
+    </div>
+    <div class="suggest-card">
+      <h4>⚡ 建议二：优化高峰期排班与响应分级</h4>
+      <p>活动期流量激增时，肖佳怡等兼职客服平响超过100秒，建议在大促期间设置"响应时间红线预警"，超阈值时自动提醒客服或组长介入。同时对新人（王璇等）进行专属培训，重点强化快速首响技能，降低新人期整体响应时长。</p>
+    </div>
+    <div class="suggest-card">
+      <h4>📊 建议三：建立月度个人KPI看板与激励机制</h4>
+      <p>当前数据已覆盖接待量、人效、满意度等多维度，建议将数据看板定期发送给各客服本人，增强数据透明度与个人成长意识。同时设立月度兼职销售额激励奖励（前3名），提升兼职团队有赞分销积极性，形成健康竞争氛围。</p>
     </div>
   </div>
 </div>
 
-<!-- ── Main Content ── -->
-<div class="main">
-  <div class="content">
-
-    <!-- ══════════════════════════ PAGE: 总体概览 ══════════════════════════ -->
-    <div class="page active" id="page-overview">
-      <div class="sec">
-        <div class="sec-header"><div class="sec-title">四周关键指标汇总</div></div>
-        <div class="kpi-grid">
-          <div class="kpi">
-            <div class="kpi-icon" style="background:var(--blue-light)">
-              <svg viewBox="0 0 24 24" style="stroke:var(--blue-mid)"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <div class="kpi-label">峰值接待量（W3）</div>
-            <div class="kpi-val">5,444</div>
-            <div class="kpi-delta up">↑ 42% vs W2</div>
-          </div>
-          <div class="kpi">
-            <div class="kpi-icon" style="background:var(--green-light)">
-              <svg viewBox="0 0 24 24" style="stroke:var(--green-mid)"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            </div>
-            <div class="kpi-label">W4 最新销售额</div>
-            <div class="kpi-val">¥15.9万</div>
-            <div class="kpi-delta up">↑ 85% vs W3</div>
-          </div>
-          <div class="kpi">
-            <div class="kpi-icon" style="background:var(--amber-light)">
-              <svg viewBox="0 0 24 24" style="stroke:var(--amber-mid)"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-            </div>
-            <div class="kpi-label">四周累计销售额</div>
-            <div class="kpi-val">¥78.8万</div>
-            <div class="kpi-delta neu">W1-W4合计</div>
-          </div>
-          <div class="kpi">
-            <div class="kpi-icon" style="background:#EEEDFE">
-              <svg viewBox="0 0 24 24" style="stroke:#7F77DD"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
-            </div>
-            <div class="kpi-label">W4 团队人效</div>
-            <div class="kpi-val">¥38.1</div>
-            <div class="kpi-delta up">↑ 141% vs W3</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sec">
-        <div class="sec-header"><div class="sec-title">四周趋势总览</div></div>
-        <div class="summary-strip">
-          <div class="strip-item">
-            <div class="strip-label">W1 (5/2-5/8)</div>
-            <div class="strip-val" style="color:var(--blue-mid)">2,251</div>
-            <div class="strip-delta neu">接待量基准</div>
-          </div>
-          <div class="strip-item">
-            <div class="strip-label">W2 (5/9-5/15)</div>
-            <div class="strip-val" style="color:var(--green-mid)">3,834</div>
-            <div class="strip-delta up">↑ 70.3%</div>
-          </div>
-          <div class="strip-item">
-            <div class="strip-label">W3 (5/16-5/22)</div>
-            <div class="strip-val" style="color:var(--amber-mid)">5,444</div>
-            <div class="strip-delta up">↑ 42.0%</div>
-          </div>
-          <div class="strip-item">
-            <div class="strip-label">W4 (5/23-5/29)</div>
-            <div class="strip-val" style="color:var(--coral-mid)">4,169</div>
-            <div class="strip-delta dn">↓ 23.4%</div>
-          </div>
-        </div>
-        <div class="chart-card">
-          <div class="chart-label">接待量与销售额四周趋势</div>
-          <div class="chart-hint">左轴：接待人次 · 右轴：销售额（万元）</div>
-          <div class="legend">
-            <div class="legend-item"><div class="legend-dot" style="background:#378ADD"></div>总接待量</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div>客服销售额</div>
-          </div>
-          <div style="position:relative;height:240px">
-            <canvas id="c-overview-trend" role="img" aria-label="四周接待量与销售额趋势图">W1:2251次/¥25.5万;W2:3834次/¥28.9万;W3:5444次/¥8.6万;W4:4169次/¥15.9万</canvas>
-          </div>
-        </div>
-      </div>
-
-      <div class="sec">
-        <div class="sec-header"><div class="sec-title">团队成员概况</div></div>
-        <div class="tbl-card">
-          <table>
-            <thead><tr>
-              <th>姓名</th><th>类型</th><th>W1接待</th><th>W2接待</th><th>W3接待</th><th>W4接待</th><th>四周合计</th><th>四周销售额</th>
-            </tr></thead>
-            <tbody id="team-table"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="sec">
-        <div class="sec-header"><div class="sec-title">活动背景时间轴</div></div>
-        <div class="insight-grid">
-          <div class="insight insight-blue">
-            <div class="insight-title">📅 W1（5/2-5/8）活动前基准期</div>
-            <div class="insight-body">接待量与销售额处于正常水位。4/22上新21日套餐，部分咨询延续至本周。全职客服（吕晨、张胜男）承担主要接待与销售。</div>
-          </div>
-          <div class="insight insight-green">
-            <div class="insight-title">🚀 W2（5/9-5/15）活动开启，咨询与销售双升</div>
-            <div class="insight-body">5/8活动正式启动，私域咨询量与客服销售额同步上涨。接待量环比激增70%，销售额增长13.5%，活动开门红效果良好，客户在私域渠道购买意愿明显提升。</div>
-          </div>
-          <div class="insight insight-amber">
-            <div class="insight-title">🔍 W3（5/16-5/22）活动持续，咨询高但下单少</div>
-            <div class="insight-body">接待量创四周峰值5,444次，但客服销售额降至8.6万。本周期进入<strong>电商平台比价阶段</strong>：大量用户通过私域咨询产品信息后，转至电商平台比价或下单，私域渠道成交转化率下降。同时个微咨询量出现下降，且前期个微数据存在异常情况，需结合实际接待情况综合判断。</div>
-          </div>
-          <div class="insight insight-coral">
-            <div class="insight-title">🆕 W4（5/23-5/29）新品上架期</div>
-            <div class="insight-body">5/26 IDN VC胶囊香港仓现货上架，5/27甘氨酸镁预售开启，带动销售额大幅反弹85%至15.9万。接待量回落至正常水位，质量显著提升。</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════ PAGE: 周期环比 ══════════════════════════ -->
-    <div class="page" id="page-trend">
-      <div class="sec">
-        <div class="sec-header"><div class="sec-title">周期环比核心指标</div></div>
-        <div class="tbl-card">
-          <table>
-            <thead><tr>
-              <th>指标</th>
-              <th class="num">W1</th><th class="num">W2</th><th class="num">W2环比</th>
-              <th class="num">W3</th><th class="num">W3环比</th>
-              <th class="num">W4</th><th class="num">W4环比</th>
-            </tr></thead>
-            <tbody>
-              <tr>
-                <td>总接待量（次）</td>
-                <td class="num">2,251</td><td class="num">3,834</td><td class="num up">↑ 70.3%</td>
-                <td class="num">5,444</td><td class="num up">↑ 42.0%</td>
-                <td class="num">4,169</td><td class="num dn">↓ 23.4%</td>
-              </tr>
-              <tr>
-                <td>客服销售额</td>
-                <td class="num">¥254,545</td><td class="num">¥288,928</td><td class="num up">↑ 13.5%</td>
-                <td class="num">¥85,759</td><td class="num dn">↓ 70.3%</td>
-                <td class="num">¥158,673</td><td class="num up">↑ 85.0%</td>
-              </tr>
-              <tr>
-                <td>团队人效（¥/次）</td>
-                <td class="num">113.1</td><td class="num">75.4</td><td class="num dn">↓ 33.3%</td>
-                <td class="num">15.8</td><td class="num dn">↓ 79.1%</td>
-                <td class="num">38.1</td><td class="num up">↑ 141%</td>
-              </tr>
-              <tr>
-                <td>在线客服人数</td>
-                <td class="num">8</td><td class="num">8</td><td class="num neu">—</td>
-                <td class="num">7*</td><td class="num neu">—</td>
-                <td class="num">9</td><td class="num neu">—</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div style="font-size:11px;color:var(--text-hint);margin-top:-8px;margin-bottom:16px">* 兼职客服（黄桥、朱梦娣、王洁茹等）按实际排班出勤，未排班周期接待量为0属正常，不计入异常统计</div>
-      </div>
-
-      <div class="chart-row">
-        <div class="chart-card">
-          <div class="chart-label">接待量环比变化</div>
-          <div class="legend">
-            <div class="legend-item"><div class="legend-dot" style="background:#378ADD"></div>W1</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div>W2</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#BA7517"></div>W3</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#D4537E"></div>W4</div>
-          </div>
-          <div style="position:relative;height:220px">
-            <canvas id="c-trend-reception" role="img" aria-label="四周接待量对比">W1:2251,W2:3834,W3:5444,W4:4169</canvas>
-          </div>
-        </div>
-        <div class="chart-card">
-          <div class="chart-label">销售额环比变化</div>
-          <div class="legend">
-            <div class="legend-item"><div class="legend-dot" style="background:#1D9E75;border-radius:50%"></div>销售额趋势</div>
-          </div>
-          <div style="position:relative;height:220px">
-            <canvas id="c-trend-sales" role="img" aria-label="四周销售额对比">W1:25.5万,W2:28.9万,W3:8.6万,W4:15.9万</canvas>
-          </div>
-        </div>
-      </div>
-
-      <div class="sec">
-        <div class="sec-header"><div class="sec-title">关键变化点分析</div></div>
-        <div class="insight-grid">
-          <div class="insight insight-green">
-            <div class="insight-title">✅ W1→W2：活动开启，咨询与销售同步爆发</div>
-            <div class="insight-body">接待量+70.3%是四周最大增幅，5/8活动启动效果立竿见影。销售额同步增长13.5%，私域渠道在活动首周即实现咨询与成交的双向提升，客服主动引导转化效果良好。</div>
-          </div>
-          <div class="insight insight-amber">
-            <div class="insight-title">🔍 W2→W3：比价阶段来临，高咨询低下单</div>
-            <div class="insight-body">接待量再增42%达峰值，但客服销售额下降70%。原因明确：W3进入<strong>电商平台比价阶段</strong>，大量用户通过私域客服了解产品详情、活动规则后，选择前往电商平台比价或下单，私域渠道的成交转化率随之下降。同时个微咨询量在W3出现下降，且个微前期数据存在异常，导致整体接待与销售的结构性分离。</div>
-          </div>
-          <div class="insight insight-blue">
-            <div class="insight-title">🚀 W3→W4：新品驱动，销售质量跃升</div>
-            <div class="insight-body">接待量回落23%至正常水位，销售额却反弹85%，团队人效从15.8飙升至38.1，说明W4新品上架精准触达高意向用户，产品力驱动转化效果显著。</div>
-          </div>
-          <div class="insight insight-coral">
-            <div class="insight-title">📊 服务指标：整体改善，局部需关注</div>
-            <div class="insight-body">吕晨平响W1→W4从54.9s降至36.6s（改善33%），张胜男从51.5s→41.4s稳定。肖佳怡W2平响128.7s（W3: 107s）明显偏高，活动期接待压力过大是主因，建议调整排班。</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════ PAGE: 工作量 ══════════════════════════ -->
-    <div class="page" id="page-workload">
-      <div class="sec">
-        <div class="sec-header">
-          <div class="sec-title">各客服接待量分布</div>
-          <div class="sec-sub">数据来源：个微 + 企微 + 有赞会话合计</div>
-        </div>
-        <div class="chart-card">
-          <div class="chart-label">各客服四周接待量对比</div>
-          <div class="legend">
-            <div class="legend-item"><div class="legend-dot" style="background:#378ADD"></div>W1(5/2-8)</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div>W2(5/9-15)</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#BA7517"></div>W3(5/16-22)</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#D4537E"></div>W4(5/23-29)</div>
-          </div>
-          <div style="position:relative;height:300px">
-            <canvas id="c-workload-bar" role="img" aria-label="各客服四周接待量柱状图">吕晨最高，张胜男次之</canvas>
-          </div>
-        </div>
-      </div>
-
-      <div class="sec">
-        <div class="sec-header"><div class="sec-title">W4 接待量占比</div></div>
-        <div class="chart-card">
-          <div class="chart-label">W4 各客服接待量占比</div>
-          <div style="position:relative;height:240px">
-            <canvas id="c-workload-pie" role="img" aria-label="W4各客服接待量占比饼图">吕晨940,张胜男801,Vicky711...</canvas>
-          </div>
-        </div>
-      </div>
-
-      <div class="sec">
-        <div class="sec-header"><div class="sec-title">工作量详细数据</div></div>
-        <div class="tbl-card">
-          <table>
-            <thead><tr><th>客服</th><th>类型</th><th class="num">W1</th><th class="num">W2</th><th class="num">W3</th><th class="num">W4</th><th class="num">四周合计</th><th class="num">趋势</th></tr></thead>
-            <tbody id="workload-table"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="sec">
-        <div class="sec-header"><div class="sec-title">工作量分析洞察</div></div>
-        <div class="insight-grid">
-          <div class="insight insight-green">
-            <div class="insight-title">🏆 接待量最高：吕晨（全职）</div>
-            <div class="insight-body">四周合计3,824次，W3单周1,618次为全团队历史最高。作为全职客服，承接了活动期最大量的流量压力，在高接待量下仍保持合理响应速度，综合表现突出。</div>
-          </div>
-          <div class="insight insight-blue">
-            <div class="insight-title">📈 成长最快：朱梦娣（兼职新）</div>
-            <div class="insight-body">W1仅67次→W4增至261次，四周增幅289%，是所有客服中增长率最高的。工时逐步增加，接待能力快速提升，建议进一步跟进培训和销售引导。</div>
-          </div>
-          <div class="insight insight-amber">
-            <div class="insight-title">📋 黄桥：按排班出勤，接待稳定</div>
-            <div class="insight-body">黄桥为兼职老客服，W2未排班故接待量为0，属正常安排。排班周期（W1/W3/W4）接待量稳定在157-168次，响应时间维持在63-87s范围，表现稳定可预期。</div>
-          </div>
-          <div class="insight insight-coral">
-            <div class="insight-title">💡 肖佳怡 W3 承压明显</div>
-            <div class="insight-body">W3接待量从639跃升至1,216次（+90%），同期平响从34s延长至107s。接待量与响应质量形成明显的负相关，建议活动期为其配备排班协助，避免服务质量下滑。</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════ PAGE: 销售贡献 ══════════════════════════ -->
-    <div class="page" id="page-sales">
-      <div class="sec">
-        <div class="sec-header"><div class="sec-title">各客服销售额对比</div></div>
-        <div class="chart-card">
-          <div class="chart-label">各客服四周销售额（元）</div>
-          <div class="legend">
-            <div class="legend-item"><div class="legend-dot" style="background:#378ADD"></div>W1</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div>W2</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#BA7517"></div>W3</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#D4537E"></div>W4</div>
-          </div>
-          <div style="position:relative;height:300px">
-            <canvas id="c-sales-bar" role="img" aria-label="各客服四周销售额柱状图">吕晨最高，张胜男次之</canvas>
-          </div>
-        </div>
-      </div>
-
-      <div class="chart-row">
-        <div class="chart-card">
-          <div class="chart-label">W4 销售额贡献占比</div>
-          <div style="position:relative;height:260px">
-            <canvas id="c-sales-pie" role="img" aria-label="W4销售额占比">吕晨41%,张胜男45%,Vicky6%...</canvas>
-          </div>
-        </div>
-        <div class="chart-card">
-          <div class="chart-label">四周累计销售额贡献</div>
-          <div style="position:relative;height:260px">
-            <canvas id="c-sales-total-pie" role="img" aria-label="四周累计销售额占比">吕晨最高</canvas>
-          </div>
-        </div>
-      </div>
-
-      <div class="sec">
-        <div class="sec-header"><div class="sec-title">销售额详细数据</div></div>
-        <div class="tbl-card">
-          <table>
-            <thead><tr><th>客服</th><th class="num">W1</th><th class="num">W2</th><th class="num">W3</th><th class="num">W4</th><th class="num">四周合计</th><th class="num">W4占比</th><th class="num">W4排名</th></tr></thead>
-            <tbody id="sales-table"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="sec">
-        <div class="sec-header"><div class="sec-title">销售贡献分析洞察</div></div>
-        <div class="insight-grid">
-          <div class="insight insight-green">
-            <div class="insight-title">🥇 销售双核：吕晨 + 张胜男</div>
-            <div class="insight-body">两位全职客服四周合计销售约66.5万，占全团队累计销售额的84.3%。吕晨在W1-W2销售领先，张胜男W4反超吕晨（7.17万 vs 6.58万），成为W4销售第一。</div>
-          </div>
-          <div class="insight insight-blue">
-            <div class="insight-title">💡 刘悦销售潜力突出</div>
-            <div class="insight-body">W2销售22,368元位列第三，四周合计41,327元。作为兼职新客服，销售表现已超越多数兼职老客服。W4下滑至2,903元，建议关注其W4工时排班是否减少。</div>
-          </div>
-          <div class="insight insight-amber">
-            <div class="insight-title">⚠️ W3销售数据异常，强烈建议核查</div>
-            <div class="insight-body">吕晨W3销售仅3万（vs W2的14.6万），张胜男W3仅2.6万（vs W2的10.2万），整体W3客服销售额降至8.6万。符合W3比价阶段的业务规律：用户通过私域咨询后流向电商平台成交，私域直接销售转化率下降属正常现象，非客服表现问题。</div>
-          </div>
-          <div class="insight insight-coral">
-            <div class="insight-title">📋 兼职客服销售：排班有限，潜力可期</div>
-            <div class="insight-body">黄桥、朱梦娣、王洁茹销售额较低，主要原因是这几位按实际排班出勤，出勤周次和工时有限，销售机会相对少于全职。建议在有排班的周次内重点跟进：① 确认有赞分销账号已开通激活；② 提供产品推荐话术参考；③ 根据实际出勤工时设置阶段性小目标，逐步建立转化习惯。</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════ PAGE: 个人表现 ══════════════════════════ -->
-    <div class="page" id="page-perf">
-      <div class="period-bar">
-        <button class="period-btn active" onclick="setPeriod(3,this)">W4（最新）</button>
-        <button class="period-btn" onclick="setPeriod(2,this)">W3</button>
-        <button class="period-btn" onclick="setPeriod(1,this)">W2</button>
-        <button class="period-btn" onclick="setPeriod(0,this)">W1</button>
-      </div>
-
-      <div class="sec">
-        <div class="sec-header"><div class="sec-title" id="perf-period-title">W4 客服综合排名表</div></div>
-        <div class="tbl-card">
-          <table>
-            <thead><tr>
-              <th>客服</th><th class="num">接待量</th><th class="num">接待排名</th>
-              <th class="num">销售额</th><th class="num">销售排名</th>
-              <th class="num">人效(¥/次)</th><th class="num">人效排名</th>
-              <th class="num">满意度</th><th class="num">平响(s)</th><th class="num">响应排名</th>
-            </tr></thead>
-            <tbody id="perf-table"></tbody>
-          </table>
-        </div>
-        <div style="font-size:11px;color:var(--text-hint);margin-top:-8px">※ 李亚飞为客服组长，兼负管理职责，接待量较低属正常；响应时间最快，体现管理响应能力。</div>
-      </div>
-
-      <div class="chart-row">
-        <div class="chart-card">
-          <div class="chart-label" id="rank-rec-title">W4 接待量排名</div>
-          <div style="position:relative;height:260px">
-            <canvas id="c-rank-rec" role="img" aria-label="接待量排名柱状图"></canvas>
-          </div>
-        </div>
-        <div class="chart-card">
-          <div class="chart-label" id="rank-sales-title">W4 销售额排名</div>
-          <div style="position:relative;height:260px">
-            <canvas id="c-rank-sales" role="img" aria-label="销售额排名柱状图"></canvas>
-          </div>
-        </div>
-      </div>
-
-      <div class="sec">
-        <div class="sec-header"><div class="sec-title">平均响应时间趋势（全周期）</div></div>
-        <div class="chart-card">
-          <div class="chart-label">各客服平响趋势（秒，越低越好）</div>
-          <div class="legend" id="resp-legend"></div>
-          <div style="position:relative;height:300px">
-            <canvas id="c-resp-trend" role="img" aria-label="各客服平响时间趋势图"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════ PAGE: 结论与建议 ══════════════════════════ -->
-    <div class="page" id="page-insights">
-      <div class="sec">
-        <div class="sec-header"><div class="sec-title">主要结论</div></div>
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <div class="insight insight-green">
-            <div class="insight-title">📌 结论一：活动驱动效果显著，私域团队是流量承接的关键支柱</div>
-            <div class="insight-body">5/8活动开启后W2咨询量与销售额同步增长，W3进入比价阶段后接待量持续攀升但私域直接成交减少——私域客服在活动不同阶段承担不同角色：W2以"引导成交"为主，W3以"咨询答疑、辅助引流至电商"为主。W4新品上架后销售额大幅反弹至15.9万，验证了新品节点的高转化效率。四周累计销售额达78.8万，充分体现私域客服的综合价值。</div>
-          </div>
-          <div class="insight insight-blue">
-            <div class="insight-title">📌 结论二：全职客服是销售核心，团队贡献高度集中</div>
-            <div class="insight-body">吕晨（全职）+ 张胜男（全职）四周合计销售额占团队总额的84.3%，是无可替代的销售主力。吕晨以接待量领先，张胜男以转化效率领先（W4人效89.5元/次）。李亚飞作为组长，接待量较低属正常，其极低的响应时间（W4仅11.9s）体现了管理状态的高度在线。</div>
-          </div>
-          <div class="insight insight-amber">
-            <div class="insight-title">📌 结论三：W3为比价阶段，咨询高销售低属正常业务规律</div>
-            <div class="insight-body">W3接待量达峰值（5,444次）而客服销售额降至8.6万，是可解释的结构性现象：活动持续期间，用户进入电商平台比价阶段，大量用户借助私域客服了解产品详情、活动政策后，选择在电商渠道下单。私域客服在此阶段承担的是"咨询引流"而非"直接成交"的角色。此外，个微W3咨询量出现下降，且前期个微数据存在异常，也对接待量与销售额的比例关系产生了影响。</div>
-          </div>
-          <div class="insight insight-coral">
-            <div class="insight-title">📌 结论四：响应效率与满意度整体健康，活动期压力点需监控</div>
-            <div class="insight-body">W1-W2有赞满意度多数客服达到100%满分，反映日常服务质量良好。但肖佳怡在W2（128.7s）、W3（107s）平响明显拉长，刘悦在W4销售额下滑，这些均是值得关注的个体信号。朱梦娣排班工时在逐步增加，接待量稳步提升，后续可重点跟进销售转化引导。</div>
-          </div>
-          <div class="insight" style="border-left-color:var(--purple-mid)">
-            <div class="insight-title">📌 结论五：兼职新客服成长可期，长尾销售潜力有待释放</div>
-            <div class="insight-body">朱梦娣四周接待量增长289%，刘悦W2销售2.2万表现突出——兼职新客服整体成长轨迹积极。黄桥、朱梦娣、王洁茹销售额较低，主要受限于排班工时，出勤周次内接待机会有限。随着排班逐步完善、出勤频次提升，这部分长尾销售潜力值得期待，建议配合销售话术培训同步推进。</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="sec">
-        <div class="sec-header"><div class="sec-title">3条管理优化建议</div></div>
-        <div style="display:flex;flex-direction:column;gap:14px">
-          <div class="chart-card" style="border-left:4px solid var(--green-mid)">
-            <div class="chart-label">💡 建议一：建立活动期弹性工时排班机制</div>
-            <div style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.7">
-              <strong>问题背景：</strong>W2活动开启期接待量激增70%，客服同步承压明显；W3进入比价阶段后接待量继续攀升至峰值，部分客服（如肖佳怡W3平响107s）响应时间拉长，影响咨询服务体验。在活动的不同阶段，客服承担的工作性质有所不同，需要有针对性的排班支撑。<br><br>
-              <strong>建议方案：</strong>依据活动节奏制定分阶段排班预案：① 活动开启期（如W2）重点保障转化效率，全职客服主导成交引导；② 比价高峰期（如W3）增加兼职客服在线覆盖，以"快速答疑"为核心目标，缩短响应等待；③ 新品上架节点提前增配排班，确保成交窗口不因咨询堆积而流失。
-            </div>
-          </div>
-          <div class="chart-card" style="border-left:4px solid var(--blue-mid)">
-            <div class="chart-label">💡 建议二：系统提升兼职客服有赞销售转化能力</div>
-            <div style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.7">
-              <strong>问题背景：</strong>黄桥、朱梦娣、王洁茹等兼职客服因排班工时有限，有赞销售额积累相对较少。在有排班的周次内，销售转化仍有提升空间，是可挖掘的增量来源。<br><br>
-              <strong>建议方案：</strong>① 核查所有兼职客服有赞分销账号是否已开通并激活；② 建立"销售话术卡片库"，含主动推荐场景、产品利益点、活动链接发送时机等，降低转化门槛；③ 结合实际排班工时设置阶梯式小目标（初期建议每出勤周100-300元），帮助兼职客服逐步建立销售意识与转化习惯。
-            </div>
-          </div>
-          <div class="chart-card" style="border-left:4px solid var(--amber-mid)">
-            <div class="chart-label">💡 建议三：强化数据标准化与异常预警机制</div>
-            <div style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.7">
-              <strong>问题背景：</strong>W3个微咨询量出现下降，且个微前期数据存在异常情况。在活动不同阶段（开启期/比价期/新品期）私域客服的角色与重心不同，若不区分阶段解读数据，容易产生误判。<br><br>
-              <strong>建议方案：</strong>① 跟进排查个微前期数据异常原因，明确是系统统计问题还是实际接待变化；② 建立分阶段数据解读框架——活动开启期重点看"销售转化率"，比价期重点看"咨询响应效率"，新品期重点看"人效"；③ 将本看板作为管理层常规工具，每周结合活动节点进行针对性复盘，避免孤立看单一指标。
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /content -->
-</div><!-- /main -->
-</div><!-- /app -->
-
 <script>
-const AGENTS = ['吕晨','张胜男','Vicky','肖佳怡','刘悦','黄桥','朱梦娣','王洁茹','李亚飞'];
-const AGENT_TYPES = {'吕晨':'full','张胜男':'full','Vicky':'part-old','肖佳怡':'part-old','刘悦':'part-new','黄桥':'part-old','朱梦娣':'part-new','王洁茹':'part-new','李亚飞':'lead'};
-const TYPE_LABELS = {'full':'全职','part-old':'兼职老','part-new':'兼职新','lead':'组长'};
-const TYPE_TAG = {'full':'tag-ft','part-old':'tag-pt','part-new':'tag-new','lead':'tag-lead'};
-const PERIODS = ['W1(5/2-8)','W2(5/9-15)','W3(5/16-22)','W4(5/23-29)'];
-const COLORS = ['#378ADD','#1D9E75','#BA7517','#D4537E'];
-const COLORS_A = ['rgba(55,138,221,0.82)','rgba(29,158,117,0.82)','rgba(186,117,23,0.82)','rgba(212,83,126,0.82)'];
-
-const RECEPTION = {
-  '吕晨':  [482,784,1618,940],
-  '张胜男':[498,983,583,801],
-  'Vicky': [447,740,1184,711],
-  '肖佳怡':[179,639,1216,518],
-  '刘悦':  [302,406,495,570],
-  '黄桥':  [163,0,157,168],
-  '朱梦娣':[67,66,189,261],
-  '王洁茹':[43,178,0,149],
-  '李亚飞':[70,39,2,51]
-};
-const SALES = {
-  '吕晨':  [157538.32,145888.12,30579.65,65777.36],
-  '张胜男':[79092.28,102049.47,26438.02,71701.40],
-  'Vicky': [8662.10,8349.20,12168.03,9530.70],
-  '肖佳怡':[823.62,9936.10,5264.25,8585.81],
-  '刘悦':  [7541.33,22368.10,8514.63,2902.90],
-  '黄桥':  [618.50,337.10,2795.00,174.70],
-  '朱梦娣':[0,0,0,0],
-  '王洁茹':[0,0,0,0],
-  '李亚飞':[269.90,0,0,0]
-};
-const AVG_RESP = {
-  '吕晨':  [54.9,56.7,72.0,36.6],
-  '张胜男':[51.5,56.9,35.9,41.4],
-  'Vicky': [72.7,55.8,53.0,52.6],
-  '肖佳怡':[69.5,128.7,107.0,84.7],
-  '刘悦':  [38.5,40.1,42.8,41.6],
-  '黄桥':  [62.7,null,87.3,77.7],
-  '朱梦娣':[50.2,40.4,73.0,51.1],
-  '王洁茹':[78.0,72.0,null,86.0],
-  '李亚飞':[62.5,14.8,null,11.9]
-};
-const SATISFACTION = {
-  '吕晨':  [80.0,92.3,100.0,null],
-  '张胜男':[100.0,null,null,null],
-  'Vicky': [100.0,100.0,null,null],
-  '肖佳怡':[100.0,100.0,null,null],
-  '刘悦':  [100.0,100.0,null,null],
-  '黄桥':  [100.0,100.0,null,null],
-  '朱梦娣':[100.0,100.0,null,null],
-  '王洁茹':[100.0,100.0,null,null],
-  '李亚飞':[null,100.0,null,null]
+// ============ DATA ============
+const DATA = {
+  apr: {
+    "吕晨":    { total:2500,gw:979,qw:1262,yz:259,  sales:153470.77,renxiao:61.39,avg_resp:43.6,satis:100,reply_rate:95.9 },
+    "张胜男":  { total:2476,gw:1023,qw:1221,yz:232, sales:118467.22,renxiao:47.85,avg_resp:73.3,satis:100,reply_rate:97.2 },
+    "李亚飞":  { total:443, gw:156, qw:189, yz:98,  sales:5431.79,  renxiao:12.26,avg_resp:63.3,satis:100,reply_rate:97.0 },
+    "Vicky":   { total:2042,gw:865, qw:977, yz:200, sales:12189.21, renxiao:5.97, avg_resp:48.6,satis:95, reply_rate:94.5 },
+    "肖佳怡":  { total:580, gw:289, qw:265, yz:26,  sales:412.0,    renxiao:0.71, avg_resp:90.0,satis:100,reply_rate:89.9 },
+    "黄桥":    { total:844, gw:316, qw:459, yz:69,  sales:4717.0,   renxiao:5.59, avg_resp:82.0,satis:100,reply_rate:87.3 },
+    "刘悦":    { total:1341,gw:508, qw:701, yz:132, sales:9520.46,  renxiao:7.10, avg_resp:36.7,satis:100,reply_rate:97.5 },
+    "朱梦娣":  { total:101, gw:45,  qw:53,  yz:3,   sales:0,        renxiao:0,    avg_resp:44.6,satis:100,reply_rate:94.4 },
+    "万紫欣":  { total:148, gw:0,   qw:116, yz:32,  sales:0,        renxiao:0,    avg_resp:46.0,satis:100,reply_rate:null }
+  },
+  may: {
+    "吕晨":    { total:3824,gw:1850,qw:1498,yz:476, sales:407523.96,renxiao:106.57,avg_resp:54.3,satis:100,reply_rate:95.1 },
+    "张胜男":  { total:3790,gw:1657,qw:1624,yz:509, sales:290803.19,renxiao:76.73, avg_resp:45.8,satis:95.6,reply_rate:96.2 },
+    "李亚飞":  { total:215, gw:13,  qw:181, yz:21,  sales:269.9,    renxiao:1.26,  avg_resp:45.7,satis:100,reply_rate:80.3 },
+    "Vicky":   { total:3250,gw:1645,qw:1261,yz:344, sales:37722.03, renxiao:11.61, avg_resp:51.5,satis:100,reply_rate:94.2 },
+    "肖佳怡":  { total:2625,gw:1456,qw:969, yz:200, sales:24788.78, renxiao:9.44,  avg_resp:106.3,satis:100,reply_rate:88.3 },
+    "黄桥":    { total:681, gw:262, qw:327, yz:92,  sales:5211.4,   renxiao:7.65,  avg_resp:74.3,satis:100,reply_rate:87.8 },
+    "刘悦":    { total:1910,gw:633, qw:989, yz:288, sales:42813.96, renxiao:22.42, avg_resp:39.8,satis:100,reply_rate:97.1 },
+    "朱梦娣":  { total:583, gw:250, qw:283, yz:50,  sales:0,        renxiao:0,     avg_resp:54.8,satis:100,reply_rate:89.9 },
+    "王洁茹":  { total:370, gw:111, qw:171, yz:88,  sales:0,        renxiao:0,     avg_resp:76.9,satis:100,reply_rate:86.4 },
+    "王璇":    { total:51,  gw:29,  qw:22,  yz:0,   sales:0,        renxiao:0,     avg_resp:239.5,satis:null,reply_rate:59.0 }
+  }
 };
 
-function fmtN(n){if(n==null||isNaN(n))return '-';return Math.round(n).toLocaleString('zh-CN');}
-function fmtY(n){if(n==null||isNaN(n)||n===0)return '-';return '¥'+n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
-function fmtYK(n){if(!n)return '-';return '¥'+(n/10000).toFixed(1)+'万';}
-function rankBadge(r){if(!r)return '-';let c=r===1?'rk-1':r===2?'rk-2':r===3?'rk-3':'rk-n';return `<span class="rk ${c}">${r}</span>`;}
-function tagHTML(a){let t=AGENT_TYPES[a]||'part-new';return `<span class="tag ${TYPE_TAG[t]}">${TYPE_LABELS[t]}</span>`;}
-function rankArr(vals,asc){
-  let pairs=vals.map((v,i)=>({v,i})).filter(x=>x.v!=null&&x.v>0);
-  pairs.sort((a,b)=>asc?a.v-b.v:b.v-a.v);
-  let ranks=new Array(vals.length).fill(null);
-  pairs.forEach((x,ri)=>{ranks[x.i]=ri+1;});
-  return ranks;
+const APR_TOTAL = 10475, APR_SALES = 304208.45;
+const MAY_TOTAL = 17299, MAY_SALES = 809133.22;
+
+const APR_COLOR = 'rgba(124,106,247,0.85)';
+const MAY_COLOR = 'rgba(247,121,90,0.85)';
+const APR_LIGHT = 'rgba(124,106,247,0.2)';
+const MAY_LIGHT = 'rgba(247,121,90,0.2)';
+
+const MEMBER_ROLES = {
+  "吕晨":"全职","张胜男":"全职","李亚飞":"组长",
+  "Vicky":"兼职老","肖佳怡":"兼职老","黄桥":"兼职老","刘悦":"兼职老",
+  "朱梦娣":"兼职新","王洁茹":"兼职新","王璇":"兼职新","万紫欣":"兼职新"
+};
+
+// Helpers
+const fmt = (n,d=0) => n==null?'—':n.toLocaleString('zh-CN',{maximumFractionDigits:d,minimumFractionDigits:d});
+const fmtW = n => n==null?'—':((n/10000).toFixed(2)+'万');
+const pct = (a,b) => b===0?'—':(((a-b)/b)*100).toFixed(1)+'%';
+
+// Init header
+document.getElementById('h-may-recv').textContent = fmt(MAY_TOTAL);
+document.getElementById('h-apr-recv').textContent = fmt(APR_TOTAL);
+document.getElementById('h-may-sales').textContent = fmtW(MAY_SALES);
+document.getElementById('h-apr-sales').textContent = fmtW(APR_SALES);
+document.getElementById('h-recv-delta').textContent = '+'+pct(MAY_TOTAL,APR_TOTAL);
+document.getElementById('h-sales-delta').textContent = '+'+pct(MAY_SALES,APR_SALES);
+
+// Overview KPIs
+const mayMembers = Object.keys(DATA.may).length;
+const aprMembers = Object.keys(DATA.apr).length;
+document.getElementById('ov-may-recv').textContent = fmt(MAY_TOTAL);
+document.getElementById('ov-may-sales').textContent = fmtW(MAY_SALES);
+document.getElementById('ov-recv-chg').textContent = '环比 +'+pct(MAY_TOTAL,APR_TOTAL);
+document.getElementById('ov-sales-chg').textContent = '环比 +'+pct(MAY_SALES,APR_SALES);
+document.getElementById('ov-avg-recv').textContent = fmt(Math.round(MAY_TOTAL/mayMembers));
+document.getElementById('ov-avg-recv-chg').textContent = '4月均值 '+fmt(Math.round(APR_TOTAL/aprMembers));
+document.getElementById('ov-avg-sales').textContent = fmtW(MAY_SALES/mayMembers);
+document.getElementById('ov-avg-sales-chg').textContent = '4月均值 '+fmtW(APR_SALES/aprMembers);
+
+// Compare KPIs
+document.getElementById('cmp-recv-delta').textContent = '+'+pct(MAY_TOTAL,APR_TOTAL);
+document.getElementById('cmp-sales-delta').textContent = '+'+pct(MAY_SALES,APR_SALES);
+document.getElementById('cmp-sales-abs').textContent = '80.9万 vs 30.4万';
+const aprRx = APR_SALES/APR_TOTAL, mayRx = MAY_SALES/MAY_TOTAL;
+document.getElementById('cmp-renxiao').textContent = mayRx.toFixed(1);
+document.getElementById('cmp-resp').textContent = '~60秒';
+document.getElementById('cmp-resp-chg').textContent = '5月响应时间略有波动';
+
+// ========== CHARTS ===========
+
+// Helper: create chart
+let charts = {};
+function newChart(id, type, data, opts={}) {
+  const ctx = document.getElementById(id);
+  if (!ctx) return;
+  if (charts[id]) charts[id].destroy();
+  charts[id] = new Chart(ctx, { type, data, options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{labels:{font:{size:11}}}}, ...opts } });
 }
 
-let currentPeriod = 3;
-let chartInstances = {};
+// Overview: reception + sales
+function buildOverview() {
+  // Platform reception
+  const aprPlat = { gw:0,qw:0,yz:0 }, mayPlat = { gw:0,qw:0,yz:0 };
+  Object.values(DATA.apr).forEach(v=>{ aprPlat.gw+=v.gw;aprPlat.qw+=v.qw;aprPlat.yz+=v.yz; });
+  Object.values(DATA.may).forEach(v=>{ mayPlat.gw+=v.gw;mayPlat.qw+=v.qw;mayPlat.yz+=v.yz; });
 
-function destroyChart(id){
-  if(chartInstances[id]){chartInstances[id].destroy();delete chartInstances[id];}
+  newChart('chart-overview-recv','bar',{
+    labels:['个微','企微','有赞'],
+    datasets:[
+      {label:'4月',data:[aprPlat.gw,aprPlat.qw,aprPlat.yz],backgroundColor:APR_COLOR,borderRadius:6},
+      {label:'5月',data:[mayPlat.gw,mayPlat.qw,mayPlat.yz],backgroundColor:MAY_COLOR,borderRadius:6}
+    ]
+  },{plugins:{legend:{position:'top'}},scales:{y:{ticks:{font:{size:10}}},x:{ticks:{font:{size:11}}}}});
+
+  newChart('chart-overview-sales','bar',{
+    labels:['4月','5月'],
+    datasets:[{label:'总销售额（万元）',data:[APR_SALES/10000,MAY_SALES/10000],backgroundColor:[APR_COLOR,MAY_COLOR],borderRadius:8}]
+  },{plugins:{legend:{display:false}},scales:{y:{ticks:{font:{size:10}}},x:{ticks:{font:{size:12}}}}});
+
+  // Person overview
+  const mNames = Object.keys(DATA.may);
+  newChart('chart-overview-person','bar',{
+    labels: mNames,
+    datasets:[
+      {label:'接待量',data:mNames.map(n=>DATA.may[n].total),backgroundColor:APR_COLOR,borderRadius:5,yAxisID:'y'},
+      {label:'销售额（万元）',data:mNames.map(n=>DATA.may[n].sales/10000),backgroundColor:MAY_COLOR,borderRadius:5,yAxisID:'y1'}
+    ]
+  },{scales:{y:{type:'linear',position:'left',ticks:{font:{size:10}}},y1:{type:'linear',position:'right',grid:{drawOnChartArea:false},ticks:{font:{size:10}}}},plugins:{legend:{position:'top'}}});
 }
-function mkChart(id,config){
-  destroyChart(id);
-  const ctx=document.getElementById(id);
-  if(!ctx)return;
-  chartInstances[id]=new Chart(ctx,config);
+
+// Compare charts
+function buildCompare() {
+  const common = ['吕晨','张胜男','Vicky','肖佳怡','黄桥','刘悦','朱梦娣'];
+  const aprR = common.map(n=>DATA.apr[n]?.total||0);
+  const mayR = common.map(n=>DATA.may[n]?.total||0);
+  const aprS = common.map(n=>(DATA.apr[n]?.sales||0)/10000);
+  const mayS = common.map(n=>(DATA.may[n]?.sales||0)/10000);
+
+  newChart('chart-cmp-recv','bar',{
+    labels:common,
+    datasets:[
+      {label:'4月',data:aprR,backgroundColor:APR_COLOR,borderRadius:5},
+      {label:'5月',data:mayR,backgroundColor:MAY_COLOR,borderRadius:5}
+    ]
+  },{plugins:{legend:{position:'top'}},scales:{y:{ticks:{font:{size:10}}},x:{ticks:{font:{size:11}}}}});
+
+  newChart('chart-cmp-sales','bar',{
+    labels:common,
+    datasets:[
+      {label:'4月',data:aprS,backgroundColor:APR_COLOR,borderRadius:5},
+      {label:'5月',data:mayS,backgroundColor:MAY_COLOR,borderRadius:5}
+    ]
+  },{plugins:{legend:{position:'top'}},scales:{y:{ticks:{font:{size:10}}},x:{ticks:{font:{size:11}}}}});
+
+  // Response time
+  const respNames = common;
+  newChart('chart-cmp-resp','bar',{
+    labels:respNames,
+    datasets:[
+      {label:'4月平响（秒）',data:respNames.map(n=>DATA.apr[n]?.avg_resp||null),backgroundColor:APR_LIGHT,borderColor:APR_COLOR,borderWidth:2,borderRadius:5},
+      {label:'5月平响（秒）',data:respNames.map(n=>DATA.may[n]?.avg_resp||null),backgroundColor:MAY_LIGHT,borderColor:MAY_COLOR,borderWidth:2,borderRadius:5}
+    ]
+  },{plugins:{legend:{position:'top'}},scales:{y:{ticks:{font:{size:10}}},x:{ticks:{font:{size:11}}}}});
 }
 
-const gridColor='rgba(120,118,112,0.1)';
-const tickColor='#9b9790';
-const baseOpts={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{
-  x:{grid:{display:false},ticks:{color:tickColor,font:{size:11},autoSkip:false,maxRotation:0}},
-  y:{grid:{color:gridColor},ticks:{color:tickColor,font:{size:11}},border:{display:false}}
-}};
+// Workload charts
+let wlPeriod = 'apr';
+function buildWorkload(period) {
+  const d = DATA[period];
+  const names = Object.keys(d).filter(n=>d[n].total>0);
+  const totals = names.map(n=>d[n].total);
+  const colors = names.map((_,i)=>period==='apr'?APR_COLOR:MAY_COLOR);
 
-function initOverview(){
-  mkChart('c-overview-trend',{
-    type:'bar',
-    data:{
-      labels:PERIODS,
+  document.getElementById('wl-chart-title').textContent = `接待量分布（${period==='apr'?'4月':'5月'}）`;
+
+  if (period==='both') {
+    const bn = ['吕晨','张胜男','Vicky','肖佳怡','黄桥','刘悦','朱梦娣'];
+    newChart('chart-workload','bar',{
+      labels:bn,
       datasets:[
-        {label:'总接待量',data:[2251,3834,5444,4169],backgroundColor:COLORS_A[0],yAxisID:'y',borderRadius:3},
-        {label:'销售额(万)',data:[25.45,28.89,8.58,15.87],backgroundColor:COLORS_A[1],yAxisID:'y1',borderRadius:3}
+        {label:'4月',data:bn.map(n=>DATA.apr[n]?.total||0),backgroundColor:APR_COLOR,borderRadius:5},
+        {label:'5月',data:bn.map(n=>DATA.may[n]?.total||0),backgroundColor:MAY_COLOR,borderRadius:5}
       ]
-    },
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{
-      x:{grid:{display:false},ticks:{color:tickColor,font:{size:11}}},
-      y:{position:'left',grid:{color:gridColor},ticks:{color:tickColor,font:{size:11},callback:v=>v.toLocaleString()},border:{display:false}},
-      y1:{position:'right',grid:{display:false},ticks:{color:tickColor,font:{size:11},callback:v=>'¥'+v+'万'},border:{display:false}}
-    }}
+    },{plugins:{legend:{position:'top'}},scales:{y:{ticks:{font:{size:10}}},x:{ticks:{font:{size:11}}}}});
+    document.getElementById('wl-chart-title').textContent = '接待量对比（4月 vs 5月）';
+  } else {
+    newChart('chart-workload','bar',{
+      labels:names,
+      datasets:[{label:'接待量',data:totals,backgroundColor:colors,borderRadius:6}]
+    },{plugins:{legend:{display:false}},scales:{y:{ticks:{font:{size:10}}},x:{ticks:{font:{size:11}}}}});
+  }
+
+  // Platform distribution
+  ['apr','may'].forEach(p=>{
+    const pd = DATA[p];
+    const gw = Object.values(pd).reduce((s,v)=>s+v.gw,0);
+    const qw = Object.values(pd).reduce((s,v)=>s+v.qw,0);
+    const yz = Object.values(pd).reduce((s,v)=>s+v.yz,0);
+    newChart(`chart-wl-platform-${p}`,'doughnut',{
+      labels:['个微','企微','有赞'],
+      datasets:[{data:[gw,qw,yz],backgroundColor:['rgba(124,106,247,0.8)','rgba(46,196,182,0.8)','rgba(247,181,71,0.8)'],borderWidth:2}]
+    },{plugins:{legend:{position:'right',labels:{font:{size:11}}}}});
+  });
+}
+
+function setWorkloadPeriod(period, btn) {
+  wlPeriod = period;
+  document.querySelectorAll('#tab-workload .toggle-btn').forEach(b=>{
+    b.className = 'toggle-btn';
+    b.style.background = '';
+  });
+  if(period==='apr') btn.className='toggle-btn active-apr';
+  else if(period==='may') btn.className='toggle-btn active-may';
+  else { btn.style.background='var(--slate)'; btn.style.color='#fff'; }
+  buildWorkload(period);
+}
+
+// Sales pie charts
+function buildSales() {
+  ['apr','may'].forEach(p=>{
+    const d = DATA[p];
+    const names = Object.keys(d).filter(n=>d[n].sales>0);
+    const vals = names.map(n=>d[n].sales);
+    const palette = ['#7c6af7','#f7795a','#2ec4b6','#ffb547','#f05e5e','#60c8f5','#b2a8ff','#ffd4c9'];
+    newChart(`chart-sales-pie-${p}`,'doughnut',{
+      labels:names,
+      datasets:[{data:vals,backgroundColor:palette,borderWidth:2}]
+    },{plugins:{legend:{position:'right',labels:{font:{size:11}}}}});
   });
 
-  // Team table
-  const tb=document.getElementById('team-table');
-  AGENTS.forEach(a=>{
-    const r=RECEPTION[a]||[0,0,0,0];
-    const s=SALES[a]||[0,0,0,0];
-    const tot=r.reduce((sum,v)=>sum+(v||0),0);
-    const stot=s.reduce((sum,v)=>sum+(v||0),0);
-    tb.innerHTML+=`<tr>
-      <td><strong>${a}</strong></td>
-      <td>${tagHTML(a)}</td>
-      <td class="num">${fmtN(r[0])}</td><td class="num">${fmtN(r[1])}</td>
-      <td class="num">${fmtN(r[2])}</td><td class="num">${fmtN(r[3])}</td>
-      <td class="num"><strong>${fmtN(tot)}</strong></td>
-      <td class="num">${stot>0?fmtYK(stot):'-'}</td>
+  // Bar comparison
+  const snames = ['吕晨','张胜男','刘悦','Vicky','肖佳怡','黄桥','李亚飞'];
+  newChart('chart-sales-bar','bar',{
+    labels:snames,
+    datasets:[
+      {label:'4月（万元）',data:snames.map(n=>(DATA.apr[n]?.sales||0)/10000),backgroundColor:APR_COLOR,borderRadius:5},
+      {label:'5月（万元）',data:snames.map(n=>(DATA.may[n]?.sales||0)/10000),backgroundColor:MAY_COLOR,borderRadius:5}
+    ]
+  },{plugins:{legend:{position:'top'}},scales:{y:{ticks:{font:{size:10}}},x:{ticks:{font:{size:11}}}}});
+}
+
+// Perf table
+let perfPeriod = 'apr';
+function buildPerfTable(period) {
+  const d = DATA[period];
+  const names = Object.keys(d);
+
+  // Compute ranks
+  const sorted_recv = [...names].sort((a,b)=>d[b].total-d[a].total);
+  const sorted_sales = [...names].filter(n=>d[n].sales>0).sort((a,b)=>d[b].sales-d[a].sales);
+  const sorted_rx = [...names].filter(n=>d[n].renxiao>0).sort((a,b)=>d[b].renxiao-d[a].renxiao);
+  const sorted_satis = [...names].filter(n=>d[n].satis!=null).sort((a,b)=>d[b].satis-d[a].satis);
+  const sorted_resp = [...names].filter(n=>d[n].avg_resp!=null).sort((a,b)=>d[a].avg_resp-d[b].avg_resp);
+
+  const rank = (arr,n) => { const i=arr.indexOf(n); return i>=0?i+1:null; };
+
+  function rankBadge(r) {
+    if(r==null) return '<span class="empty-cell">—</span>';
+    const cls = r===1?'rank-1':r===2?'rank-2':r===3?'rank-3':'rank-n';
+    return `<span class="rank-badge ${cls}">${r}</span>`;
+  }
+
+  function roleTag(name) {
+    const role = MEMBER_ROLES[name]||'';
+    if(role==='组长') return '<span class="role-tag tag-lead">组长</span>';
+    if(role==='全职') return '<span class="role-tag">全职</span>';
+    if(role.includes('老')) return '<span class="role-tag tag-pt">兼职</span>';
+    if(role.includes('新')) return '<span class="role-tag tag-pt" style="background:#fff0f0;color:#c04040">兼职新</span>';
+    return '';
+  }
+
+  const tbody = document.getElementById('perf-tbody');
+  tbody.innerHTML = names.map(name => {
+    const v = d[name];
+    return `<tr>
+      <td><strong>${name}</strong>${roleTag(name)}</td>
+      <td>${fmt(v.total)}</td>
+      <td>${rankBadge(rank(sorted_recv,name))}</td>
+      <td>${v.sales>0?fmt(v.sales,2):'<span class="empty-cell">0</span>'}</td>
+      <td>${rankBadge(rank(sorted_sales,name))}</td>
+      <td>${v.renxiao>0?fmt(v.renxiao,2)+'元':'<span class="empty-cell">0</span>'}</td>
+      <td>${rankBadge(rank(sorted_rx,name))}</td>
+      <td>${v.satis!=null?v.satis+'%':'<span class="empty-cell">—</span>'}</td>
+      <td>${rankBadge(rank(sorted_satis,name))}</td>
+      <td>${v.avg_resp!=null?v.avg_resp+'s':'<span class="empty-cell">—</span>'}</td>
+      <td>${rankBadge(rank(sorted_resp,name))}</td>
     </tr>`;
-  });
+  }).join('');
+
+  // Renxiao chart
+  const rxNames = sorted_rx;
+  newChart('chart-renxiao','bar',{
+    labels:rxNames,
+    datasets:[{label:'人效（元/次）',data:rxNames.map(n=>d[n].renxiao),backgroundColor:period==='apr'?APR_COLOR:MAY_COLOR,borderRadius:6}]
+  },{plugins:{legend:{display:false}},scales:{y:{ticks:{font:{size:10}}},x:{ticks:{font:{size:11}}}}});
+  document.getElementById('renxiao-title').textContent = `人效排名（元/次）— ${period==='apr'?'4月':'5月'}`;
 }
 
-function initTrend(){
-  mkChart('c-trend-reception',{
-    type:'bar',
-    data:{labels:PERIODS,datasets:[{label:'接待量',data:[2251,3834,5444,4169],backgroundColor:COLORS_A,borderRadius:4}]},
-    options:{...baseOpts,scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toLocaleString()}}}}
-  });
-  mkChart('c-trend-sales',{
-    type:'line',
-    data:{labels:PERIODS,datasets:[{label:'销售额',data:[254545,288928,85759,158673],borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.08)',tension:0.4,fill:true,pointRadius:5,pointBackgroundColor:'#1D9E75',pointBorderColor:'#fff',pointBorderWidth:2}]},
-    options:{...baseOpts,scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>'¥'+Math.round(v/1000)+'k'}}}}
-  });
+function setPerfPeriod(period, btn) {
+  perfPeriod = period;
+  document.querySelectorAll('#tab-perf .toggle-btn').forEach(b=>b.className='toggle-btn');
+  btn.className = period==='apr'?'toggle-btn active-apr':'toggle-btn active-may';
+  buildPerfTable(period);
 }
 
-function initWorkload(){
-  const ag=AGENTS.filter(a=>a!=='李亚飞');
-  mkChart('c-workload-bar',{
-    type:'bar',
-    data:{labels:ag,datasets:PERIODS.map((p,i)=>({label:p,data:ag.map(a=>(RECEPTION[a]||[0,0,0,0])[i]||0),backgroundColor:COLORS_A[i],borderRadius:3}))},
-    options:{...baseOpts,scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toLocaleString()}}}}
-  });
-
-  const w4rec=AGENTS.filter(a=>a!=='李亚飞').map(a=>({name:a,v:(RECEPTION[a]||[0,0,0,0])[3]||0})).filter(d=>d.v>0);
-  mkChart('c-workload-pie',{
-    type:'doughnut',
-    data:{labels:w4rec.map(d=>d.name),datasets:[{data:w4rec.map(d=>d.v),backgroundColor:['#378ADD','#1D9E75','#D4537E','#BA7517','#7F77DD','#1D9E75','#888780'],borderWidth:2,borderColor:'#fff'}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:12},padding:10,color:tickColor}}}}
-  });
-
-  const tb=document.getElementById('workload-table');
-  AGENTS.forEach(a=>{
-    const r=RECEPTION[a]||[0,0,0,0];
-    const tot=r.reduce((s,v)=>s+(v||0),0);
-    const trend=r[3]>r[0]?`<span class="up">↑ ${Math.round((r[3]-r[0])/Math.max(r[0],1)*100)}%</span>`:r[3]<r[0]?`<span class="dn">↓ ${Math.round((r[0]-r[3])/Math.max(r[0],1)*100)}%</span>`:`<span class="neu">—</span>`;
-    tb.innerHTML+=`<tr>
-      <td><strong>${a}</strong></td><td>${tagHTML(a)}</td>
-      <td class="num">${r[0]||'-'}</td><td class="num">${r[1]||'-'}</td>
-      <td class="num">${r[2]||'-'}</td><td class="num">${r[3]||'-'}</td>
-      <td class="num"><strong>${fmtN(tot)}</strong></td>
-      <td class="num">${trend}</td>
-    </tr>`;
-  });
-}
-
-function initSales(){
-  const sAg=['吕晨','张胜男','Vicky','肖佳怡','刘悦','黄桥'];
-  mkChart('c-sales-bar',{
-    type:'bar',
-    data:{labels:sAg,datasets:PERIODS.map((p,i)=>({label:p,data:sAg.map(a=>(SALES[a]||[0,0,0,0])[i]||0),backgroundColor:COLORS_A[i],borderRadius:3}))},
-    options:{...baseOpts,scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v>=1000?'¥'+Math.round(v/1000)+'k':'¥'+v}}}}
-  });
-
-  const w4s=AGENTS.map(a=>({name:a,v:(SALES[a]||[0,0,0,0])[3]||0})).filter(d=>d.v>100);
-  mkChart('c-sales-pie',{
-    type:'doughnut',
-    data:{labels:w4s.map(d=>d.name),datasets:[{data:w4s.map(d=>d.v),backgroundColor:['#378ADD','#1D9E75','#D4537E','#BA7517','#7F77DD'],borderWidth:2,borderColor:'#fff'}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:12},padding:10,color:tickColor}}}}
-  });
-
-  const tots=AGENTS.map(a=>({name:a,v:(SALES[a]||[0,0,0,0]).reduce((s,v)=>s+(v||0),0)})).filter(d=>d.v>500);
-  mkChart('c-sales-total-pie',{
-    type:'doughnut',
-    data:{labels:tots.map(d=>d.name),datasets:[{data:tots.map(d=>d.v),backgroundColor:['#378ADD','#1D9E75','#D4537E','#BA7517','#7F77DD','#888780'],borderWidth:2,borderColor:'#fff'}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:12},padding:10,color:tickColor}}}}
-  });
-
-  const tb=document.getElementById('sales-table');
-  const w4total=AGENTS.reduce((s,a)=>s+((SALES[a]||[0,0,0,0])[3]||0),0);
-  const w4ranks=rankArr(AGENTS.map(a=>(SALES[a]||[0,0,0,0])[3]||0),false);
-  AGENTS.forEach((a,i)=>{
-    const s=(SALES[a]||[0,0,0,0]);
-    const tot=s.reduce((sum,v)=>sum+(v||0),0);
-    const w4v=s[3]||0;
-    const pct=w4total>0&&w4v>0?((w4v/w4total)*100).toFixed(1)+'%':'-';
-    tb.innerHTML+=`<tr>
-      <td><strong>${a}</strong></td>
-      <td class="num">${fmtY(s[0])}</td><td class="num">${fmtY(s[1])}</td>
-      <td class="num">${fmtY(s[2])}</td><td class="num">${fmtY(s[3])}</td>
-      <td class="num"><strong>${fmtY(tot)}</strong></td>
-      <td class="num">${pct}</td>
-      <td class="num">${w4ranks[i]?rankBadge(w4ranks[i]):'-'}</td>
-    </tr>`;
-  });
-}
-
-function renderPerfTable(pi){
-  const rec=AGENTS.map(a=>(RECEPTION[a]||[0,0,0,0])[pi]||0);
-  const sal=AGENTS.map(a=>(SALES[a]||[0,0,0,0])[pi]||0);
-  const eff=AGENTS.map((a,i)=>rec[i]>0?sal[i]/rec[i]:0);
-  const resp=AGENTS.map(a=>(AVG_RESP[a]||[null,null,null,null])[pi]);
-  const sat=AGENTS.map(a=>(SATISFACTION[a]||[null,null,null,null])[pi]);
-
-  const recRanks=rankArr(rec,false);
-  const salRanks=rankArr(sal,false);
-  const effRanks=rankArr(eff,false);
-  const respRanks=rankArr(resp.map(v=>v!=null?-v:null),false);
-
-  const tb=document.getElementById('perf-table');
-  tb.innerHTML='';
-  AGENTS.forEach((a,i)=>{
-    tb.innerHTML+=`<tr>
-      <td><strong>${a}</strong>${tagHTML(a)}</td>
-      <td class="num">${fmtN(rec[i])}</td>
-      <td class="num">${recRanks[i]?rankBadge(recRanks[i]):'-'}</td>
-      <td class="num">${sal[i]>0?fmtY(sal[i]):'-'}</td>
-      <td class="num">${salRanks[i]?rankBadge(salRanks[i]):'-'}</td>
-      <td class="num">${eff[i]>0?'¥'+eff[i].toFixed(1):'-'}</td>
-      <td class="num">${effRanks[i]?rankBadge(effRanks[i]):'-'}</td>
-      <td class="num">${sat[i]!=null?sat[i].toFixed(0)+'%':'-'}</td>
-      <td class="num">${resp[i]!=null?resp[i].toFixed(1)+'s':'-'}</td>
-      <td class="num">${respRanks[i]?rankBadge(respRanks[i]):'-'}</td>
-    </tr>`;
-  });
-
-  const pLabel = PERIODS[pi];
-  document.getElementById('perf-period-title').textContent = pLabel + ' 客服综合排名表';
-  document.getElementById('rank-rec-title').textContent = pLabel + ' 接待量排名';
-  document.getElementById('rank-sales-title').textContent = pLabel + ' 销售额排名';
-
-  // Rank charts
-  const recData=AGENTS.map((a,i)=>({name:a,v:rec[i]})).filter(d=>d.v>0).sort((a,b)=>b.v-a.v);
-  mkChart('c-rank-rec',{
-    type:'bar',
-    data:{labels:recData.map(d=>d.name),datasets:[{label:'接待量',data:recData.map(d=>d.v),backgroundColor:recData.map((_,i)=>i<3?COLORS_A[0]:'rgba(136,135,128,0.45)'),borderRadius:4}]},
-    options:{...baseOpts,scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v.toLocaleString()}}}}
-  });
-
-  const salData=AGENTS.map((a,i)=>({name:a,v:sal[i]})).filter(d=>d.v>0).sort((a,b)=>b.v-a.v);
-  mkChart('c-rank-sales',{
-    type:'bar',
-    data:{labels:salData.map(d=>d.name),datasets:[{label:'销售额',data:salData.map(d=>d.v),backgroundColor:salData.map((_,i)=>i<3?'rgba(29,158,117,0.82)':'rgba(136,135,128,0.45)'),borderRadius:4}]},
-    options:{...baseOpts,scales:{...baseOpts.scales,y:{...baseOpts.scales.y,ticks:{...baseOpts.scales.y.ticks,callback:v=>v>=1000?'¥'+Math.round(v/1000)+'k':'¥'+v}}}}
-  });
-}
-
-function initRespTrend(){
-  const respAgents=['吕晨','张胜男','Vicky','肖佳怡','刘悦','黄桥','朱梦娣'];
-  const rColors=['#378ADD','#1D9E75','#D4537E','#BA7517','#7F77DD','#888780','#1D9E75'];
-  const rDash=[[],[5,5],[],[3,3],[],[7,3],[]];
-
-  mkChart('c-resp-trend',{
-    type:'line',
-    data:{
-      labels:PERIODS,
-      datasets:respAgents.map((a,i)=>({
-        label:a,
-        data:(AVG_RESP[a]||[null,null,null,null]),
-        borderColor:rColors[i],
-        backgroundColor:'transparent',
-        borderDash:rDash[i],
-        tension:0.3,
-        pointRadius:4,
-        pointBackgroundColor:rColors[i],
-        pointBorderColor:'#fff',
-        pointBorderWidth:1.5,
-        spanGaps:true
-      }))
-    },
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{
-      x:{grid:{display:false},ticks:{color:tickColor,font:{size:11}}},
-      y:{grid:{color:gridColor},ticks:{color:tickColor,font:{size:11},callback:v=>v+'s'},border:{display:false}}
-    }}
-  });
-
-  const legend=document.getElementById('resp-legend');
-  legend.innerHTML=respAgents.map((a,i)=>`
-    <div class="legend-item">
-      <div class="legend-dot" style="background:${rColors[i]}"></div>${a}
-    </div>`).join('');
-}
-
-function setPeriod(pi,btn){
-  currentPeriod=pi;
-  document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderPerfTable(pi);
-}
-
-function nav(id,el){
+// ========== TAB SYSTEM ===========
+function switchTab(name) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  el.classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.target.classList.add('active');
+
+  // Lazy build charts when tab opens
+  if(name==='overview') buildOverview();
+  if(name==='compare') buildCompare();
+  if(name==='workload') buildWorkload(wlPeriod);
+  if(name==='sales') buildSales();
+  if(name==='perf') buildPerfTable(perfPeriod);
 }
 
-// Init all
-initOverview();
-initTrend();
-initWorkload();
-initSales();
-renderPerfTable(3);
-initRespTrend();
+// Init first tab
+buildOverview();
+buildPerfTable('apr');
 </script>
 </body>
 </html>
+PYEOF
+echo "Done"
