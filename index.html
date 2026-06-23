@@ -3,1307 +3,753 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>私域客服周报 · 6月16日</title>
+<title>私域客服周报 | W1–W4 | 2026.05.23–06.19</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root {
     --bg: #0f1117;
-    --surface: #1a1d27;
-    --surface2: #22263a;
-    --border: #2e3352;
+    --card: #181c27;
+    --card2: #1e2333;
+    --border: #272d42;
     --accent: #4f8ef7;
-    --accent2: #a78bfa;
-    --accent3: #34d399;
-    --accent4: #f59e0b;
-    --accent5: #f87171;
-    --text: #e8eaf2;
-    --text2: #8b90a7;
-    --text3: #5c6080;
-    --green: #34d399;
-    --red: #f87171;
-    --yellow: #f59e0b;
+    --accent2: #34c78a;
+    --accent3: #f7954f;
+    --accent4: #c94fff;
+    --warn: #f75c5c;
+    --text: #e8ecf4;
+    --muted: #7a82a0;
+    --label: #b0b8d0;
+    --w1: #4f8ef7;
+    --w2: #34c78a;
+    --w3: #f7954f;
+    --w4: #c94fff;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-    font-size: 14px;
-    min-height: 100vh;
-  }
+  body { background: var(--bg); color: var(--text); font-family: 'PingFang SC','Microsoft YaHei',sans-serif; font-size: 14px; min-height: 100vh; }
 
-  /* TOP NAV */
-  .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(15,17,23,0.95);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 0;
-    padding: 0 24px;
-    height: 52px;
-  }
-  .topbar-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text);
-    margin-right: 32px;
-    white-space: nowrap;
-    letter-spacing: 0.02em;
-  }
-  .topbar-title span { color: var(--accent); }
-  .tab-btn {
-    padding: 0 18px;
-    height: 52px;
-    border: none;
-    background: none;
-    color: var(--text2);
-    font-size: 13px;
-    cursor: pointer;
-    transition: color 0.2s, border-bottom 0.2s;
-    border-bottom: 2px solid transparent;
-    white-space: nowrap;
-    font-family: inherit;
-  }
-  .tab-btn:hover { color: var(--text); }
-  .tab-btn.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
+  /* ---- TOP NAV ---- */
+  .topbar { display:flex; align-items:center; justify-content:space-between; padding:0 28px; height:56px; background:var(--card); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+  .topbar-title { font-size:15px; font-weight:700; color:var(--text); letter-spacing:.5px; }
+  .topbar-sub { font-size:12px; color:var(--muted); margin-top:2px; }
+  .tabs { display:flex; gap:4px; }
+  .tab { padding:6px 16px; border-radius:6px; cursor:pointer; font-size:13px; color:var(--muted); border:none; background:transparent; transition:all .2s; white-space:nowrap; }
+  .tab:hover { color:var(--text); background:var(--card2); }
+  .tab.active { background:var(--accent); color:#fff; font-weight:600; }
 
-  /* MAIN */
-  .main { max-width: 1280px; margin: 0 auto; padding: 28px 24px 48px; }
-  .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
+  /* ---- PAGES ---- */
+  .page { display:none; padding:24px 28px; max-width:1400px; margin:0 auto; }
+  .page.active { display:block; }
 
-  /* SECTION HEADER */
-  .section-header {
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border);
-  }
-  .section-header h2 {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-  .section-header p { color: var(--text2); font-size: 13px; }
+  /* ---- SECTION HEADER ---- */
+  .section-title { font-size:13px; font-weight:700; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:16px; margin-top:28px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+  .section-title:first-child { margin-top:0; }
 
-  /* GRID */
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-  .grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
-  .col-span-2 { grid-column: span 2; }
+  /* ---- STAT CARDS ---- */
+  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px; margin-bottom:24px; }
+  .kpi { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:18px 20px; }
+  .kpi-label { font-size:11px; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; margin-bottom:8px; }
+  .kpi-val { font-size:26px; font-weight:700; line-height:1; }
+  .kpi-sub { font-size:11px; color:var(--muted); margin-top:6px; }
+  .kpi-delta { font-size:12px; font-weight:600; margin-top:6px; }
+  .up { color:var(--accent2); }
+  .down { color:var(--warn); }
+  .neutral { color:var(--muted); }
 
-  /* CARD */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-  }
-  .card-title {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 14px;
-  }
+  /* ---- WEEK LEGEND PILLS ---- */
+  .week-legend { display:flex; gap:10px; margin-bottom:18px; flex-wrap:wrap; }
+  .pill { display:flex; align-items:center; gap:6px; padding:4px 12px; border-radius:20px; font-size:12px; border:1px solid var(--border); }
+  .pill-dot { width:8px; height:8px; border-radius:50%; }
 
-  /* KPI */
-  .kpi-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px 20px;
-  }
-  .kpi-label { font-size: 12px; color: var(--text2); margin-bottom: 8px; }
-  .kpi-value { font-size: 28px; font-weight: 800; color: var(--text); line-height: 1; }
-  .kpi-value.blue { color: var(--accent); }
-  .kpi-value.purple { color: var(--accent2); }
-  .kpi-value.green { color: var(--green); }
-  .kpi-value.amber { color: var(--yellow); }
-  .kpi-sub { font-size: 12px; color: var(--text3); margin-top: 6px; }
-  .kpi-change { font-size: 12px; margin-top: 6px; font-weight: 600; }
-  .kpi-change.up { color: var(--green); }
-  .kpi-change.down { color: var(--red); }
+  /* ---- CHART CONTAINERS ---- */
+  .chart-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+  .chart-row.single { grid-template-columns:1fr; }
+  .chart-row.triple { grid-template-columns:1fr 1fr 1fr; }
+  .chart-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:20px; }
+  .chart-card h3 { font-size:13px; color:var(--label); margin-bottom:16px; font-weight:600; }
+  .chart-wrap { position:relative; }
+  .chart-wrap.h260 { height:260px; }
+  .chart-wrap.h300 { height:300px; }
+  .chart-wrap.h340 { height:340px; }
+  .chart-wrap.h220 { height:220px; }
 
-  /* CHART CONTAINER */
-  .chart-wrap { position: relative; }
+  /* ---- TABLE ---- */
+  .tbl-wrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th { background:var(--card2); color:var(--muted); font-weight:600; font-size:11px; letter-spacing:.6px; text-transform:uppercase; padding:10px 12px; text-align:left; border-bottom:1px solid var(--border); white-space:nowrap; }
+  td { padding:10px 12px; border-bottom:1px solid var(--border); white-space:nowrap; color:var(--text); }
+  tr:last-child td { border-bottom:none; }
+  tr:hover td { background:rgba(79,142,247,.05); }
+  .rank-badge { display:inline-block; width:22px; height:22px; border-radius:50%; text-align:center; line-height:22px; font-size:11px; font-weight:700; }
+  .r1 { background:#f7c94f22; color:#f7c94f; }
+  .r2 { background:#b0b8d022; color:#b0b8d0; }
+  .r3 { background:#c97b4f22; color:#c97b4f; }
+  .rn { background:var(--card2); color:var(--muted); }
+  .tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; }
+  .tag-mgr { background:#4f8ef722; color:var(--accent); }
+  .tag-ft { background:#34c78a22; color:var(--accent2); }
+  .tag-pt { background:#7a82a022; color:var(--muted); }
+  .tag-new { background:#c94fff22; color:var(--accent4); }
 
-  /* TABLE */
-  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .data-table th {
-    text-align: left;
-    padding: 10px 12px;
-    color: var(--text3);
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-bottom: 1px solid var(--border);
-  }
-  .data-table td {
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--border);
-    color: var(--text2);
-  }
-  .data-table tr:last-child td { border-bottom: none; }
-  .data-table tr:hover td { background: var(--surface2); color: var(--text); }
-  .data-table .name-cell { color: var(--text); font-weight: 600; }
-  .data-table .rank-badge {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 22px; height: 22px; border-radius: 50%;
-    font-size: 11px; font-weight: 700;
-  }
-  .rank-1 { background: #f59e0b22; color: #f59e0b; }
-  .rank-2 { background: #8b90a722; color: #8b90a7; }
-  .rank-3 { background: #c0814422; color: #c08144; }
-  .rank-n { background: #2e335222; color: var(--text3); }
+  /* ---- INSIGHT BOX ---- */
+  .insights { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-bottom:24px; }
+  .insight-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:18px 20px; }
+  .insight-card h4 { font-size:12px; font-weight:700; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; margin-bottom:10px; }
+  .insight-card p { font-size:13px; color:var(--label); line-height:1.7; }
+  .insight-card .highlight { color:var(--text); font-weight:600; }
+  .insight-card.warn-card { border-color:#f75c5c44; }
+  .insight-card.good-card { border-color:#34c78a44; }
+  .insight-card.info-card { border-color:#4f8ef744; }
 
-  /* BADGE */
-  .badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 600;
-  }
-  .badge-blue { background: #4f8ef722; color: var(--accent); }
-  .badge-green { background: #34d39922; color: var(--green); }
-  .badge-amber { background: #f59e0b22; color: var(--yellow); }
-  .badge-red { background: #f8717122; color: var(--red); }
-  .badge-purple { background: #a78bfa22; color: var(--accent2); }
+  /* ---- PERIOD SELECTOR (for agent page) ---- */
+  .period-btns { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+  .pbtn { padding:6px 14px; border-radius:6px; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; font-size:12px; transition:all .2s; }
+  .pbtn:hover { color:var(--text); border-color:var(--accent); }
+  .pbtn.active { background:var(--accent); color:#fff; border-color:var(--accent); font-weight:600; }
 
-  /* INSIGHT BOX */
-  .insight-box {
-    background: var(--surface2);
-    border-left: 3px solid var(--accent);
-    border-radius: 0 8px 8px 0;
-    padding: 14px 16px;
-    margin-top: 16px;
-  }
-  .insight-box.amber { border-left-color: var(--yellow); }
-  .insight-box.green { border-left-color: var(--green); }
-  .insight-box.red { border-left-color: var(--red); }
-  .insight-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
-  .insight-body { font-size: 13px; color: var(--text2); line-height: 1.7; }
-
-  /* TREND ROW */
-  .trend-row {
-    display: flex;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    gap: 12px;
-  }
-  .trend-row:last-child { border-bottom: none; }
-  .trend-name { width: 64px; font-weight: 600; color: var(--text); font-size: 13px; }
-  .trend-bar-wrap { flex: 1; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
-  .trend-bar { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
-  .trend-val { width: 80px; text-align: right; font-size: 13px; color: var(--text2); }
-
-  /* PERIOD COMPARE */
-  .compare-row {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .compare-row:last-child { border-bottom: none; }
-  .compare-metric { font-size: 12px; color: var(--text3); text-align: center; }
-  .compare-val { font-size: 18px; font-weight: 700; }
-  .compare-val.left { text-align: right; color: var(--accent2); }
-  .compare-val.right { text-align: left; color: var(--accent); }
-  .compare-arrow { text-align: center; font-size: 18px; }
-
-  /* SEPARATOR */
-  .mt-16 { margin-top: 16px; }
-  .mt-20 { margin-top: 20px; }
-  .mt-24 { margin-top: 24px; }
-
-  /* ACTIVITY TIMELINE */
-  .activity-item {
-    display: flex;
-    gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .activity-item:last-child { border-bottom: none; }
-  .activity-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--accent);
-    margin-top: 5px; flex-shrink: 0;
-  }
-  .activity-dot.amber { background: var(--yellow); }
-  .activity-dot.green { background: var(--green); }
-  .activity-content { flex: 1; }
-  .activity-date { font-size: 11px; color: var(--text3); }
-  .activity-text { font-size: 13px; color: var(--text2); line-height: 1.5; margin-top: 2px; }
-
-  /* RESPONSE INDICATOR */
-  .resp-indicator {
-    display: inline-block;
-    width: 8px; height: 8px; border-radius: 50%;
-    margin-right: 6px;
-  }
-  .resp-fast { background: var(--green); }
-  .resp-mid { background: var(--yellow); }
-  .resp-slow { background: var(--red); }
-
-  /* NULL DISPLAY */
-  .null-val { color: var(--text3); }
-
-  /* WEEK SELECTOR */
-  .week-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-  }
-  .week-tab {
-    padding: 6px 16px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: none;
-    color: var(--text2);
-    cursor: pointer;
-    font-size: 12px;
-    font-family: inherit;
-    transition: all 0.2s;
-  }
-  .week-tab:hover { border-color: var(--accent); color: var(--text); }
-  .week-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-
-  @media (max-width: 768px) {
-    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-    .col-span-2 { grid-column: span 1; }
-    .topbar { padding: 0 12px; overflow-x: auto; }
-    .main { padding: 16px 12px 48px; }
+  @media (max-width:900px) {
+    .chart-row { grid-template-columns:1fr; }
+    .chart-row.triple { grid-template-columns:1fr; }
+    .insights { grid-template-columns:1fr; }
+    .topbar { flex-direction:column; height:auto; padding:12px; gap:10px; }
+    .page { padding:16px; }
   }
 </style>
 </head>
 <body>
 
-<!-- TOP NAV -->
-<nav class="topbar">
-  <div class="topbar-title">私域客服 <span>周报</span></div>
-  <button class="tab-btn active" onclick="switchTab('overview')">总体概览</button>
-  <button class="tab-btn" onclick="switchTab('compare')">周期环比</button>
-  <button class="tab-btn" onclick="switchTab('workload')">工作量分析</button>
-  <button class="tab-btn" onclick="switchTab('sales')">销售贡献</button>
-  <button class="tab-btn" onclick="switchTab('performance')">个人表现</button>
-  <button class="tab-btn" onclick="switchTab('conclusion')">结论与建议</button>
-</nav>
-
-<div class="main">
-
-<!-- ==================== TAB 1: 总体概览 ==================== -->
-<div id="tab-overview" class="tab-panel active">
-  <div class="section-header">
-    <h2>总体概览</h2>
-    <p>覆盖四个周期：W1 (5.16–5.22) · W2 (5.23–5.29) · W3 (5.30–6.05) · W4 (6.06–6.12)</p>
+<div class="topbar">
+  <div>
+    <div class="topbar-title">🏠 私域客服团队周报</div>
+    <div class="topbar-sub">2026.05.23 — 06.19 · W1–W4 · 数据来源：个微 / 企微 / 有赞</div>
   </div>
-
-  <!-- KPI Cards -->
-  <div class="grid-4" style="margin-bottom:16px;">
-    <div class="kpi-card">
-      <div class="kpi-label">最新周接待量 (W4)</div>
-      <div class="kpi-value blue">3,651</div>
-      <div class="kpi-change down">▼ 3.6% 较 W3</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">最新周销售额 (W4)</div>
-      <div class="kpi-value purple">¥18,177</div>
-      <div class="kpi-change down">▼ 48.7% 较 W3</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">四周累计接待量</div>
-      <div class="kpi-value green">17,052</div>
-      <div class="kpi-sub">周均 4,263 次</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">四周累计销售额</div>
-      <div class="kpi-value amber">¥298,035</div>
-      <div class="kpi-sub">周均 ¥74,509</div>
-    </div>
+  <div class="tabs">
+    <button class="tab active" onclick="showPage('overview')">总体概览</button>
+    <button class="tab" onclick="showPage('trend')">周期环比</button>
+    <button class="tab" onclick="showPage('workload')">工作量分析</button>
+    <button class="tab" onclick="showPage('sales')">销售贡献</button>
+    <button class="tab" onclick="showPage('agent')">个人表现</button>
+    <button class="tab" onclick="showPage('conclusion')">结论与建议</button>
   </div>
+</div>
 
-  <!-- 趋势图 -->
-  <div class="grid-2" style="margin-bottom:16px;">
-    <div class="card">
-      <div class="card-title">各周接待量趋势</div>
-      <div class="chart-wrap" style="height:220px;">
-        <canvas id="chartOverviewRec"></canvas>
-      </div>
+<!-- ===================== PAGE 1: 总体概览 ===================== -->
+<div class="page active" id="page-overview">
+
+  <div class="section-title">四周汇总 KPI</div>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-label">总接待量</div>
+      <div class="kpi-val" style="color:var(--accent)">14,594</div>
+      <div class="kpi-sub">4周合计 · 三系统</div>
     </div>
-    <div class="card">
-      <div class="card-title">各周销售额趋势</div>
-      <div class="chart-wrap" style="height:220px;">
-        <canvas id="chartOverviewSales"></canvas>
-      </div>
+    <div class="kpi">
+      <div class="kpi-label">总销售额</div>
+      <div class="kpi-val" style="color:var(--accent2)">¥227,136</div>
+      <div class="kpi-sub">有赞分销累计</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">W1 销售额</div>
+      <div class="kpi-val" style="color:var(--w1)">¥158,673</div>
+      <div class="kpi-sub">活动尾期 · 最高周</div>
+      <div class="kpi-delta up">活动期驱动</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">W2 销售额</div>
+      <div class="kpi-val" style="color:var(--w2)">¥35,426</div>
+      <div class="kpi-sub">活动结束后回落</div>
+      <div class="kpi-delta down">↓ 77.7% vs W1</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">W3 销售额</div>
+      <div class="kpi-val" style="color:var(--w3)">¥18,177</div>
+      <div class="kpi-sub">非活动期稳态</div>
+      <div class="kpi-delta down">↓ 48.7% vs W2</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">W4 销售额</div>
+      <div class="kpi-val" style="color:var(--w4)">¥14,861</div>
+      <div class="kpi-sub">趋于稳定</div>
+      <div class="kpi-delta neutral">↓ 18.2% vs W3</div>
     </div>
   </div>
 
-  <!-- 周期汇总表 -->
-  <div class="card" style="margin-bottom:16px;">
-    <div class="card-title">四周数据汇总</div>
-    <table class="data-table">
+  <div class="section-title">核心指标趋势</div>
+  <div class="week-legend">
+    <div class="pill"><div class="pill-dot" style="background:var(--w1)"></div>W1 05/23-29</div>
+    <div class="pill"><div class="pill-dot" style="background:var(--w2)"></div>W2 05/30-06/05</div>
+    <div class="pill"><div class="pill-dot" style="background:var(--w3)"></div>W3 06/06-12</div>
+    <div class="pill"><div class="pill-dot" style="background:var(--w4)"></div>W4 06/13-19</div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-card">
+      <h3>📊 周接待量趋势（三系统合计）</h3>
+      <div class="chart-wrap h260"><canvas id="c-total-recv"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>💰 周销售额趋势</h3>
+      <div class="chart-wrap h260"><canvas id="c-total-sales"></canvas></div>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-card">
+      <h3>⚡ 团队综合平响趋势（秒）</h3>
+      <div class="chart-wrap h260"><canvas id="c-total-resp"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>🎯 各周接待量系统构成</h3>
+      <div class="chart-wrap h260"><canvas id="c-sys-breakdown"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section-title">关键事项说明</div>
+  <div class="insights">
+    <div class="insight-card warn-card">
+      <h4>⚠️ W1销售额特殊背景</h4>
+      <p>W1（5/23-29）销售额 <span class="highlight">¥158,673</span> 远高于后续周期，系 <span class="highlight">5/8-5/31 有赞活动期</span>尾段效应所致，不应作为常规基准参考。W2起为非活动期正常水位。</p>
+    </div>
+    <div class="insight-card info-card">
+      <h4>ℹ️ 王璇 新人说明</h4>
+      <p>王璇为 <span class="highlight">5月底新入职</span>成员，W1 无数据为正常入职节奏，W2 起开始接待，有赞分销账号暂未开通，销售数据缺失属于权限配置问题，不反映工作表现。</p>
+    </div>
+    <div class="insight-card warn-card">
+      <h4>⚠️ 大可/朱梦娣 间歇缺席</h4>
+      <p>大可 W3/W4 连续无数据，朱梦娣 W2 无数据，推测为 <span class="highlight">排班或请假</span>所致，非数据异常。建议核查排班记录确认。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE 2: 周期环比 ===================== -->
+<div class="page" id="page-trend">
+
+  <div class="section-title">四周环比数据对比</div>
+  <div class="tbl-wrap">
+    <table>
       <thead>
         <tr>
-          <th>周期</th>
-          <th>日期范围</th>
-          <th>总接待量</th>
-          <th>总销售额</th>
-          <th>周均人效</th>
-          <th>活跃客服数</th>
-          <th>接待量环比</th>
-          <th>销售额环比</th>
+          <th>周期</th><th>总接待量</th><th>环比</th><th>总销售额</th><th>环比</th><th>人均接待</th><th>人均销售</th>
         </tr>
       </thead>
-      <tbody id="overviewTableBody"></tbody>
+      <tbody>
+        <tr>
+          <td><span style="color:var(--w1);font-weight:700">W1</span> 05/23-29</td>
+          <td>4,169</td><td class="neutral">—</td>
+          <td>¥158,673</td><td class="neutral">—</td>
+          <td>463</td><td>¥17,630</td>
+        </tr>
+        <tr>
+          <td><span style="color:var(--w2);font-weight:700">W2</span> 05/30-06/05</td>
+          <td>3,788</td><td class="down">↓ 9.1%</td>
+          <td>¥35,426</td><td class="down">↓ 77.7%</td>
+          <td>473</td><td>¥4,428</td>
+        </tr>
+        <tr>
+          <td><span style="color:var(--w3);font-weight:700">W3</span> 06/06-12</td>
+          <td>3,651</td><td class="down">↓ 3.6%</td>
+          <td>¥18,177</td><td class="down">↓ 48.7%</td>
+          <td>456</td><td>¥2,272</td>
+        </tr>
+        <tr>
+          <td><span style="color:var(--w4);font-weight:700">W4</span> 06/13-19</td>
+          <td>2,986</td><td class="down">↓ 18.2%</td>
+          <td>¥14,861</td><td class="down">↓ 18.2%</td>
+          <td>373</td><td>¥1,858</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 
-  <!-- 活动背景 -->
-  <div class="card">
-    <div class="card-title">活动背景与节点</div>
-    <div class="activity-item">
-      <div class="activity-dot amber"></div>
-      <div class="activity-content">
-        <div class="activity-date">5/8 00:00 — 5/31 23:59</div>
-        <div class="activity-text">有赞平台理想燃料品牌 & IDN品牌活动期 · W1/W2 正值活动高峰，接待量显著拉高，W2销售额峰值 ¥158,673 与促销集中释放直接相关</div>
-      </div>
+  <div class="chart-row" style="margin-top:20px">
+    <div class="chart-card">
+      <h3>📈 接待量四周环比（按客服）</h3>
+      <div class="chart-wrap h340"><canvas id="c-trend-recv"></canvas></div>
     </div>
-    <div class="activity-item">
-      <div class="activity-dot green"></div>
-      <div class="activity-content">
-        <div class="activity-date">2026.05.26</div>
-        <div class="activity-text">有赞 · IDN VC胶囊香港仓版现货上架 · 新品带动 W2 末段咨询量上升</div>
-      </div>
+    <div class="chart-card">
+      <h3>💰 销售额四周环比（按客服）</h3>
+      <div class="chart-wrap h340"><canvas id="c-trend-sales"></canvas></div>
     </div>
-    <div class="activity-item">
-      <div class="activity-dot green"></div>
-      <div class="activity-content">
-        <div class="activity-date">2026.05.27</div>
-        <div class="activity-text">有赞 · IDN甘氨酸镁预售上架 · 预售品类通常拉长决策周期，有助解释 W2 咨询高但部分转化延后</div>
-      </div>
+  </div>
+
+  <div class="section-title">关键变化点分析</div>
+  <div class="insights">
+    <div class="insight-card warn-card">
+      <h4>📉 销售额断崖式下滑</h4>
+      <p>W1→W2 销售额从 <span class="highlight">¥158,673 → ¥35,426</span>，降幅77.7%。核心原因：5/31活动期结束，吕晨、张胜男的有赞分销收益大幅收缩，属于活动周期正常回归，<span class="highlight">非团队表现问题</span>。</p>
     </div>
-    <div class="activity-item">
-      <div class="activity-dot"></div>
-      <div class="activity-content">
-        <div class="activity-date">5/31 23:59 活动结束</div>
-        <div class="activity-text">活动退潮后 W3（5.30-6.05）及 W4（6.06-6.12）接待量与销售额均回落至常规水位，符合活动后自然衰减规律</div>
-      </div>
+    <div class="insight-card info-card">
+      <h4>📊 接待量温和收缩</h4>
+      <p>接待量从W1的4,169逐步降至W4的2,986，降幅28.4%，整体平稳。W4降幅略大，与Vicky接待量明显减少（W4仅197人次 vs W3的729人次）及大可缺席有关。</p>
+    </div>
+    <div class="insight-card good-card">
+      <h4>✅ W2-W4 销售趋稳</h4>
+      <p>W3→W4 销售额降幅收窄至 <span class="highlight">18.2%</span>（W2→W3为48.7%），说明非活动期销售正在寻找新水位。W4 ¥14,861 可作为后续无活动周的基础参照值。</p>
     </div>
   </div>
 </div>
 
-<!-- ==================== TAB 2: 周期环比 ==================== -->
-<div id="tab-compare" class="tab-panel">
-  <div class="section-header">
-    <h2>周期环比分析</h2>
-    <p>重点对比 W3 (5.30–6.05) 与 W4 (6.06–6.12) 最近两周数据变化</p>
-  </div>
+<!-- ===================== PAGE 3: 工作量分析 ===================== -->
+<div class="page" id="page-workload">
 
-  <!-- 主指标环比 -->
-  <div class="grid-4" style="margin-bottom:16px;">
-    <div class="kpi-card">
-      <div class="kpi-label">W3 → W4 接待量变化</div>
-      <div class="kpi-value" style="font-size:22px;">3,788 → 3,651</div>
-      <div class="kpi-change down">▼ 3.6%（-137）</div>
-      <div class="kpi-sub">小幅回落，属活动后正常波动</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">W3 → W4 销售额变化</div>
-      <div class="kpi-value" style="font-size:22px;">¥35,426 → ¥18,177</div>
-      <div class="kpi-change down">▼ 48.7%（-¥17,249）</div>
-      <div class="kpi-sub">活动结束后销售收缩明显</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">W3 → W4 周均人效</div>
-      <div class="kpi-value" style="font-size:22px;">¥9.36 → ¥4.98</div>
-      <div class="kpi-change down">▼ 46.8%</div>
-      <div class="kpi-sub">销售下滑拖累整体人效</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">销售贡献客服数</div>
-      <div class="kpi-value" style="font-size:22px;">6 → 6</div>
-      <div class="kpi-change" style="color:var(--text2);">持平</div>
-      <div class="kpi-sub">有销售产出的客服数量稳定</div>
+  <div class="section-title">各客服四周接待量汇总</div>
+  <div class="chart-row single">
+    <div class="chart-card">
+      <h3>📦 客服总接待量（按人，四周合计）</h3>
+      <div class="chart-wrap h300"><canvas id="c-agent-total-recv"></canvas></div>
     </div>
   </div>
 
-  <!-- 逐人接待量环比图 -->
-  <div class="card" style="margin-bottom:16px;">
-    <div class="card-title">各客服接待量环比 (W3 vs W4)</div>
-    <div class="chart-wrap" style="height:280px;">
-      <canvas id="chartCompareRec"></canvas>
+  <div class="chart-row">
+    <div class="chart-card">
+      <h3>📊 各客服每周接待量变化</h3>
+      <div class="chart-wrap h300"><canvas id="c-agent-recv-trend"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>🗂️ W4 接待量系统构成</h3>
+      <div class="chart-wrap h300"><canvas id="c-w4-sys"></canvas></div>
     </div>
   </div>
 
-  <!-- 逐人销售额环比图 -->
-  <div class="card" style="margin-bottom:16px;">
-    <div class="card-title">各客服销售额环比 (W3 vs W4)</div>
-    <div class="chart-wrap" style="height:280px;">
-      <canvas id="chartCompareSales"></canvas>
-    </div>
+  <div class="section-title">各客服接待量明细</div>
+  <div class="tbl-wrap">
+    <table id="tbl-workload"></table>
   </div>
 
-  <!-- 服务指标对比 -->
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title">平均响应时长对比（秒）</div>
-      <div id="responseCompareList"></div>
-      <div class="insight-box amber mt-16">
-        <div class="insight-title">⏱ 响应时长观察</div>
-        <div class="insight-body">W4 整体响应时长较 W3 有所改善，吕晨、刘悦表现稳定（均在35秒内）。王璇响应时长持续偏高（W3: 171.6s → W4: 134.7s），有所进步但仍显著高于团队均值，建议持续关注。</div>
-      </div>
+  <div class="section-title">工作量分析结论</div>
+  <div class="insights">
+    <div class="insight-card info-card">
+      <h4>🏆 接待量最高成员</h4>
+      <p>四周合计：<span class="highlight">吕晨 2,713次</span>（全职首位）、<span class="highlight">张胜男 2,871次</span>（总量第一）、<span class="highlight">Vicky 2,121次</span>（兼职最高）。三人合计占团队总接待量约 53%。</p>
     </div>
-    <div class="card">
-      <div class="card-title">关键变化点分析</div>
-      <div class="insight-box green">
-        <div class="insight-title">📈 接待量亮点</div>
-        <div class="insight-body">朱梦娣 W3 接待量为0（未排班），W4 强势回归达395次，为团队补充了重要产能。吕晨 W4 接待量从475大幅回升至719，恢复主力水位。</div>
-      </div>
-      <div class="insight-box red mt-16">
-        <div class="insight-title">📉 销售下滑原因</div>
-        <div class="insight-body">5月31日品牌活动结束是核心原因。W2 活动高峰期销售额高达 ¥158,673，W3 已回落至 ¥35,426，W4 进一步降至 ¥18,177，为常规非活动期正常水平。</div>
-      </div>
-      <div class="insight-box amber mt-16">
-        <div class="insight-title">🔍 需关注</div>
-        <div class="insight-body">肖佳怡接待量 W4 214次，平响 70.6s 仍为团队中段偏慢；朱梦娣、王璇连续无销售产出，需确认是否具备有赞分销链接操作能力。</div>
-      </div>
+    <div class="insight-card warn-card">
+      <h4>⚠️ 接待量波动明显</h4>
+      <p>Vicky 接待量在 W4 骤降至197次（较W3的729次下降73%），需确认是否为排班调整。肖佳怡 W2 接待量仅73次，较W1的518次大幅下滑，同期企微接待量也仅34次，推测为出勤问题。</p>
+    </div>
+    <div class="insight-card info-card">
+      <h4>📌 新人王璇接待稳定</h4>
+      <p>王璇 W2 起接待量分别为 431 / 382 / 231，三周均为中等水平。考虑到新入职背景，<span class="highlight">接待稳定性良好</span>，有赞账号开通后可进一步观察转化能力。</p>
     </div>
   </div>
 </div>
 
-<!-- ==================== TAB 3: 工作量分析 ==================== -->
-<div id="tab-workload" class="tab-panel">
-  <div class="section-header">
-    <h2>客服工作量分析</h2>
-    <p>各客服接待量规模、趋势及W4最新周排名</p>
-  </div>
+<!-- ===================== PAGE 4: 销售贡献 ===================== -->
+<div class="page" id="page-sales">
 
-  <!-- 四周接待量趋势 -->
-  <div class="card" style="margin-bottom:16px;">
-    <div class="card-title">各客服四周接待量趋势</div>
-    <div class="chart-wrap" style="height:300px;">
-      <canvas id="chartWorkloadTrend"></canvas>
+  <div class="section-title">客服销售贡献概览</div>
+  <div class="chart-row">
+    <div class="chart-card">
+      <h3>💰 各客服四周销售额合计（柱状）</h3>
+      <div class="chart-wrap h300"><canvas id="c-agent-sales-bar"></canvas></div>
     </div>
-  </div>
-
-  <!-- W4 接待量排名 -->
-  <div class="grid-2" style="margin-bottom:16px;">
-    <div class="card">
-      <div class="card-title">W4 接待量排名（6.06-6.12）</div>
-      <div id="recRankingW4"></div>
-    </div>
-    <div class="card">
-      <div class="card-title">W3 接待量排名（5.30-6.05）</div>
-      <div id="recRankingW3"></div>
+    <div class="chart-card">
+      <h3>🥧 四周销售额贡献占比</h3>
+      <div class="chart-wrap h300"><canvas id="c-agent-sales-pie"></canvas></div>
     </div>
   </div>
 
-  <!-- W4 接待量柱状图 -->
-  <div class="card">
-    <div class="card-title">W4 各客服接待量</div>
-    <div class="chart-wrap" style="height:260px;">
-      <canvas id="chartW4Reception"></canvas>
+  <div class="chart-row">
+    <div class="chart-card">
+      <h3>⚡ 人效排名（销售额÷接待量）W2-W4 均值</h3>
+      <div class="chart-wrap h260"><canvas id="c-efficiency"></canvas></div>
     </div>
-    <div class="insight-box mt-16">
-      <div class="insight-title">💡 工作量洞察</div>
-      <div class="insight-body">W4 接待量前三名为 Vicky（729）、吕晨（719）、张胜男（622），三人合计贡献接待量占比约 56%，仍为核心承压主力。王璇（382）已接近团队中游，新人融入表现良好，但响应时长需改善。李亚飞（38）接待量偏低符合组长职能定位，不做横向比较。</div>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== TAB 4: 销售贡献 ==================== -->
-<div id="tab-sales" class="tab-panel">
-  <div class="section-header">
-    <h2>客服销售贡献分析</h2>
-    <p>基于有赞分销链接产生的销售数据；W4 (6.06–6.12) 为最新周期</p>
-  </div>
-
-  <div class="grid-2" style="margin-bottom:16px;">
-    <!-- W4 销售贡献饼图 -->
-    <div class="card">
-      <div class="card-title">W4 销售贡献占比</div>
-      <div class="chart-wrap" style="height:280px;">
-        <canvas id="chartW4SalesPie"></canvas>
-      </div>
-    </div>
-    <!-- 销售贡献列表 -->
-    <div class="card">
-      <div class="card-title">W4 各客服销售额与占比</div>
-      <table class="data-table">
-        <thead>
-          <tr><th>排名</th><th>客服</th><th>销售额</th><th>贡献占比</th></tr>
-        </thead>
-        <tbody id="salesContribTable"></tbody>
-      </table>
-      <div class="insight-box green mt-16">
-        <div class="insight-title">🏆 销售贡献集中</div>
-        <div class="insight-body">W4 张胜男（32.8%）+吕晨（28.2%）合计贡献 61% 销售额，两位全职客服为核心销售主力。Vicky（15.4%）和肖佳怡（13.0%）构成第二梯队，四人合计贡献约 89% 的销售额。</div>
-      </div>
+    <div class="chart-card">
+      <h3>📈 各客服每周销售额变化</h3>
+      <div class="chart-wrap h260"><canvas id="c-sales-trend"></canvas></div>
     </div>
   </div>
 
-  <!-- 四周销售额趋势(人) -->
-  <div class="card" style="margin-bottom:16px;">
-    <div class="card-title">各客服四周销售额趋势</div>
-    <div class="chart-wrap" style="height:280px;">
-      <canvas id="chartSalesTrend"></canvas>
-    </div>
+  <div class="section-title">销售贡献明细</div>
+  <div class="tbl-wrap">
+    <table id="tbl-sales"></table>
   </div>
 
-  <!-- W4 销售额排名 -->
-  <div class="card">
-    <div class="card-title">W4 销售额排名</div>
-    <div class="chart-wrap" style="height:220px;">
-      <canvas id="chartW4Sales"></canvas>
+  <div class="section-title">销售分析结论</div>
+  <div class="insights">
+    <div class="insight-card good-card">
+      <h4>🏆 销售贡献最高</h4>
+      <p>四周合计：<span class="highlight">张胜男 ¥99,037</span>（占总销售额43.6%）、<span class="highlight">吕晨 ¥86,960</span>（38.3%）。两人合计贡献超过81%，是团队销售核心。</p>
     </div>
-    <div class="insight-box amber mt-16">
-      <div class="insight-title">⚠️ 持续关注</div>
-      <div class="insight-body">朱梦娣、王璇、王洁茹、李亚飞四周累计销售额均为零。前三位兼职客服需确认是否已开通有赞分销权限并掌握操作流程；李亚飞作为组长，管理职能优先，低销售属正常。</div>
+    <div class="insight-card info-card">
+      <h4>💡 人效亮点（W2-W4）</h4>
+      <p>非活动期人效：<span class="highlight">张胜男 ¥17.0/次</span> 排名第一，<span class="highlight">吕晨 ¥13.7/次</span> 第二。兼职中肖佳怡（¥7.1/次）和 Vicky（¥5.7/次）表现相对稳定。</p>
+    </div>
+    <div class="insight-card warn-card">
+      <h4>⚠️ 零销售成员</h4>
+      <p>朱梦娣（四周合计¥0）、王璇（无有赞账号）、大可（W2后缺席），需区分两类情况：<span class="highlight">账号权限未开通</span> vs <span class="highlight">有赞商品推广意识不足</span>，建议分别核查。</p>
     </div>
   </div>
 </div>
 
-<!-- ==================== TAB 5: 个人表现 ==================== -->
-<div id="tab-performance" class="tab-panel">
-  <div class="section-header">
-    <h2>客服个人表现与排名</h2>
-    <p>含全量指标对比；周期选择器可切换查看</p>
+<!-- ===================== PAGE 5: 个人表现 ===================== -->
+<div class="page" id="page-agent">
+
+  <div class="period-btns">
+    <button class="pbtn active" onclick="selectPeriod('W1')">W1 05/23-29</button>
+    <button class="pbtn" onclick="selectPeriod('W2')">W2 05/30-06/05</button>
+    <button class="pbtn" onclick="selectPeriod('W3')">W3 06/06-12</button>
+    <button class="pbtn" onclick="selectPeriod('W4')">W4 06/13-19</button>
   </div>
 
-  <div class="week-tabs">
-    <button class="week-tab active" onclick="switchWeek('w4')">W4 (6.06–6.12) 最新</button>
-    <button class="week-tab" onclick="switchWeek('w3')">W3 (5.30–6.05)</button>
-  </div>
-
-  <!-- 综合数据表 -->
-  <div class="card" style="margin-bottom:16px;">
-    <div class="card-title" id="perfTableTitle">W4 客服综合数据（6.06–6.12）</div>
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>客服</th>
-          <th>接待量</th>
-          <th>销售额</th>
-          <th>人效（¥/次）</th>
-          <th>满意度</th>
-          <th>平均响应时长</th>
-          <th>备注</th>
-        </tr>
-      </thead>
-      <tbody id="perfTableBody"></tbody>
-    </table>
-  </div>
-
-  <!-- 排名图表 -->
-  <div class="grid-2" style="margin-bottom:16px;">
-    <div class="card">
-      <div class="card-title" id="rankEffTitle">人效排名（¥/次，高优先）</div>
-      <div class="chart-wrap" style="height:240px;">
-        <canvas id="chartRankEff"></canvas>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title" id="rankRespTitle">响应效率排名（秒，低优先）</div>
-      <div class="chart-wrap" style="height:240px;">
-        <canvas id="chartRankResp"></canvas>
-      </div>
+  <div class="section-title">本周接待量排名</div>
+  <div class="chart-row single">
+    <div class="chart-card">
+      <h3 id="recv-chart-title">📊 接待量排名（W1）</h3>
+      <div class="chart-wrap h260"><canvas id="c-period-recv"></canvas></div>
     </div>
   </div>
 
-  <!-- 响应效率 vs 满意度分析 -->
-  <div class="card">
-    <div class="card-title">响应效率综合分析</div>
-    <div class="insight-box">
-      <div class="insight-title">📊 W4 响应效率分布</div>
-      <div class="insight-body">
-        <strong style="color:var(--green)">快速响应（≤40s）：</strong>吕晨（33.2s）、刘悦（34.8s）、张胜男（36.4s）— 三位响应最快，与接待量高度正相关，说明效率型服务模式更易维持高产能。<br><br>
-        <strong style="color:var(--yellow)">中等响应（40–80s）：</strong>朱梦娣（41.8s）、李亚飞（48s）、Vicky（53.6s）、肖佳怡（70.6s）、黄桥（78s）— 属正常区间，但肖佳怡与黄桥有提升空间。<br><br>
-        <strong style="color:var(--red)">响应偏慢（>80s）：</strong>王璇（134.7s）— 作为新人，仍处于学习期，平响高于团队均值约2.7倍，为重点改善对象。<br><br>
-        <strong>W4满意度：</strong>本周期满意度数据缺失（客户未留评），以服务指标代理评估。综合看吕晨历史满意度稳定在100%，属响应快且满意度高的优质服务型。
-      </div>
+  <div class="chart-row">
+    <div class="chart-card">
+      <h3 id="sales-chart-title">💰 销售额排名</h3>
+      <div class="chart-wrap h260"><canvas id="c-period-sales"></canvas></div>
     </div>
+    <div class="chart-card">
+      <h3 id="resp-chart-title">⏱️ 综合平响（秒，越低越好）</h3>
+      <div class="chart-wrap h260"><canvas id="c-period-resp"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section-title" id="agent-table-title">客服个人表现详情（W1）</div>
+  <div class="tbl-wrap">
+    <table id="tbl-agent"></table>
   </div>
 </div>
 
-<!-- ==================== TAB 6: 结论与建议 ==================== -->
-<div id="tab-conclusion" class="tab-panel">
-  <div class="section-header">
-    <h2>主要结论与管理优化建议</h2>
-    <p>基于 W1–W4 四周数据综合分析</p>
-  </div>
+<!-- ===================== PAGE 6: 结论与建议 ===================== -->
+<div class="page" id="page-conclusion">
 
-  <!-- 主要结论 -->
-  <div class="card" style="margin-bottom:16px;">
-    <div class="card-title">主要结论（适合放入周报）</div>
-    <div class="insight-box green">
-      <div class="insight-title">✅ 结论一：接待量整体平稳，团队承载力有保障</div>
-      <div class="insight-body">四周总接待量 17,052 次，W4（3,651）较 W3（3,788）小幅下降 3.6%，属正常波动。吕晨、Vicky、张胜男持续承担大量接待，王璇新人融入顺利，已达382次接待。</div>
+  <div class="section-title">主要结论</div>
+  <div class="insights" style="grid-template-columns:1fr 1fr;">
+    <div class="insight-card warn-card">
+      <h4>📉 结论1：销售下滑为活动周期效应，非团队问题</h4>
+      <p>W1销售额¥158,673受5/8-5/31有赞活动驱动，W2起回落至¥35,426并持续收缩。W2-W4三周均值约¥22,821，可作为非活动期正常销售基线。团队实际销售能力未出现明显退化。</p>
     </div>
-    <div class="insight-box amber mt-16">
-      <div class="insight-title">⚠️ 结论二：销售额随活动结束显著回落，非团队服务问题</div>
-      <div class="insight-body">W2 品牌活动期销售额峰值 ¥158,673，活动结束后 W3 降至 ¥35,426，W4 进一步降至 ¥18,177。W4 人效（¥4.98/次）与活动期（W2: ¥38.1/次）差距悬殊，属周期性正常收缩，建议以非活动期均值作为常规基准线。</div>
+    <div class="insight-card good-card">
+      <h4>✅ 结论2：全职客服是销售核心，兼职接待量有效补充</h4>
+      <p>张胜男、吕晨四周销售合计占比超81%，全职团队销售能力突出。Vicky、刘悦、肖佳怡等兼职老客服在接待量方面起到有效补充，三人合计W4贡献908次接待。</p>
     </div>
-    <div class="insight-box mt-16">
-      <div class="insight-title">📌 结论三：两全职客服为销售核心，兼职分销转化率有待激活</div>
-      <div class="insight-body">张胜男 + 吕晨 W4 合计贡献 61% 销售额，为绝对核心。朱梦娣、王璇、王洁茹连续多周无销售，建议排查分销权限与操作流程是否完善。肖佳怡 W4 人效 ¥11.01/次，在本周期排名第一，有待稳定。</div>
+    <div class="insight-card warn-card">
+      <h4>⚠️ 结论3：企微平响差异显著，肖佳怡/黄桥需关注</h4>
+      <p>肖佳怡企微平响持续超过100秒（W1: 121s, W4: 103s），黄桥企微平响同样偏高（W1: 104s, W4: 84s），而两人有赞平响正常（30-56秒）。说明企微系统存在响应习惯或分配机制问题。</p>
     </div>
-    <div class="insight-box mt-16">
-      <div class="insight-title">📌 结论四：响应效率整体良好，王璇需专项辅导</div>
-      <div class="insight-body">团队大多数成员平响在 35–80 秒区间，属可接受水平。王璇平响 134.7s，为新人学习期高值，需结合话术培训和实操辅导加速改善。肖佳怡在企微的响应时长历史偏高（超100s），本周有所改善但仍需关注。</div>
+    <div class="insight-card info-card">
+      <h4>📌 结论4：新人王璇入职稳定，需开通有赞账号</h4>
+      <p>王璇W2-W4接待量累计1,044次，表现稳定，个微及时响应率87%属正常范围。当前企微平响偏高（144-214秒），建议结合工作习惯给予针对性辅导。有赞账号应尽快开通以完善销售数据。</p>
     </div>
   </div>
 
-  <!-- 管理优化建议 -->
-  <div class="card">
-    <div class="card-title">3条管理优化建议</div>
-
-    <div style="padding:20px 0 16px; border-bottom:1px solid var(--border);">
-      <div style="display:flex;gap:14px;align-items:flex-start;">
-        <div style="width:36px;height:36px;border-radius:8px;background:#4f8ef722;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🎯</div>
-        <div>
-          <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;">建议一：建立"分销转化激活"专项计划</div>
-          <div style="font-size:13px;color:var(--text2);line-height:1.8;">
-            <strong style="color:var(--text);">现状：</strong>朱梦娣、王璇、王洁茹连续多周销售为零，三人合计每周接待近800次，存在大量潜在转化机会未被激活。<br>
-            <strong style="color:var(--text);">建议：</strong>①确认三人是否已开通有赞分销账号权限；②组织一次30分钟分销链接发送场景的实操培训（参照吕晨/张胜男的话术）；③在下次活动前设置每人至少达成1单的阶段目标，有数据后再评估潜力。
-          </div>
-        </div>
-      </div>
+  <div class="section-title">响应效率与满意度综合分析</div>
+  <div class="chart-row">
+    <div class="chart-card" style="grid-column:1/-1">
+      <h3>⏱️ 各客服企微平响对比（W1-W4，秒）</h3>
+      <div class="chart-wrap h260"><canvas id="c-resp-compare"></canvas></div>
     </div>
-
-    <div style="padding:20px 0 16px; border-bottom:1px solid var(--border);">
-      <div style="display:flex;gap:14px;align-items:flex-start;">
-        <div style="width:36px;height:36px;border-radius:8px;background:#a78bfa22;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">⏱</div>
-        <div>
-          <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;">建议二：针对王璇设置新人响应时长改善追踪</div>
-          <div style="font-size:13px;color:var(--text2);line-height:1.8;">
-            <strong style="color:var(--text);">现状：</strong>王璇平均响应时长 134.7s，是团队最快成员吕晨（33.2s）的约4倍，且连续两周高位。新人学习曲线可以理解，但需要有节奏的干预。<br>
-            <strong style="color:var(--text);">建议：</strong>①设置每两周一次的响应时长复盘节点，目标路径：134s → 90s（W5/6）→ 60s（W7/8）；②分析王璇响应慢的原因（是找话术慢还是多平台切换慢），定向解决；③肖佳怡企微响应偏慢问题同步跟进。
-          </div>
-        </div>
-      </div>
+  </div>
+  <div class="insights" style="margin-top:16px">
+    <div class="insight-card good-card">
+      <h4>✅ 响应快且有赞满意度高</h4>
+      <p><span class="highlight">吕晨</span>：企微平响25-32秒，有赞满意度100%（W1/W2），是团队响应效率标杆。<span class="highlight">张胜男</span>：平响24-35秒，响应效率全团队第二，销售能力最强。</p>
     </div>
+    <div class="insight-card info-card">
+      <h4>📊 响应中等，销售稳定</h4>
+      <p><span class="highlight">刘悦</span>：企微平响31-44秒，属于合理区间，有赞平响稳定在19-23秒，整体服务质量稳定。<span class="highlight">Vicky</span>：企微平响51-57秒，有赞平响34-43秒，满意度数据缺失较多，建议关注。</p>
+    </div>
+    <div class="insight-card warn-card">
+      <h4>⚠️ 企微平响偏高待改善</h4>
+      <p><span class="highlight">肖佳怡</span>企微平响长期超100秒，<span class="highlight">黄桥</span>企微平响84-104秒，<span class="highlight">王璇</span>企微平响144-214秒（新人）。有赞渠道响应均正常，提示企微端存在系统习惯或消息分配问题。</p>
+    </div>
+  </div>
 
-    <div style="padding:20px 0 0;">
-      <div style="display:flex;gap:14px;align-items:flex-start;">
-        <div style="width:36px;height:36px;border-radius:8px;background:#34d39922;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📅</div>
-        <div>
-          <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;">建议三：建立活动期与非活动期双基准绩效评估体系</div>
-          <div style="font-size:13px;color:var(--text2);line-height:1.8;">
-            <strong style="color:var(--text);">现状：</strong>W2 活动期人效均值 ¥38.1/次，W4 非活动期降至 ¥4.98/次，两者差距近8倍。若用统一标准评估，非活动期客服表现会被大幅低估。<br>
-            <strong style="color:var(--text);">建议：</strong>①将绩效基准线区分为"活动期基准"（含促销资源加权）和"常规期基准"（以W3/W4均值为参考）；②定期更新常规期基准（季度更新），避免以活动期高峰作为长期考核参照；③对活动期前预判接待量高峰，提前调整兼职排班，确保活动窗口期不因人力不足丢失转化机会。
-          </div>
-        </div>
-      </div>
+  <div class="section-title">管理优化建议</div>
+  <div class="insights" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="insight-card info-card" style="border-color:var(--accent2)44">
+      <h4>💡 建议一：企微平响专项优化</h4>
+      <p>针对肖佳怡、黄桥、王璇的企微高平响问题，建议：① 检查企微消息推送设置，确认是否存在通知延迟；② 组织有赞平响表现好的吕晨、张胜男分享响应习惯；③ 设置企微平响预警机制（目标：非高峰期 ≤60秒）。</p>
+    </div>
+    <div class="insight-card info-card" style="border-color:var(--accent3)44">
+      <h4>💡 建议二：兼职客服有赞转化能力培训</h4>
+      <p>朱梦娣连续四周有赞销售为¥0，大可同样为¥0，刘悦有赞人效仅¥4.4-5.1/次。建议：① 确认上述成员有赞分销账号权限正常；② 针对有赞商品推荐话术、分销链接发送时机进行专项培训；③ 参考吕晨、张胜男的高转化接待流程。</p>
+    </div>
+    <div class="insight-card info-card" style="border-color:var(--accent4)44">
+      <h4>💡 建议三：建立非活动期销售基线与目标体系</h4>
+      <p>W2-W4 非活动期数据可作为真实销售基线（团队周均约 ¥22,821）。建议：① 将W2-W4均值作为常规周绩效参考，不与活动期数据混评；② 为全职客服设定非活动期周销售额目标（参考：吕晨 ¥7,000/周，张胜男 ¥9,000/周）；③ 提前规划下一次活动期，制定阶梯式销售冲刺计划。</p>
     </div>
   </div>
 </div>
-
-</div><!-- end main -->
 
 <script>
-// ==================== DATA ====================
-const PERIODS = ['W1 (5.16-5.22)', 'W2 (5.23-5.29)', 'W3 (5.30-6.05)', 'W4 (6.06-6.12)'];
-const AGENTS = ['吕晨','张胜男','Vicky','肖佳怡','刘悦','黄桥','朱梦娣','王洁茹','王璇','李亚飞'];
+// ===================== DATA =====================
+const RAW = [{"周期":"2026.05.23-2026.05.29","客服":"吕晨","个微_接待":316,"企微_接待":476,"有赞_接待":148,"总接待":940,"销售额":65777.36,"有赞满意度":100.0,"企微平响_秒":25.8,"有赞平响_秒":21.0,"有赞首响_秒":25.0,"综合平响_秒":24.6,"有数据":true,"人效":69.98},{"周期":"2026.05.23-2026.05.29","客服":"张胜男","个微_接待":287,"企微_接待":398,"有赞_接待":116,"总接待":801,"销售额":71701.4,"有赞满意度":null,"企微平响_秒":35.2,"有赞平响_秒":51.0,"有赞首响_秒":47.0,"综合平响_秒":38.8,"有数据":true,"人效":89.51},{"周期":"2026.05.23-2026.05.29","客服":"李亚飞","个微_接待":2,"企微_接待":44,"有赞_接待":5,"总接待":51,"销售额":0.0,"有赞满意度":null,"企微平响_秒":18.8,"有赞平响_秒":5.0,"有赞首响_秒":3.0,"综合平响_秒":17.4,"有数据":true,"人效":0.0},{"周期":"2026.05.23-2026.05.29","客服":"黄桥","个微_接待":106,"企微_接待":53,"有赞_接待":9,"总接待":168,"销售额":174.7,"有赞满意度":null,"企微平响_秒":104.0,"有赞平响_秒":36.0,"有赞首响_秒":35.0,"综合平响_秒":94.1,"有数据":true,"人效":1.04},{"周期":"2026.05.23-2026.05.29","客服":"Vicky","个微_接待":246,"企微_接待":376,"有赞_接待":89,"总接待":711,"销售额":9530.7,"有赞满意度":null,"企微平响_秒":53.7,"有赞平响_秒":34.0,"有赞首响_秒":36.0,"综合平响_秒":50.0,"有数据":true,"人效":13.4},{"周期":"2026.05.23-2026.05.29","客服":"肖佳怡","个微_接待":211,"企微_接待":256,"有赞_接待":51,"总接待":518,"销售额":8585.81,"有赞满意度":null,"企微平响_秒":121.0,"有赞平响_秒":33.0,"有赞首响_秒":32.0,"综合平响_秒":106.4,"有数据":true,"人效":16.57},{"周期":"2026.05.23-2026.05.29","客服":"刘悦","个微_接待":205,"企微_接待":285,"有赞_接待":80,"总接待":570,"销售额":2902.9,"有赞满意度":null,"企微平响_秒":43.9,"有赞平响_秒":23.0,"有赞首响_秒":25.0,"综合平响_秒":39.3,"有数据":true,"人效":5.09},{"周期":"2026.05.23-2026.05.29","客服":"朱梦娣","个微_接待":139,"企微_接待":103,"有赞_接待":19,"总接待":261,"销售额":0.0,"有赞满意度":null,"企微平响_秒":58.4,"有赞平响_秒":43.0,"有赞首响_秒":38.0,"综合平响_秒":56.0,"有数据":true,"人效":0.0},{"周期":"2026.05.23-2026.05.29","客服":"大可","个微_接待":22,"企微_接待":92,"有赞_接待":35,"总接待":149,"销售额":0.0,"有赞满意度":null,"企微平响_秒":51.0,"有赞平响_秒":127.0,"有赞首响_秒":137.0,"综合平响_秒":71.9,"有数据":true,"人效":0.0},{"周期":"2026.05.23-2026.05.29","客服":"王璇","个微_接待":0,"企微_接待":0,"有赞_接待":0,"总接待":0,"销售额":0.0,"有赞满意度":null,"企微平响_秒":null,"有赞平响_秒":null,"有赞首响_秒":null,"综合平响_秒":null,"有数据":false,"人效":0.0},{"周期":"2026.05.30-2026.06.05","客服":"吕晨","个微_接待":147,"企微_接待":243,"有赞_接待":85,"总接待":475,"销售额":10591.34,"有赞满意度":100.0,"企微平响_秒":26.8,"有赞平响_秒":28.0,"有赞首响_秒":27.0,"综合平响_秒":27.1,"有数据":true,"人效":22.3},{"周期":"2026.05.30-2026.06.05","客服":"张胜男","个微_接待":208,"企微_接待":437,"有赞_接待":149,"总接待":794,"销售额":16373.65,"有赞满意度":null,"企微平响_秒":25.9,"有赞平响_秒":26.0,"有赞首响_秒":24.0,"综合平响_秒":25.9,"有数据":true,"人效":20.62},{"周期":"2026.05.30-2026.06.05","客服":"李亚飞","个微_接待":33,"企微_接待":121,"有赞_接待":55,"总接待":209,"销售额":0.0,"有赞满意度":null,"企微平响_秒":37.9,"有赞平响_秒":12.0,"有赞首响_秒":12.0,"综合平响_秒":29.8,"有数据":true,"人效":0.0},{"周期":"2026.05.30-2026.06.05","客服":"黄桥","个微_接待":111,"企微_接待":245,"有赞_接待":123,"总接待":479,"销售额":183.1,"有赞满意度":null,"企微平响_秒":104.0,"有赞平响_秒":34.0,"有赞首响_秒":33.0,"综合平响_秒":80.6,"有数据":true,"人效":0.38},{"周期":"2026.05.30-2026.06.05","客服":"Vicky","个微_接待":113,"企微_接待":288,"有赞_接待":83,"总接待":484,"销售额":4486.7,"有赞满意度":null,"企微平响_秒":56.8,"有赞平响_秒":43.0,"有赞首响_秒":39.0,"综合平响_秒":53.7,"有数据":true,"人效":9.27},{"周期":"2026.05.30-2026.06.05","客服":"肖佳怡","个微_接待":21,"企微_接待":34,"有赞_接待":18,"总接待":73,"销售额":389.0,"有赞满意度":null,"企微平响_秒":67.0,"有赞平响_秒":32.0,"有赞首响_秒":45.0,"综合平响_秒":54.9,"有数据":true,"人效":5.33},{"周期":"2026.05.30-2026.06.05","客服":"刘悦","个微_接待":156,"企微_接待":303,"有赞_接待":116,"总接待":575,"销售额":3402.0,"有赞满意度":null,"企微平响_秒":37.3,"有赞平响_秒":23.0,"有赞首响_秒":23.0,"综合平响_秒":33.3,"有数据":true,"人效":5.92},{"周期":"2026.05.30-2026.06.05","客服":"朱梦娣","个微_接待":0,"企微_接待":0,"有赞_接待":0,"总接待":0,"销售额":0.0,"有赞满意度":null,"企微平响_秒":null,"有赞平响_秒":null,"有赞首响_秒":null,"综合平响_秒":null,"有数据":false,"人效":0.0},{"周期":"2026.05.30-2026.06.05","客服":"大可","个微_接待":91,"企微_接待":121,"有赞_接待":56,"总接待":268,"销售额":0.0,"有赞满意度":null,"企微平响_秒":54.5,"有赞平响_秒":144.0,"有赞首响_秒":157.0,"综合平响_秒":82.8,"有数据":true,"人效":0.0},{"周期":"2026.05.30-2026.06.05","客服":"王璇","个微_接待":166,"企微_接待":265,"有赞_接待":0,"总接待":431,"销售额":0.0,"有赞满意度":null,"企微平响_秒":214.0,"有赞平响_秒":null,"有赞首响_秒":null,"综合平响_秒":214.0,"有数据":true,"人效":0.0},{"周期":"2026.06.06-2026.06.12","客服":"吕晨","个微_接待":165,"企微_接待":421,"有赞_接待":133,"总接待":719,"销售额":5118.03,"有赞满意度":null,"企微平响_秒":26.6,"有赞平响_秒":28.0,"有赞首响_秒":26.0,"综合平响_秒":27.0,"有数据":true,"人效":7.12},{"周期":"2026.06.06-2026.06.12","客服":"张胜男","个微_接待":160,"企微_接待":332,"有赞_接待":130,"总接待":622,"销售额":5964.14,"有赞满意度":null,"企微平响_秒":34.6,"有赞平响_秒":44.0,"有赞首响_秒":43.0,"综合平响_秒":37.3,"有数据":true,"人效":9.59},{"周期":"2026.06.06-2026.06.12","客服":"李亚飞","个微_接待":3,"企微_接待":35,"有赞_接待":0,"总接待":38,"销售额":0.0,"有赞满意度":null,"企微平响_秒":null,"有赞平响_秒":0.0,"有赞首响_秒":0.0,"综合平响_秒":null,"有数据":true,"人效":0.0},{"周期":"2026.06.06-2026.06.12","客服":"黄桥","个微_接待":32,"企微_接待":55,"有赞_接待":38,"总接待":125,"销售额":793.0,"有赞满意度":null,"企微平响_秒":114.0,"有赞平响_秒":25.0,"有赞首响_秒":17.0,"综合平响_秒":77.6,"有数据":true,"人效":6.34},{"周期":"2026.06.06-2026.06.12","客服":"Vicky","个微_接待":197,"企微_接待":383,"有赞_接待":149,"总接待":729,"销售额":2790.9,"有赞满意度":null,"企微平响_秒":54.3,"有赞平响_秒":42.0,"有赞首响_秒":47.0,"综合平响_秒":50.8,"有数据":true,"人效":3.83},{"周期":"2026.06.06-2026.06.12","客服":"肖佳怡","个微_接待":47,"企微_接待":148,"有赞_接待":19,"总接待":214,"销售额":2356.0,"有赞满意度":null,"企微平响_秒":66.0,"有赞平响_秒":16.0,"有赞首响_秒":14.0,"综合平响_秒":60.3,"有数据":true,"人效":11.01},{"周期":"2026.06.06-2026.06.12","客服":"刘悦","个微_接待":122,"企微_接待":233,"有赞_接待":72,"总接待":427,"销售额":1154.9,"有赞满意度":null,"企微平响_秒":31.5,"有赞平响_秒":18.0,"有赞首响_秒":16.0,"综合平响_秒":28.3,"有数据":true,"人效":2.7},{"周期":"2026.06.06-2026.06.12","客服":"朱梦娣","个微_接待":109,"企微_接待":234,"有赞_接待":52,"总接待":395,"销售额":0.0,"有赞满意度":null,"企微平响_秒":39.5,"有赞平响_秒":31.0,"有赞首响_秒":28.0,"综合平响_秒":37.9,"有数据":true,"人效":0.0},{"周期":"2026.06.06-2026.06.12","客服":"大可","个微_接待":0,"企微_接待":0,"有赞_接待":0,"总接待":0,"销售额":0.0,"有赞满意度":null,"企微平响_秒":null,"有赞平响_秒":null,"有赞首响_秒":null,"综合平响_秒":null,"有数据":false,"人效":0.0},{"周期":"2026.06.06-2026.06.12","客服":"王璇","个微_接待":129,"企微_接待":253,"有赞_接待":0,"总接待":382,"销售额":0.0,"有赞满意度":null,"企微平响_秒":159.0,"有赞平响_秒":null,"有赞首响_秒":null,"综合平响_秒":159.0,"有数据":true,"人效":0.0},{"周期":"2026.06.13-2026.06.19","客服":"吕晨","个微_接待":151,"企微_接待":312,"有赞_接待":116,"总接待":579,"销售额":5474.0,"有赞满意度":null,"企微平响_秒":31.9,"有赞平响_秒":31.0,"有赞首响_秒":33.0,"综合平响_秒":31.6,"有数据":true,"人效":9.45},{"周期":"2026.06.13-2026.06.19","客服":"张胜男","个微_接待":253,"企微_接待":282,"有赞_接待":119,"总接待":654,"销售额":5497.73,"有赞满意度":null,"企微平响_秒":24.7,"有赞平响_秒":21.0,"有赞首响_秒":20.0,"综合平响_秒":23.6,"有数据":true,"人效":8.41},{"周期":"2026.06.13-2026.06.19","客服":"李亚飞","个微_接待":26,"企微_接待":107,"有赞_接待":20,"总接待":153,"销售额":462.9,"有赞满意度":null,"企微平响_秒":38.0,"有赞平响_秒":15.0,"有赞首响_秒":15.0,"综合平响_秒":34.4,"有数据":true,"人效":3.03},{"周期":"2026.06.13-2026.06.19","客服":"黄桥","个微_接待":132,"企微_接待":146,"有赞_接待":35,"总接待":313,"销售额":1047.0,"有赞满意度":null,"企微平响_秒":84.0,"有赞平响_秒":27.0,"有赞首响_秒":17.0,"综合平响_秒":73.0,"有数据":true,"人效":3.35},{"周期":"2026.06.13-2026.06.19","客服":"Vicky","个微_接待":49,"企微_接待":111,"有赞_接待":37,"总接待":197,"销售额":296.0,"有赞满意度":null,"企微平响_秒":46.5,"有赞平响_秒":40.0,"有赞首响_秒":36.0,"综合平响_秒":44.9,"有数据":true,"人效":1.5},{"周期":"2026.06.13-2026.06.19","客服":"肖佳怡","个微_接待":73,"企微_接待":121,"有赞_接待":30,"总接待":224,"销售额":698.24,"有赞满意度":null,"企微平响_秒":103.0,"有赞平响_秒":56.0,"有赞首响_秒":48.0,"综合平响_秒":93.7,"有数据":true,"人效":3.12},{"周期":"2026.06.13-2026.06.19","客服":"刘悦","个微_接待":154,"企微_接待":247,"有赞_接待":80,"总接待":481,"销售额":1385.0,"有赞满意度":null,"企微平响_秒":35.5,"有赞平响_秒":19.0,"有赞首响_秒":19.0,"综合平响_秒":31.4,"有数据":true,"人效":2.88},{"周期":"2026.06.13-2026.06.19","客服":"朱梦娣","个微_接待":41,"企微_接待":80,"有赞_接待":33,"总接待":154,"销售额":0.0,"有赞满意度":null,"企微平响_秒":47.9,"有赞平响_秒":46.0,"有赞首响_秒":47.0,"综合平响_秒":47.3,"有数据":true,"人效":0.0},{"周期":"2026.06.13-2026.06.19","客服":"大可","个微_接待":0,"企微_接待":0,"有赞_接待":0,"总接待":0,"销售额":0.0,"有赞满意度":null,"企微平响_秒":null,"有赞平响_秒":null,"有赞首响_秒":null,"综合平响_秒":null,"有数据":false,"人效":0.0},{"周期":"2026.06.13-2026.06.19","客服":"王璇","个微_接待":109,"企微_接待":122,"有赞_接待":0,"总接待":231,"销售额":0.0,"有赞满意度":null,"企微平响_秒":144.0,"有赞平响_秒":null,"有赞首响_秒":null,"综合平响_秒":144.0,"有数据":true,"人效":0.0}];
 
-const PERIOD_TOTALS = [
-  {reception:5444, sales:85759.58},
-  {reception:4169, sales:158672.87},
-  {reception:3788, sales:35425.79},
-  {reception:3651, sales:18176.97}
-];
+const PERIODS = ['2026.05.23-2026.05.29','2026.05.30-2026.06.05','2026.06.06-2026.06.12','2026.06.13-2026.06.19'];
+const PLABELS = ['W1 05/23-29','W2 05/30-06/05','W3 06/06-12','W4 06/13-19'];
+const PCOLORS = ['#4f8ef7','#34c78a','#f7954f','#c94fff'];
+const AGENTS = ['吕晨','张胜男','李亚飞','黄桥','Vicky','肖佳怡','刘悦','朱梦娣','大可','王璇'];
+const ROLE = {'吕晨':'全职','张胜男':'全职','李亚飞':'组长','黄桥':'兼职老','Vicky':'兼职老','肖佳怡':'兼职老','刘悦':'兼职老','朱梦娣':'兼职新','大可':'兼职新','王璇':'兼职新'};
+const ROLE_TAG = {'全职':'tag-ft','组长':'tag-mgr','兼职老':'tag-pt','兼职新':'tag-new'};
 
-const AGENT_REC = {
-  '吕晨':  [1618, 940, 475, 719],
-  '张胜男':[583,  801, 794, 622],
-  'Vicky': [1184, 711, 484, 729],
-  '肖佳怡':[1216, 518, 73,  214],
-  '刘悦':  [495,  570, 575, 427],
-  '黄桥':  [157,  168, 479, 125],
-  '朱梦娣':[189,  261, 0,   395],
-  '王洁茹':[0,    149, 268, 0],
-  '王璇':  [0,    0,   431, 382],
-  '李亚飞':[2,    51,  209, 38]
+const AGENT_COLORS = {
+  '吕晨':'#4f8ef7','张胜男':'#34c78a','李亚飞':'#f7c94f',
+  '黄桥':'#f7954f','Vicky':'#c94fff','肖佳怡':'#f75c5c',
+  '刘悦':'#4fd4f7','朱梦娣':'#f74fa0','大可':'#a0f74f','王璇':'#f7e04f'
 };
 
-const AGENT_SALES = {
-  '吕晨':  [30579.65, 65777.36, 10591.34, 5118.03],
-  '张胜男':[26438.02, 71701.40, 16373.65, 5964.14],
-  'Vicky': [12168.03, 9530.70,  4486.70,  2790.90],
-  '肖佳怡':[5264.25,  8585.81,  389.00,   2356.00],
-  '刘悦':  [8514.63,  2902.90,  3402.00,  1154.90],
-  '黄桥':  [2795.00,  174.70,   183.10,   793.00],
-  '朱梦娣':[0,0,0,0],
-  '王洁茹':[0,0,0,0],
-  '王璇':  [0,0,0,0],
-  '李亚飞':[0,0,0,0]
-};
+function byPeriod(p) { return RAW.filter(r=>r['周期']===p); }
+function getAgent(p,a) { return RAW.find(r=>r['周期']===p && r['客服']===a) || {}; }
+function fmt(n,pre='¥') { if(n==null||n===0)return '—'; return pre+n.toLocaleString('zh-CN',{maximumFractionDigits:0}); }
+function fmtN(n) { if(n==null||n===undefined)return '—'; return n.toLocaleString(); }
 
-const W3_TABLE = [
-  {name:'吕晨',   reception:475, sales:10591.34, efficiency:22.30, satisfaction:100.0, avg_resp:40.1},
-  {name:'张胜男', reception:794, sales:16373.65, efficiency:20.62, satisfaction:null,  avg_resp:27.8},
-  {name:'Vicky',  reception:484, sales:4486.70,  efficiency:9.27,  satisfaction:null,  avg_resp:58.7},
-  {name:'肖佳怡', reception:73,  sales:389.00,   efficiency:5.33,  satisfaction:null,  avg_resp:70.7},
-  {name:'刘悦',   reception:575, sales:3402.00,  efficiency:5.92,  satisfaction:null,  avg_resp:41.9},
-  {name:'黄桥',   reception:479, sales:183.10,   efficiency:0.38,  satisfaction:null,  avg_resp:80.0},
-  {name:'王洁茹', reception:268, sales:0,         efficiency:0.00,  satisfaction:null,  avg_resp:81.2},
-  {name:'王璇',   reception:431, sales:0,         efficiency:0.00,  satisfaction:null,  avg_resp:171.6},
-  {name:'李亚飞', reception:209, sales:0,         efficiency:0.00,  satisfaction:null,  avg_resp:34.7, isLead:true}
-];
-
-const W4_TABLE = [
-  {name:'吕晨',   reception:719, sales:5118.03, efficiency:7.12,  satisfaction:null, avg_resp:33.2},
-  {name:'张胜男', reception:622, sales:5964.14, efficiency:9.59,  satisfaction:null, avg_resp:36.4},
-  {name:'Vicky',  reception:729, sales:2790.90, efficiency:3.83,  satisfaction:null, avg_resp:53.6},
-  {name:'肖佳怡', reception:214, sales:2356.00, efficiency:11.01, satisfaction:null, avg_resp:70.6},
-  {name:'刘悦',   reception:427, sales:1154.90, efficiency:2.70,  satisfaction:null, avg_resp:34.8},
-  {name:'黄桥',   reception:125, sales:793.00,  efficiency:6.34,  satisfaction:null, avg_resp:78.0},
-  {name:'朱梦娣', reception:395, sales:0,        efficiency:0.00,  satisfaction:null, avg_resp:41.8},
-  {name:'王璇',   reception:382, sales:0,        efficiency:0.00,  satisfaction:null, avg_resp:134.7},
-  {name:'李亚飞', reception:38,  sales:0,        efficiency:0.00,  satisfaction:null, avg_resp:48.0, isLead:true}
-];
-
-const W4_SALES_CONTRIB = [
-  {name:'张胜男', sales:5964.14, pct:32.8},
-  {name:'吕晨',   sales:5118.03, pct:28.2},
-  {name:'Vicky',  sales:2790.90, pct:15.4},
-  {name:'肖佳怡', sales:2356.00, pct:13.0},
-  {name:'刘悦',   sales:1154.90, pct:6.4},
-  {name:'黄桥',   sales:793.00,  pct:4.4}
-];
-
-// ==================== COLORS ====================
-const COLORS = {
-  '吕晨':  '#4f8ef7',
-  '张胜男':'#a78bfa',
-  'Vicky': '#34d399',
-  '肖佳怡':'#f59e0b',
-  '刘悦':  '#f87171',
-  '黄桥':  '#22d3ee',
-  '朱梦娣':'#fb923c',
-  '王洁茹':'#e879f9',
-  '王璇':  '#a3e635',
-  '李亚飞':'#64748b'
-};
-
-function hex2rgba(hex, alpha) {
-  const r = parseInt(hex.slice(1,3),16);
-  const g = parseInt(hex.slice(3,5),16);
-  const b = parseInt(hex.slice(5,7),16);
-  return `rgba(${r},${g},${b},${alpha})`;
-}
-
-// ==================== CHART DEFAULTS ====================
-Chart.defaults.color = '#8b90a7';
-Chart.defaults.borderColor = '#2e3352';
-Chart.defaults.font.family = "'PingFang SC','Microsoft YaHei',sans-serif";
-Chart.defaults.plugins.legend.labels.boxWidth = 12;
-
-const gridOpts = {
-  color: '#2e3352',
-  lineWidth: 1,
-};
-
-function baseLineOpts(titleText) {
-  return {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { position: 'bottom', labels: { padding: 16, font: {size:11} } },
-      title: { display: false }
-    },
-    scales: {
-      x: { grid: gridOpts, ticks: {font:{size:11}} },
-      y: { grid: gridOpts, ticks: {font:{size:11}} }
-    }
-  };
-}
-
-// ==================== CHARTS ====================
-let chartInstances = {};
-function destroyChart(id) {
-  if (chartInstances[id]) { chartInstances[id].destroy(); delete chartInstances[id]; }
-}
-
-// 1. Overview reception trend
-function initOverviewRec() {
-  destroyChart('chartOverviewRec');
-  const ctx = document.getElementById('chartOverviewRec').getContext('2d');
-  chartInstances['chartOverviewRec'] = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: PERIODS,
-      datasets: [{
-        label: '总接待量',
-        data: PERIOD_TOTALS.map(t => t.reception),
-        borderColor: '#4f8ef7',
-        backgroundColor: 'rgba(79,142,247,0.12)',
-        tension: 0.4,
-        fill: true,
-        pointRadius: 5,
-        pointBackgroundColor: '#4f8ef7'
-      }]
-    },
-    options: baseLineOpts('接待量')
-  });
-}
-
-// 2. Overview sales trend
-function initOverviewSales() {
-  destroyChart('chartOverviewSales');
-  const ctx = document.getElementById('chartOverviewSales').getContext('2d');
-  chartInstances['chartOverviewSales'] = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: PERIODS,
-      datasets: [{
-        label: '总销售额（元）',
-        data: PERIOD_TOTALS.map(t => t.sales),
-        borderColor: '#a78bfa',
-        backgroundColor: 'rgba(167,139,250,0.12)',
-        tension: 0.4,
-        fill: true,
-        pointRadius: 5,
-        pointBackgroundColor: '#a78bfa'
-      }]
-    },
-    options: {
-      ...baseLineOpts('销售额'),
-      plugins: {
-        ...baseLineOpts('销售额').plugins,
-        tooltip: {
-          callbacks: {
-            label: ctx => `¥${ctx.parsed.y.toLocaleString('zh-CN', {minimumFractionDigits:2})}`
-          }
-        }
-      }
-    }
-  });
-}
-
-// 3. Overview table
-function initOverviewTable() {
-  const tbody = document.getElementById('overviewTableBody');
-  const ranges = ['5.16–5.22','5.23–5.29','5.30–6.05','6.06–6.12'];
-  let prevRec = null, prevSales = null;
-  let html = '';
-  PERIOD_TOTALS.forEach((t, i) => {
-    const eff = (t.sales / t.reception).toFixed(2);
-    let recChg = '—', salesChg = '—';
-    if (i > 0) {
-      const rc = ((t.reception - prevRec) / prevRec * 100).toFixed(1);
-      const sc = ((t.sales - prevSales) / prevSales * 100).toFixed(1);
-      const recUp = rc >= 0;
-      const salesUp = sc >= 0;
-      recChg = `<span style="color:${recUp?'var(--green)':'var(--red)'}">${recUp?'▲':'▼'} ${Math.abs(rc)}%</span>`;
-      salesChg = `<span style="color:${salesUp?'var(--green)':'var(--red)'}">${salesUp?'▲':'▼'} ${Math.abs(sc)}%</span>`;
-    }
-    html += `<tr>
-      <td class="name-cell">${PERIODS[i]}</td>
-      <td>${ranges[i]}</td>
-      <td>${t.reception.toLocaleString()}</td>
-      <td>¥${t.sales.toLocaleString('zh-CN',{minimumFractionDigits:2})}</td>
-      <td>¥${eff}</td>
-      <td>${[8,9,9,9][i]}</td>
-      <td>${recChg}</td>
-      <td>${salesChg}</td>
-    </tr>`;
-    prevRec = t.reception; prevSales = t.sales;
-  });
-  tbody.innerHTML = html;
-}
-
-// 4. Compare reception bar
-function initCompareRec() {
-  destroyChart('chartCompareRec');
-  const ctx = document.getElementById('chartCompareRec').getContext('2d');
-  const agentsInBoth = AGENTS.filter(a => (AGENT_REC[a][2]||0) + (AGENT_REC[a][3]||0) > 0);
-  chartInstances['chartCompareRec'] = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: agentsInBoth,
-      datasets: [
-        {
-          label: 'W3 (5.30-6.05)',
-          data: agentsInBoth.map(a => AGENT_REC[a][2]),
-          backgroundColor: agentsInBoth.map(a => hex2rgba(COLORS[a]||'#4f8ef7', 0.4)),
-          borderColor: agentsInBoth.map(a => COLORS[a]||'#4f8ef7'),
-          borderWidth: 1, borderRadius: 4
-        },
-        {
-          label: 'W4 (6.06-6.12)',
-          data: agentsInBoth.map(a => AGENT_REC[a][3]),
-          backgroundColor: agentsInBoth.map(a => hex2rgba(COLORS[a]||'#4f8ef7', 0.85)),
-          borderColor: agentsInBoth.map(a => COLORS[a]||'#4f8ef7'),
-          borderWidth: 1, borderRadius: 4
-        }
-      ]
-    },
-    options: { ...baseLineOpts(), plugins: { legend: { position: 'bottom' } } }
-  });
-}
-
-// 5. Compare sales bar
-function initCompareSales() {
-  destroyChart('chartCompareSales');
-  const ctx = document.getElementById('chartCompareSales').getContext('2d');
-  const agentsWithSales = AGENTS.filter(a => (AGENT_SALES[a][2]||0) + (AGENT_SALES[a][3]||0) > 0);
-  chartInstances['chartCompareSales'] = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: agentsWithSales,
-      datasets: [
-        {
-          label: 'W3',
-          data: agentsWithSales.map(a => AGENT_SALES[a][2]),
-          backgroundColor: 'rgba(167,139,250,0.35)',
-          borderColor: '#a78bfa',
-          borderWidth: 1, borderRadius: 4
-        },
-        {
-          label: 'W4',
-          data: agentsWithSales.map(a => AGENT_SALES[a][3]),
-          backgroundColor: 'rgba(167,139,250,0.8)',
-          borderColor: '#a78bfa',
-          borderWidth: 1, borderRadius: 4
-        }
-      ]
-    },
-    options: {
-      ...baseLineOpts(),
-      plugins: { legend: { position: 'bottom' },
-        tooltip: { callbacks: { label: c => `¥${c.parsed.y.toFixed(2)}` } }
-      }
-    }
-  });
-}
-
-// 6. Response compare list
-function initResponseCompare() {
-  const el = document.getElementById('responseCompareList');
-  const w3Data = {
-    '张胜男':27.8, '李亚飞':34.7, '吕晨':40.1, '刘悦':41.9,
-    'Vicky':58.7, '肖佳怡':70.7, '黄桥':80.0, '王洁茹':81.2, '王璇':171.6
-  };
-  const w4Data = {
-    '吕晨':33.2, '刘悦':34.8, '张胜男':36.4, '朱梦娣':41.8,
-    '李亚飞':48.0, 'Vicky':53.6, '肖佳怡':70.6, '黄桥':78.0, '王璇':134.7
-  };
-  const allNames = [...new Set([...Object.keys(w3Data), ...Object.keys(w4Data)])];
-  let html = '';
-  allNames.forEach(name => {
-    const v3 = w3Data[name] || null;
-    const v4 = w4Data[name] || null;
-    const chg = (v3 && v4) ? ((v4-v3)/v3*100).toFixed(1) : null;
-    const chgColor = chg ? (chg < 0 ? 'var(--green)' : 'var(--red)') : 'var(--text3)';
-    const chgStr = chg ? `<span style="color:${chgColor};font-size:11px;">${chg<0?'▼':'▲'}${Math.abs(chg)}%</span>` : '';
-    html += `<div class="trend-row">
-      <div class="trend-name">${name}</div>
-      <div style="color:var(--text3);font-size:12px;width:56px;text-align:right;">${v3?v3+'s':'—'}</div>
-      <div style="color:var(--text2);font-size:12px;width:14px;text-align:center;">→</div>
-      <div style="font-size:12px;width:56px;">${v4?v4+'s':'—'}</div>
-      <div style="width:50px;">${chgStr}</div>
-    </div>`;
-  });
-  el.innerHTML = html;
-}
-
-// 7. Workload trend chart
-function initWorkloadTrend() {
-  destroyChart('chartWorkloadTrend');
-  const ctx = document.getElementById('chartWorkloadTrend').getContext('2d');
-  const datasets = AGENTS.map(a => ({
-    label: a,
-    data: AGENT_REC[a],
-    borderColor: COLORS[a] || '#888',
-    backgroundColor: 'transparent',
-    tension: 0.4,
-    pointRadius: 4,
-    borderWidth: 2
-  }));
-  chartInstances['chartWorkloadTrend'] = new Chart(ctx, {
-    type: 'line',
-    data: { labels: PERIODS, datasets },
-    options: { ...baseLineOpts(), plugins: { legend: { position: 'right', labels: { font:{size:11}, padding: 10 } } } }
-  });
-}
-
-// 8. Reception ranking bars
-function initRecRankings() {
-  const makeList = (tableData, elId) => {
-    const sorted = [...tableData].sort((a,b) => b.reception - a.reception);
-    const max = sorted[0].reception;
-    let html = '';
-    sorted.forEach((r, i) => {
-      const badge = i < 3 ? `rank-${i+1}` : 'rank-n';
-      const color = COLORS[r.name] || '#888';
-      html += `<div class="trend-row">
-        <span class="rank-badge ${badge}">${i+1}</span>
-        <div class="trend-name" style="width:56px;">${r.name}</div>
-        <div class="trend-bar-wrap">
-          <div class="trend-bar" style="width:${(r.reception/max*100).toFixed(1)}%;background:${color};"></div>
-        </div>
-        <div class="trend-val">${r.reception}</div>
-      </div>`;
-    });
-    document.getElementById(elId).innerHTML = html;
-  };
-  makeList(W4_TABLE, 'recRankingW4');
-  makeList(W3_TABLE, 'recRankingW3');
-}
-
-// 9. W4 reception bar chart
-function initW4ReceptionChart() {
-  destroyChart('chartW4Reception');
-  const ctx = document.getElementById('chartW4Reception').getContext('2d');
-  const sorted = [...W4_TABLE].sort((a,b) => b.reception - a.reception);
-  chartInstances['chartW4Reception'] = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: sorted.map(r => r.name),
-      datasets: [{
-        label: '接待量（次）',
-        data: sorted.map(r => r.reception),
-        backgroundColor: sorted.map(r => hex2rgba(COLORS[r.name]||'#4f8ef7', 0.75)),
-        borderColor: sorted.map(r => COLORS[r.name]||'#4f8ef7'),
-        borderWidth: 1, borderRadius: 6
-      }]
-    },
-    options: { ...baseLineOpts(), plugins: { legend: { display: false } } }
-  });
-}
-
-// 10. W4 sales pie
-function initW4SalesPie() {
-  destroyChart('chartW4SalesPie');
-  const ctx = document.getElementById('chartW4SalesPie').getContext('2d');
-  chartInstances['chartW4SalesPie'] = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: W4_SALES_CONTRIB.map(d => d.name),
-      datasets: [{
-        data: W4_SALES_CONTRIB.map(d => d.sales),
-        backgroundColor: W4_SALES_CONTRIB.map(d => COLORS[d.name]||'#888'),
-        borderColor: '#1a1d27',
-        borderWidth: 2
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { position: 'bottom', labels: { padding: 12, font:{size:11} } },
-        tooltip: { callbacks: { label: c => `${c.label}: ¥${c.parsed.toFixed(2)} (${W4_SALES_CONTRIB[c.dataIndex].pct}%)` } }
-      },
-      cutout: '55%'
-    }
-  });
-}
-
-// 11. Sales contrib table
-function initSalesContribTable() {
-  const tbody = document.getElementById('salesContribTable');
-  let html = '';
-  W4_SALES_CONTRIB.forEach((d, i) => {
-    const badge = i < 3 ? `rank-${i+1}` : 'rank-n';
-    html += `<tr>
-      <td><span class="rank-badge ${badge}">${i+1}</span></td>
-      <td class="name-cell">${d.name}</td>
-      <td>¥${d.sales.toFixed(2)}</td>
-      <td><div style="display:flex;align-items:center;gap:8px;">
-        <div style="height:6px;width:${d.pct}px;border-radius:3px;background:${COLORS[d.name]||'#888'};"></div>
-        <span>${d.pct}%</span>
-      </div></td>
-    </tr>`;
-  });
-  tbody.innerHTML = html;
-}
-
-// 12. Sales trend
-function initSalesTrend() {
-  destroyChart('chartSalesTrend');
-  const ctx = document.getElementById('chartSalesTrend').getContext('2d');
-  const agentsWithSales = AGENTS.filter(a => AGENT_SALES[a].some(v => v > 0));
-  chartInstances['chartSalesTrend'] = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: PERIODS,
-      datasets: agentsWithSales.map(a => ({
-        label: a,
-        data: AGENT_SALES[a],
-        borderColor: COLORS[a],
-        backgroundColor: 'transparent',
-        tension: 0.4,
-        pointRadius: 4,
-        borderWidth: 2
-      }))
-    },
-    options: {
-      ...baseLineOpts(),
-      plugins: {
-        legend: { position: 'right', labels: { padding:10, font:{size:11} } },
-        tooltip: { callbacks: { label: c => `${c.dataset.label}: ¥${c.parsed.y.toFixed(2)}` } }
-      }
-    }
-  });
-}
-
-// 13. W4 sales bar
-function initW4SalesChart() {
-  destroyChart('chartW4Sales');
-  const ctx = document.getElementById('chartW4Sales').getContext('2d');
-  const sorted = [...W4_SALES_CONTRIB].sort((a,b) => b.sales - a.sales);
-  chartInstances['chartW4Sales'] = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: sorted.map(d => d.name),
-      datasets: [{
-        label: '销售额（元）',
-        data: sorted.map(d => d.sales),
-        backgroundColor: sorted.map(d => hex2rgba(COLORS[d.name]||'#a78bfa', 0.75)),
-        borderColor: sorted.map(d => COLORS[d.name]||'#a78bfa'),
-        borderWidth: 1, borderRadius: 6
-      }]
-    },
-    options: {
-      ...baseLineOpts(),
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: c => `¥${c.parsed.y.toFixed(2)}` } }
-      }
-    }
-  });
-}
-
-// 14. Performance table
-let currentWeek = 'w4';
-function initPerfTable(week) {
-  const tableData = week === 'w4' ? W4_TABLE : W3_TABLE;
-  const label = week === 'w4' ? 'W4 客服综合数据（6.06–6.12）' : 'W3 客服综合数据（5.30–6.05）';
-  document.getElementById('perfTableTitle').textContent = label;
-  const tbody = document.getElementById('perfTableBody');
-  let html = '';
-  tableData.forEach(r => {
-    const respColor = r.avg_resp < 40 ? 'var(--green)' : r.avg_resp < 80 ? 'var(--yellow)' : 'var(--red)';
-    const satStr = r.satisfaction !== null ? `${r.satisfaction}%` : '<span class="null-val">—</span>';
-    const note = r.isLead ? '<span class="badge badge-purple">组长</span>' : '';
-    html += `<tr>
-      <td class="name-cell">${r.name}${r.isLead?'&nbsp;<span style="font-size:10px;color:var(--accent2);">（组长）</span>':''}</td>
-      <td>${r.reception.toLocaleString()}</td>
-      <td>${r.sales > 0 ? '¥'+r.sales.toFixed(2) : '<span class="null-val">¥0</span>'}</td>
-      <td>${r.efficiency > 0 ? '¥'+r.efficiency.toFixed(2) : '<span class="null-val">—</span>'}</td>
-      <td>${satStr}</td>
-      <td style="color:${respColor};">${r.avg_resp}s</td>
-      <td>${note}</td>
-    </tr>`;
-  });
-  tbody.innerHTML = html;
-}
-
-// 15. Ranking charts
-function initRankCharts(week) {
-  const tableData = week === 'w4' ? W4_TABLE : W3_TABLE;
-  const label = week === 'w4' ? 'W4' : 'W3';
-  document.getElementById('rankEffTitle').textContent = `${label} 人效排名（¥/次）`;
-  document.getElementById('rankRespTitle').textContent = `${label} 响应效率排名（秒）`;
-
-  // Efficiency ranking
-  destroyChart('chartRankEff');
-  const effSorted = [...tableData].filter(r => r.efficiency > 0).sort((a,b) => b.efficiency - a.efficiency);
-  const ctxEff = document.getElementById('chartRankEff').getContext('2d');
-  chartInstances['chartRankEff'] = new Chart(ctxEff, {
-    type: 'bar',
-    data: {
-      labels: effSorted.map(r => r.name),
-      datasets: [{
-        label: '人效（¥/次）',
-        data: effSorted.map(r => r.efficiency),
-        backgroundColor: effSorted.map(r => hex2rgba(COLORS[r.name]||'#34d399', 0.75)),
-        borderColor: effSorted.map(r => COLORS[r.name]||'#34d399'),
-        borderWidth: 1, borderRadius: 5
-      }]
-    },
-    options: {
-      ...baseLineOpts(),
-      indexAxis: 'y',
-      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `¥${c.parsed.x.toFixed(2)}/次` } } }
-    }
-  });
-
-  // Response ranking (lower = better)
-  destroyChart('chartRankResp');
-  const respSorted = [...tableData].filter(r => r.avg_resp !== null).sort((a,b) => a.avg_resp - b.avg_resp);
-  const ctxResp = document.getElementById('chartRankResp').getContext('2d');
-  chartInstances['chartRankResp'] = new Chart(ctxResp, {
-    type: 'bar',
-    data: {
-      labels: respSorted.map(r => r.name),
-      datasets: [{
-        label: '平响（秒）',
-        data: respSorted.map(r => r.avg_resp),
-        backgroundColor: respSorted.map(r => r.avg_resp < 40 ? 'rgba(52,211,153,0.7)' : r.avg_resp < 80 ? 'rgba(245,158,11,0.7)' : 'rgba(248,113,113,0.7)'),
-        borderColor: respSorted.map(r => r.avg_resp < 40 ? '#34d399' : r.avg_resp < 80 ? '#f59e0b' : '#f87171'),
-        borderWidth: 1, borderRadius: 5
-      }]
-    },
-    options: {
-      ...baseLineOpts(),
-      indexAxis: 'y',
-      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${c.parsed.x}秒` } } }
-    }
-  });
-}
-
-// ==================== WEEK SWITCH ====================
-function switchWeek(week) {
-  currentWeek = week;
-  document.querySelectorAll('.week-tab').forEach(btn => {
-    btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${week}'`));
-  });
-  initPerfTable(week);
-  initRankCharts(week);
-}
-
-// ==================== TAB SWITCH ====================
-const tabChartInits = {
-  'overview': () => { initOverviewRec(); initOverviewSales(); initOverviewTable(); },
-  'compare': () => { initCompareRec(); initCompareSales(); initResponseCompare(); },
-  'workload': () => { initWorkloadTrend(); initRecRankings(); initW4ReceptionChart(); },
-  'sales': () => { initW4SalesPie(); initSalesContribTable(); initSalesTrend(); initW4SalesChart(); },
-  'performance': () => { initPerfTable(currentWeek); initRankCharts(currentWeek); },
-  'conclusion': () => {}
-};
-const initialized = {};
-
-function switchTab(tabName) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById(`tab-${tabName}`).classList.add('active');
-  document.querySelectorAll('.tab-btn').forEach(b => {
-    if (b.getAttribute('onclick').includes(`'${tabName}'`)) b.classList.add('active');
-  });
-  if (!initialized[tabName]) {
-    setTimeout(() => { tabChartInits[tabName](); }, 80);
-    initialized[tabName] = true;
+const CHART_DEFAULTS = {
+  color:'#b0b8d0',
+  plugins:{ legend:{ labels:{ color:'#b0b8d0', font:{size:11} } }, tooltip:{ backgroundColor:'#1e2333', titleColor:'#e8ecf4', bodyColor:'#b0b8d0', borderColor:'#272d42', borderWidth:1 } },
+  scales:{
+    x:{ ticks:{ color:'#7a82a0', font:{size:11} }, grid:{ color:'#272d42' } },
+    y:{ ticks:{ color:'#7a82a0', font:{size:11} }, grid:{ color:'#272d42' } }
   }
+};
+
+function mkChart(id, type, data, opts={}) {
+  const ctx = document.getElementById(id);
+  if(!ctx) return;
+  return new Chart(ctx, { type, data, options: deepMerge(JSON.parse(JSON.stringify(CHART_DEFAULTS)), opts) });
 }
 
-// ==================== INIT ====================
-window.addEventListener('DOMContentLoaded', () => {
-  initOverviewRec();
-  initOverviewSales();
-  initOverviewTable();
-  initialized['overview'] = true;
+function deepMerge(a,b) {
+  for(let k in b) {
+    if(b[k]&&typeof b[k]==='object'&&!Array.isArray(b[k])&&a[k]&&typeof a[k]==='object') deepMerge(a[k],b[k]);
+    else a[k]=b[k];
+  }
+  return a;
+}
+
+// ===================== OVERVIEW CHARTS =====================
+function buildOverview() {
+  const totals = PERIODS.map(p=>{
+    const rows = byPeriod(p);
+    return { recv: rows.reduce((s,r)=>s+r['总接待'],0), sales: rows.reduce((s,r)=>s+r['销售额'],0), gw: rows.reduce((s,r)=>s+r['个微_接待'],0), qw: rows.reduce((s,r)=>s+r['企微_接待'],0), yz: rows.reduce((s,r)=>s+r['有赞_接待'],0) };
+  });
+
+  mkChart('c-total-recv','bar',{ labels:PLABELS, datasets:[{ label:'总接待量', data:totals.map(t=>t.recv), backgroundColor:PCOLORS, borderRadius:6 }] },
+    { plugins:{ legend:{ display:false } } });
+
+  mkChart('c-total-sales','bar',{ labels:PLABELS, datasets:[{ label:'销售额(¥)', data:totals.map(t=>t.sales), backgroundColor:PCOLORS, borderRadius:6 }] },
+    { plugins:{ legend:{ display:false } }, scales:{ y:{ ticks:{ callback:v=>'¥'+v.toLocaleString() } } } });
+
+  // avg resp per week (agents with data)
+  const avgResp = PERIODS.map(p => {
+    const rows = byPeriod(p).filter(r=>r['综合平响_秒']&&r['综合平响_秒']>0&&r['总接待']>0);
+    if(!rows.length) return null;
+    const total = rows.reduce((s,r)=>s+r['综合平响_秒']*r['总接待'],0);
+    const cnt = rows.reduce((s,r)=>s+r['总接待'],0);
+    return Math.round(total/cnt);
+  });
+  mkChart('c-total-resp','line',{ labels:PLABELS, datasets:[{ label:'团队加权平响(秒)', data:avgResp, borderColor:'#4f8ef7', backgroundColor:'#4f8ef722', fill:true, tension:.4, pointRadius:6, pointBackgroundColor:'#4f8ef7' }] });
+
+  mkChart('c-sys-breakdown','bar',{ labels:PLABELS, datasets:[
+    { label:'个微', data:totals.map(t=>t.gw), backgroundColor:'#4f8ef7', borderRadius:4 },
+    { label:'企微', data:totals.map(t=>t.qw), backgroundColor:'#34c78a', borderRadius:4 },
+    { label:'有赞', data:totals.map(t=>t.yz), backgroundColor:'#f7954f', borderRadius:4 },
+  ]},{ scales:{ x:{stacked:true}, y:{stacked:true} } });
+}
+
+// ===================== TREND CHARTS =====================
+function buildTrend() {
+  const agentsWithData = AGENTS.filter(a => PERIODS.some(p => getAgent(p,a)['有数据']));
+  mkChart('c-trend-recv','line',{
+    labels: PLABELS,
+    datasets: agentsWithData.map(a=>({ label:a, data:PERIODS.map(p=>{const d=getAgent(p,a); return d['有数据']?d['总接待']:null}), borderColor:AGENT_COLORS[a], backgroundColor:AGENT_COLORS[a]+'33', tension:.3, pointRadius:4, spanGaps:true }))
+  });
+  mkChart('c-trend-sales','line',{
+    labels: PLABELS,
+    datasets: agentsWithData.filter(a=>PERIODS.some(p=>getAgent(p,a)['销售额']>0)).map(a=>({ label:a, data:PERIODS.map(p=>{const d=getAgent(p,a); return d['销售额']>0?d['销售额']:null}), borderColor:AGENT_COLORS[a], backgroundColor:AGENT_COLORS[a]+'33', tension:.3, pointRadius:4, spanGaps:true }))
+  },{scales:{y:{ticks:{callback:v=>'¥'+v.toLocaleString()}}}});
+}
+
+// ===================== WORKLOAD CHARTS =====================
+function buildWorkload() {
+  // 4-week total
+  const totals4 = AGENTS.map(a=>({ name:a, total: PERIODS.reduce((s,p)=>s+(getAgent(p,a)['总接待']||0),0) })).filter(x=>x.total>0).sort((a,b)=>b.total-a.total);
+  mkChart('c-agent-total-recv','bar',{ labels:totals4.map(x=>x.name), datasets:[{ label:'四周接待合计', data:totals4.map(x=>x.total), backgroundColor:totals4.map(x=>AGENT_COLORS[x.name]), borderRadius:6 }] },
+    { plugins:{ legend:{ display:false } } });
+
+  // trend per agent
+  const agentsWithAny = AGENTS.filter(a => PERIODS.some(p => (getAgent(p,a)['总接待']||0)>0));
+  mkChart('c-agent-recv-trend','line',{
+    labels: PLABELS,
+    datasets: agentsWithAny.map(a=>({ label:a, data:PERIODS.map(p=>getAgent(p,a)['总接待']||null), borderColor:AGENT_COLORS[a], tension:.3, pointRadius:4, spanGaps:true }))
+  });
+
+  // W4 system breakdown
+  const w4 = byPeriod(PERIODS[3]).filter(r=>r['有数据']&&r['总接待']>0);
+  mkChart('c-w4-sys','bar',{
+    labels: w4.map(r=>r['客服']),
+    datasets:[
+      { label:'个微', data:w4.map(r=>r['个微_接待']), backgroundColor:'#4f8ef7', borderRadius:4 },
+      { label:'企微', data:w4.map(r=>r['企微_接待']), backgroundColor:'#34c78a', borderRadius:4 },
+      { label:'有赞', data:w4.map(r=>r['有赞_接待']), backgroundColor:'#f7954f', borderRadius:4 },
+    ]
+  },{ scales:{ x:{stacked:true}, y:{stacked:true} } });
+
+  // Workload table
+  const tbl = document.getElementById('tbl-workload');
+  let h=`<thead><tr><th>客服</th><th>角色</th><th>W1接待</th><th>W2接待</th><th>W3接待</th><th>W4接待</th><th>四周合计</th><th>接待量排名</th></tr></thead><tbody>`;
+  const sorted = AGENTS.map(a=>({
+    name:a, role:ROLE[a],
+    w:[...PERIODS.map(p=>getAgent(p,a)['总接待']||0)],
+    total: PERIODS.reduce((s,p)=>s+(getAgent(p,a)['总接待']||0),0)
+  })).filter(x=>x.total>0).sort((a,b)=>b.total-a.total);
+  sorted.forEach((d,i)=>{
+    const rk = i+1;
+    const rc = rk===1?'r1':rk===2?'r2':rk===3?'r3':'rn';
+    h+=`<tr><td><strong>${d.name}</strong></td><td><span class="tag ${ROLE_TAG[d.role]}">${d.role}</span></td>${d.w.map(v=>`<td>${v||'—'}</td>`).join('')}<td><strong>${d.total.toLocaleString()}</strong></td><td><span class="rank-badge ${rc}">${rk}</span></td></tr>`;
+  });
+  tbl.innerHTML = h+'</tbody>';
+}
+
+// ===================== SALES CHARTS =====================
+function buildSales() {
+  const sales4 = AGENTS.map(a=>({ name:a, total: PERIODS.reduce((s,p)=>s+(getAgent(p,a)['销售额']||0),0) })).filter(x=>x.total>0).sort((a,b)=>b.total-a.total);
+  mkChart('c-agent-sales-bar','bar',{ labels:sales4.map(x=>x.name), datasets:[{ label:'四周销售额', data:sales4.map(x=>x.total), backgroundColor:sales4.map(x=>AGENT_COLORS[x.name]), borderRadius:6 }] },
+    { plugins:{ legend:{ display:false } }, scales:{ y:{ ticks:{ callback:v=>'¥'+v.toLocaleString() } } } });
+
+  mkChart('c-agent-sales-pie','doughnut',{ labels:sales4.map(x=>x.name), datasets:[{ data:sales4.map(x=>x.total), backgroundColor:sales4.map(x=>AGENT_COLORS[x.name]), borderWidth:2, borderColor:'#0f1117' }] },
+    { scales:{}, plugins:{ legend:{ position:'right', labels:{ color:'#b0b8d0', font:{size:12} } }, tooltip:{ callbacks:{ label: ctx=>` ¥${ctx.parsed.toLocaleString()}` } } } });
+
+  // efficiency W2-W4 average
+  const eff = AGENTS.map(a=>{
+    const vals = [PERIODS[1],PERIODS[2],PERIODS[3]].map(p=>getAgent(p,a)['人效']||0).filter(v=>v>0);
+    return { name:a, eff: vals.length?vals.reduce((s,v)=>s+v,0)/vals.length:0 };
+  }).filter(x=>x.eff>0).sort((a,b)=>b.eff-a.eff);
+  mkChart('c-efficiency','bar',{ labels:eff.map(x=>x.name), datasets:[{ label:'人效 (¥/次)', data:eff.map(x=>+x.eff.toFixed(1)), backgroundColor:eff.map(x=>AGENT_COLORS[x.name]), borderRadius:6 }] },
+    { plugins:{ legend:{ display:false } }, scales:{ y:{ ticks:{ callback:v=>'¥'+v } } } });
+
+  mkChart('c-sales-trend','line',{
+    labels: PLABELS,
+    datasets: AGENTS.filter(a=>PERIODS.some(p=>(getAgent(p,a)['销售额']||0)>0)).map(a=>({ label:a, data:PERIODS.map(p=>getAgent(p,a)['销售额']||null), borderColor:AGENT_COLORS[a], tension:.3, pointRadius:4, spanGaps:true }))
+  },{scales:{y:{ticks:{callback:v=>'¥'+v.toLocaleString()}}}});
+
+  // Sales table
+  const tbl = document.getElementById('tbl-sales');
+  const allSales = AGENTS.map(a=>({
+    name:a, role:ROLE[a],
+    w: PERIODS.map(p=>getAgent(p,a)['销售额']||0),
+    total: PERIODS.reduce((s,p)=>s+(getAgent(p,a)['销售额']||0),0),
+    eff23: [PERIODS[1],PERIODS[2],PERIODS[3]].map(p=>getAgent(p,a)['人效']||0).filter(v=>v>0).reduce((s,v,_,arr)=>s+v/arr.length,0)
+  })).sort((a,b)=>b.total-a.total);
+  const grandTotal = allSales.reduce((s,d)=>s+d.total,0);
+  let h=`<thead><tr><th>排名</th><th>客服</th><th>角色</th><th>W1销售额</th><th>W2销售额</th><th>W3销售额</th><th>W4销售额</th><th>四周合计</th><th>贡献占比</th><th>W2-W4人效均值</th></tr></thead><tbody>`;
+  allSales.forEach((d,i)=>{
+    const rk = d.total>0?i+1:'—';
+    const rc = rk===1?'r1':rk===2?'r2':rk===3?'r3':'rn';
+    const pct = grandTotal>0?(d.total/grandTotal*100).toFixed(1)+'%':'—';
+    h+=`<tr><td>${d.total>0?`<span class="rank-badge ${rc}">${rk}</span>`:'—'}</td><td><strong>${d.name}</strong></td><td><span class="tag ${ROLE_TAG[d.role]}">${d.role}</span></td>${d.w.map(v=>`<td>${v>0?'¥'+v.toLocaleString('zh-CN',{maximumFractionDigits:0}):'—'}</td>`).join('')}<td><strong>${d.total>0?'¥'+d.total.toLocaleString('zh-CN',{maximumFractionDigits:0}):'¥0'}</strong></td><td>${pct}</td><td>${d.eff23>0?'¥'+d.eff23.toFixed(1):'—'}</td></tr>`;
+  });
+  tbl.innerHTML = h+'</tbody>';
+}
+
+// ===================== AGENT PAGE =====================
+let periodCharts = {};
+let currentP = 'W1';
+
+function selectPeriod(w) {
+  currentP = w;
+  document.querySelectorAll('.pbtn').forEach(b=>b.classList.toggle('active', b.textContent.startsWith(w)));
+  buildAgentPeriod(w);
+}
+
+function buildAgentPeriod(w) {
+  const pi = ['W1','W2','W3','W4'].indexOf(w);
+  const p = PERIODS[pi];
+  const pl = PLABELS[pi];
+
+  ['c-period-recv','c-period-sales','c-period-resp'].forEach(id=>{ const c=Chart.getChart(id); if(c) c.destroy(); });
+
+  document.getElementById('recv-chart-title').textContent = `📊 接待量排名（${pl}）`;
+  document.getElementById('sales-chart-title').textContent = `💰 销售额排名（${pl}）`;
+  document.getElementById('resp-chart-title').textContent = `⏱️ 综合平响（${pl}，秒，越低越好）`;
+  document.getElementById('agent-table-title').textContent = `客服个人表现详情（${pl}）`;
+
+  const rows = byPeriod(p).filter(r=>r['有数据']&&r['总接待']>0);
+
+  // recv ranked
+  const recvSorted = [...rows].sort((a,b)=>b['总接待']-a['总接待']);
+  mkChart('c-period-recv','bar',{ labels:recvSorted.map(r=>r['客服']), datasets:[{ label:'总接待量', data:recvSorted.map(r=>r['总接待']), backgroundColor:recvSorted.map(r=>AGENT_COLORS[r['客服']]), borderRadius:6 }] },
+    { plugins:{ legend:{ display:false } } });
+
+  // sales ranked
+  const salesRows = rows.filter(r=>r['销售额']>0).sort((a,b)=>b['销售额']-a['销售额']);
+  if(salesRows.length) {
+    mkChart('c-period-sales','bar',{ labels:salesRows.map(r=>r['客服']), datasets:[{ label:'销售额(¥)', data:salesRows.map(r=>r['销售额']), backgroundColor:salesRows.map(r=>AGENT_COLORS[r['客服']]), borderRadius:6 }] },
+      { plugins:{ legend:{ display:false } }, scales:{ y:{ ticks:{ callback:v=>'¥'+v.toLocaleString() } } } });
+  }
+
+  // resp ranked (lower is better)
+  const respRows = rows.filter(r=>r['综合平响_秒']&&r['综合平响_秒']>0).sort((a,b)=>a['综合平响_秒']-b['综合平响_秒']);
+  if(respRows.length) {
+    mkChart('c-period-resp','bar',{ labels:respRows.map(r=>r['客服']), datasets:[{ label:'综合平响(秒)', data:respRows.map(r=>r['综合平响_秒']), backgroundColor:respRows.map(r=>AGENT_COLORS[r['客服']]), borderRadius:6 }] },
+      { plugins:{ legend:{ display:false } } });
+  }
+
+  // Rankings
+  const recvRank = {}; recvSorted.forEach((r,i)=>recvRank[r['客服']]=i+1);
+  const salesSorted=[...rows].sort((a,b)=>b['销售额']-a['销售额']);
+  const salesRank={}; salesSorted.forEach((r,i)=>salesRank[r['客服']]=r['销售额']>0?i+1:'—');
+  const effSorted=[...rows].sort((a,b)=>b['人效']-a['人效']);
+  const effRank={}; effSorted.forEach((r,i)=>effRank[r['客服']]=r['人效']>0?i+1:'—');
+  const respSorted=[...rows].filter(r=>r['综合平响_秒']>0).sort((a,b)=>a['综合平响_秒']-b['综合平响_秒']);
+  const respRank={}; respSorted.forEach((r,i)=>respRank[r['客服']]=i+1);
+
+  const tbl = document.getElementById('tbl-agent');
+  let h=`<thead><tr><th>客服</th><th>角色</th><th>总接待</th><th>个微</th><th>企微</th><th>有赞</th><th>销售额</th><th>人效</th><th>企微平响</th><th>有赞平响</th><th>综合平响</th><th>有赞满意度</th><th>接待排名</th><th>销售排名</th><th>人效排名</th><th>响应效率排名</th></tr></thead><tbody>`;
+  rows.sort((a,b)=>b['总接待']-a['总接待']).forEach(r=>{
+    const mkRk=(v)=>{if(v==='—'||!v)return'—';const rc=v===1?'r1':v===2?'r2':v===3?'r3':'rn';return`<span class="rank-badge ${rc}">${v}</span>`;};
+    const sat = r['有赞满意度']!=null ? r['有赞满意度'].toFixed(0)+'%' : '—';
+    const isLiaYf = r['客服']==='李亚飞';
+    h+=`<tr>
+      <td><strong>${r['客服']}</strong>${isLiaYf?' <span class="tag tag-mgr" style="font-size:10px">组长</span>':''}</td>
+      <td><span class="tag ${ROLE_TAG[ROLE[r['客服']]]}">${ROLE[r['客服']]}</span></td>
+      <td><strong>${r['总接待']}</strong></td>
+      <td>${r['个微_接待']||'—'}</td><td>${r['企微_接待']||'—'}</td><td>${r['有赞_接待']||'—'}</td>
+      <td>${r['销售额']>0?'¥'+r['销售额'].toLocaleString('zh-CN',{maximumFractionDigits:0}):'—'}</td>
+      <td>${r['人效']>0?'¥'+r['人效'].toFixed(1):'—'}</td>
+      <td>${r['企微平响_秒']?r['企微平响_秒']+'s':'—'}</td>
+      <td>${r['有赞平响_秒']&&r['有赞平响_秒']>0?r['有赞平响_秒']+'s':'—'}</td>
+      <td>${r['综合平响_秒']&&r['综合平响_秒']>0?r['综合平响_秒']+'s':'—'}</td>
+      <td>${sat}</td>
+      <td>${mkRk(recvRank[r['客服']])}</td>
+      <td>${mkRk(salesRank[r['客服']])}</td>
+      <td>${mkRk(effRank[r['客服']])}</td>
+      <td>${mkRk(respRank[r['客服']])}</td>
+    </tr>`;
+  });
+  tbl.innerHTML = h+'</tbody>';
+}
+
+// ===================== CONCLUSION CHART =====================
+function buildConclusion() {
+  const agents = ['吕晨','张胜男','黄桥','Vicky','肖佳怡','刘悦','朱梦娣','王璇'];
+  mkChart('c-resp-compare','line',{
+    labels: PLABELS,
+    datasets: agents.map(a=>({ label:a, data:PERIODS.map(p=>{ const d=getAgent(p,a); return d['企微平响_秒']||null; }), borderColor:AGENT_COLORS[a], tension:.3, pointRadius:4, spanGaps:true }))
+  },{scales:{y:{ticks:{callback:v=>v+'s'},title:{display:true,text:'企微平响（秒）',color:'#7a82a0'}}},plugins:{legend:{labels:{color:'#b0b8d0',font:{size:11}}}}});
+}
+
+// ===================== NAV =====================
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ===================== INIT =====================
+window.addEventListener('load', ()=>{
+  buildOverview();
+  buildTrend();
+  buildWorkload();
+  buildSales();
+  buildAgentPeriod('W1');
+  buildConclusion();
 });
 </script>
 </body>
